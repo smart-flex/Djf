@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bean clazz="ru.smartflex.djf.demo.java.PojoAccount">
+	<prop name="postalIndex" length="10" not-null="true"/>
+	<prop name="accountNumber" not-null="true" />
+	<prop name="salary" pre-scale="6.2"/>
+	<set name="equipment" clazz="ru.smartflex.djf.demo.java.PojoAccEquipment" parent="account">
+		<prop name="serialNumber" length="4" />
+		<prop name="amount" pre-scale="7.4" />
+		<set name="workHistory" clazz="ru.smartflex.djf.demo.java.WorkHistory" parent="equipment">
+		</set>
+	</set>
+</bean>
+

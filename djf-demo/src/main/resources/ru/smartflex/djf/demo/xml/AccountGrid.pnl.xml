@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<panel>
+	<layout clazz="java.awt.BorderLayout" />
+	<items>
+		<grid constraint="Center" selectAble="fired" bindPref="pa" id="idAccountGrid">
+			<cols>
+				<int bind="idAccount" title="${demo.gridfields.grid.idAcc}"
+					width="50" enabled="no" noResize="yes" />
+				<text bind="accountNumber" title="${demo.gridfields.grid.an}"
+					width="100:150" />
+				<checkbox bind="hasChildren" title="${demo.gridfields.grid.hasChildren}"
+					width="40:40" accessible="${form.itemsAccessBank}"
+					enabled="yes" />
+				<date bind="dateCreate" title="${demo.gridfields.grid.dc}"
+					width="100:100" />
+				<combobox bind="carType" fill="ct.carName"
+					title="${label.demo.gridfields.grid.ct}" />
+			</cols>
+		</grid>
+	</items>
+</panel>

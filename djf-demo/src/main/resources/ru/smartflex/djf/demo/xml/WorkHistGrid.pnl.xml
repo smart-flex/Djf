@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<panel>
+	<layout clazz="java.awt.BorderLayout" />
+	<items>
+		<grid constraint="Center" append="false" bindPref="pa.equipment.workHistory" id="idWorkHistoryGrid">
+			<cols>
+				<int bind="idHistory" title="${label.demo.gridfields_tab.gridwh.idWH}"
+					width="50" noResize="yes"/>
+				<date bind="dateWork" title="${label.demo.gridfields_tab.gridwh.date}"
+					width="80" />
+				<text bind="remark" title="${label.demo.gridfields_tab.gridwh.remark}" />
+			</cols>
+		</grid>
+	</items>
+</panel>

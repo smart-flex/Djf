@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+  	<description>Simple grid form</description>
+	<layout clazz="java.awt.BorderLayout" />
+	<panel include="ru/smartflex/djf/demo/xml/AccountAllFieldsGrid.pnl.xml"
+		constraint="Center" />
+	<assist clazz="ru.smartflex.djf.demo.java.GridFieldsAssistant" />
+
+	<models>
+<!--
+In model definition for session invocation you can use "session", "sess" or simply "s".  
+ -->	
+		<model id="pa">
+ 			<load method="${session.app.getAccounts}" delay="${form.loadDelay}"> 
+				<param type="string" value="${session.sessId}" />
+			</load>
+ 			<save method="${sess.app.saveAccounts}" > 
+				<param type="string" value="${s.sessId}" />
+				<param type="stackDelete" />
+				<param type="stackSave" />
+			</save>
+			<bean include="ru/smartflex/djf/demo/xml/PojoAccount.bean.xml"/>
+		</model>
+		
+		<model id="ct" readOnly="true">
+			<load method="${s.car.getCarType}" />
+			<bean clazz="ru.smartflex.djf.demo.java.PojoCarType" />
+		</model>		
+	</models>
+</form>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<panel>
+	<layout clazz="java.awt.BorderLayout" />
+	<items>
+		<grid constraint="Center" bindPref="pa.equipment" selectAble="disabled" id="idEquipmentGrid">
+			<cols>
+				<int bind="idEquipment" title="${demo.gridfields.grideq.idEq}" width="30" noResize="yes" />
+				<num bind="amount" title="${demo.gridfields.grideq.amount}" />
+				<text bind="serialNumber" title="${demo.gridfields.grideq.sn}" />				
+				<text bind="remark" title="${demo.gridfields.grideq.remark}" width="250"/>
+			</cols>
+		</grid>
+	</items>
+</panel>

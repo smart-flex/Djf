@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form modal="true" size="60%,70%" parRefresh="true">
+	<description>Address modal form</description>
+	<layout clazz="java.awt.BorderLayout" />
+
+	<panel constraint="Center">
+		<layout clazz="net.miginfocom.swing.MigLayout">
+			<param type="string" value="" />
+			<param type="string" value="[0:0, grow 70, fill][0:0, grow 30, fill]" />
+			<param type="string" value="[c, pref, fill] 15 [c, 150px] 10 [c, pref!]" />
+		</layout>
+		<items>
+			<grid bindPref="st">
+				<cols>
+					<int bind="idStreet" title="ID" width="50" enabled="no"
+						noResize="yes" />
+					<text bind="streetName" title="Street name" />
+				</cols>
+			</grid>
+			<grid constraint="wrap">
+				<cols>
+					<text bind="st.buildings.buildingNumber" title="Number" tips="Building number"/>
+				</cols>
+			</grid>
+			<grid noInfoColumn="true" bindPref="ct">
+				<cols>
+					<int bind="carId" title="ID" width="50" enabled="no"
+						noResize="yes" />
+					<text bind="carName" title="Car name" enabled="no" />
+				</cols>
+			</grid>
+			<grid noInfoColumn="true" constraint="wrap">
+				<cols>
+					<text bind="ct.modelList.modelName" title="Model name" enabled="no" />
+				</cols>
+			</grid>
+			
+			<oper constraint="span 2"/>
+		</items>
+
+	</panel>
+
+
+	<models>
+		<model id="st" noDelete="true">
+			<load method="${session.adr.getAddress}" delay="0">
+				<param type="boolean" value="false" />
+			</load>
+ 			<save method="${sess.adr.saveAddress}" > 
+				<param type="string" value="${s.sessId}" />
+				<param type="stackSave" />
+			</save>
+			<bean clazz="ru.smartflex.djf.demo.java.PojoStreet">
+				<prop name="streetName" not-null="true" />
+				<set name="buildings" clazz="ru.smartflex.djf.demo.java.PojoBuilding">
+					<prop name="buildingNumber" not-null="true" />
+				</set>
+			</bean>
+		</model>
+
+		<model id="ct" readOnly="true">
+			<load method="${session.car.getCarType}" />
+			<bean clazz="ru.smartflex.djf.demo.java.PojoCarType" >
+				<set name="modelList" clazz="ru.smartflex.djf.demo.java.PojoCarModel"/>
+			</bean>
+		</model>
+	</models>
+</form>

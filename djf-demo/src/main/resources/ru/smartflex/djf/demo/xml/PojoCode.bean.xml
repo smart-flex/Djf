@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bean clazz="ru.smartflex.djf.demo.java.PojoCode" selfSet="subCode">
+	<prop name="nameCode" length="25"/>
+	<set name="histAlg" clazz="ru.smartflex.djf.demo.java.PojoCodeAlg">
+		<set name="parameterList" clazz="ru.smartflex.djf.demo.java.PojoCodeAlgParam" />
+	</set>
+</bean>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<panel>
+	<layout clazz="java.awt.GridLayout">
+		<param type="int" value="1" />
+		<param type="int" value="1" />
+		<param type="int" value="5" />
+		<param type="int" value="5" />
+	</layout>
+
+	<panel>
+		<layout clazz="java.awt.BorderLayout" />
+		<items>
+			<grid constraint="Center" selectAble="calcPrivatization" bindPref="tc">
+				<cols>
+					<text bind="idCode" title="${demo.tree.tgrid.id_code}"
+						enabled="no" width="50" noResize="yes" />
+					<tree bind="nameCode" title="${demo.tree.tgrid.code_name}"
+						width="100:1000" />
+					<text bind="unit" title="${demo.tree.tgrid.unit_name}"
+						width="40:50" />
+					<checkbox bind="calcPrivatization" title="Privatization" width="40:50" />
+				</cols>
+			</grid>
+		</items>
+	</panel>
+
+</panel>

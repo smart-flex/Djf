@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form onlyOnce="true" welcome="${label.demo.login.welcome}">
+	<layout clazz="java.awt.BorderLayout" />
+	<panel include="ru/smartflex/djf/demo/xml/Login.pnl.xml"
+		constraint="Center" />	
+	<assist clazz="ru.smartflex.djf.demo.java.LoginAssistant" />
+
+	<models>
+		<model id="ln" noSave="true">
+			<load method="${session.app.getCredentialInfo}" delay="0" />
+			<bean clazz="ru.smartflex.djf.demo.java.CredentialInfo" />
+		</model>
+	</models>
+</form>

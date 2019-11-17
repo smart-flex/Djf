@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="ItemFileType">
+
+		<xs:attribute name="tips" type="ct:AttrTipsType" />
+		<xs:attribute name="belong" type="ct:AttrBelongType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="enabled" type="ct:AttrEnabledType" />
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="order" type="ct:AttrOrderType" />
+		<xs:attribute name="id" type="ct:AttrIdWidgetType" />
+
+	</xs:complexType>
+
+</xs:schema>

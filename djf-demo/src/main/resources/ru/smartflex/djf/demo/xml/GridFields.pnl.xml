@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<panel>
+	<layout clazz="java.awt.GridLayout">
+		<param type="int" value="1" />
+		<param type="int" value="2" />
+		<param type="int" value="5" />
+		<param type="int" value="5" />
+	</layout>
+
+	<panel include="ru/smartflex/djf/demo/xml/AccountGrid.pnl.xml" />
+
+	<panel>
+		<layout clazz="java.awt.BorderLayout" />
+
+		<!-- Filter panel -->
+		<panel constraint="North" border="line">
+			<layout clazz="net.miginfocom.swing.MigLayout">
+				<param type="string" value="" />
+				<param type="string" value="[pref!][grow,fill]" />
+			</layout>
+			<items>
+				<label text="${demo.gridfields.grid.an}" constraint="gap para" />
+				<text bind="fl.accountNumber" constraint="span, wrap" />
+				<label text="${demo.gridfields.account_type}" constraint="gap para" />
+				<combobox bind="fl.typeAccount" fill="pt.nameType"
+					tipsItem="false" constraint="span, wrap" />
+				<button text="${demo.gridfields.btn_filter}" belong="fl"
+					tips="${demo.gridfields.btn_filter.tips}" constraint="gap para"
+					action="filter" id="btn_filter"/>
+			</items>
+		</panel>
+
+		<panel constraint="Center">
+			<layout clazz="net.miginfocom.swing.MigLayout">
+				<param type="string" value="insets 5 0 0 0" />
+				<param type="string" value="[grow, fill][grow, fill]" />
+				<param type="string" value="[50%, grow, fill][50%, grow, fill]" />
+			</layout>
+			<panel include="ru/smartflex/djf/demo/xml/AccountFields.pnl.xml"
+				constraint="span 2, wrap" />
+			<panel include="ru/smartflex/djf/demo/xml/AccEquipmentGrid.pnl.xml"
+				constraint="span 2" />
+		</panel>
+
+	</panel>
+</panel>

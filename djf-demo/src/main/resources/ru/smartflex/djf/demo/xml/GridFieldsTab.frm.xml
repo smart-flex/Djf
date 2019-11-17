@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+  	<description>Master-detail form with text field and tabs</description>
+	<layout clazz="java.awt.BorderLayout" />
+	<panel include="ru/smartflex/djf/demo/xml/GridFieldsTab.pnl.xml"
+		constraint="Center" />
+	<assist clazz="ru.smartflex.djf.demo.java.GridFieldsTabAssistant" />
+
+	<models>
+		<model id="pa">	
+ 			<load method="${session.app.getAccounts}" delay="${form.loadDelay}"> 
+				<param type="string" value="${session.sessId}" />
+				<!-- This boolean parameter is responsible for network error emulation -->
+				<param type="boolean" value="${form.makeNetworkError}" default="false" />
+			</load>
+ 			<save method="${session.app.saveAccounts}" > 
+				<param type="string" value="${session.sessId}" />
+				<param type="stackDelete" />
+				<param type="stackSave" />
+				<param type="objSource" />
+			</save>
+			<bean include="ru/smartflex/djf/demo/xml/PojoAccount.bean.xml"/>
+		</model>
+
+		<model id="pt" readOnly="true" noAppend="true">
+			<load method="${session.app.getAccPropertyType}" />
+			<bean clazz="ru.smartflex.djf.demo.java.PojoAccPropertyType" />
+		</model>
+
+		<model id="ct" readOnly="true">
+			<load method="${session.car.getCarType}" />
+			<bean clazz="ru.smartflex.djf.demo.java.PojoCarType" />
+		</model>
+
+		<model id="st">
+			<load method="${session.adr.getAddress}" />
+			<bean clazz="ru.smartflex.djf.demo.java.PojoStreet" />
+		</model>
+	</models>
+</form>

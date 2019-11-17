@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<panel>
+	<layout clazz="java.awt.GridLayout">
+		<param type="int" value="1" />
+		<param type="int" value="2" />
+		<param type="int" value="5" />
+		<param type="int" value="5" />
+	</layout>
+
+	<panel include="ru/smartflex/djf/demo/xml/AccountGrid.pnl.xml" />
+
+	<tabpanel>
+		<tabs>
+			<tab title="${demo.gridfields_tab.tab_field}" accessible="${form.itemsAccess}">
+				<panel include="ru/smartflex/djf/demo/xml/AccountFields.pnl.xml" />
+			</tab>
+			<tab title="${demo.gridfields_tab.tab_equip}">
+				<panel include="${form.equipWorkHist}"
+					default="ru/smartflex/djf/demo/xml/AccEquipmentGrid.pnl.xml" />
+			</tab>
+		</tabs>
+	</tabpanel>
+
+</panel>

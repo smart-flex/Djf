@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="LayoutType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridType-1.0.xsd" />
+	<xs:include schemaLocation="TabPanelType-1.0.xsd" />
+
+	<xs:include schemaLocation="ItemDateType-1.0.xsd" />
+	<xs:include schemaLocation="ItemButtonType-1.0.xsd" />
+	<xs:include schemaLocation="ItemComboboxType-1.0.xsd" />
+	<xs:include schemaLocation="ItemLabelType-1.0.xsd" />
+	<xs:include schemaLocation="ItemTextType-1.0.xsd" />
+	<xs:include schemaLocation="ItemCheckboxType-1.0.xsd" />
+	<xs:include schemaLocation="ItemPasswordType-1.0.xsd" />
+	<xs:include schemaLocation="ItemButtonRunType-1.0.xsd" />
+	<xs:include schemaLocation="ItemPeriodType-1.0.xsd" />
+	<xs:include schemaLocation="ItemByteType-1.0.xsd" />
+	<xs:include schemaLocation="ItemShortType-1.0.xsd" />
+	<xs:include schemaLocation="ItemIntType-1.0.xsd" />
+	<xs:include schemaLocation="ItemLongType-1.0.xsd" />
+	<xs:include schemaLocation="ItemNumType-1.0.xsd" />
+	<xs:include schemaLocation="ItemOperatorType-1.0.xsd" />
+	<xs:include schemaLocation="SeparatorType-1.0.xsd" />
+	<xs:include schemaLocation="ItemTextAreaType-1.0.xsd" />
+	<xs:include schemaLocation="ItemFileType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGroupType-1.0.xsd" />
+
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="PanelType">
+		<xs:sequence>
+			<xs:element name="layout" type="ct:LayoutType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="items">
+				<xs:complexType>
+					<xs:choice minOccurs="1" maxOccurs="unbounded">
+
+						<xs:element name="grid" type="ct:ItemGridType" />
+						<xs:element name="date" type="ct:ItemDateType" />
+						<xs:element name="button" type="ct:ItemButtonType" />
+						<xs:element name="combobox" type="ct:ItemComboboxType" />
+						<xs:element name="label" type="ct:ItemLabelType" />
+						<xs:element name="text" type="ct:ItemTextType" />
+						<xs:element name="checkbox" type="ct:ItemCheckboxType" />
+						<xs:element name="password" type="ct:ItemPasswordType" />
+						<xs:element name="run" type="ct:ItemButtonRunType" />
+						<xs:element name="period" type="ct:ItemPeriodType" />
+						<xs:element name="byte" type="ct:ItemByteType" />
+						<xs:element name="short" type="ct:ItemShortType" />
+						<xs:element name="int" type="ct:ItemIntType" />
+						<xs:element name="long" type="ct:ItemLongType" />
+						<xs:element name="num" type="ct:ItemNumType" />
+						<xs:element name="oper" type="ct:ItemOperatorType" />
+						<xs:element name="separator" type="ct:SeparatorType" />
+						<xs:element name="textarea" type="ct:ItemTextAreaType" />
+						<xs:element name="file" type="ct:ItemFileType" />
+						<xs:element name="group" type="ct:ItemGroupType" />
+
+					</xs:choice>
+
+					<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+					<xs:attribute name="bindPref" type="AttrBindPrefixType" />
+
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="panel" type="ct:PanelType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="tabpanel" type="ct:TabPanelType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="include" type="ct:AttrIncludeType" />
+		<xs:attribute name="includeBindPref" type="AttrBindPrefixType">
+			<xs:annotation>
+				<xs:documentation>This is bindPref for items tag in included panel.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="label" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>This is the file name of UTF-8 encoding where is
+					placed label and tips messages. This file is located in the same
+					package as panel.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="default" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Default value for parameter include
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="scroll" type="ct:AttrScrollType" />
+		<xs:attribute name="border" type="ct:AttrBorderType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+
+	</xs:complexType>
+
+</xs:schema>

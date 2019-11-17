@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+	<description>Simple grid form with tree and DnD
+	</description>
+	<layout clazz="java.awt.BorderLayout" />
+	<panel include="ru/smartflex/djf/demo/xml/TreeCode.pnl.xml"
+		constraint="Center" />
+
+	<models>
+		<model id="tc">
+			<load method="${session.app.getCodeTreeAsList}" delay="0" />
+			<save method="${session.app.saveCodes}">
+				<param type="string" value="${session.sessId}" />
+				<param type="stackDelete" />
+				<param type="stackSave" />
+			</save>
+			<bean include="ru/smartflex/djf/demo/xml/PojoCode.bean.xml" />
+		</model>
+	</models>
+</form>

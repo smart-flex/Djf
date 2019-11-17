@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="LayoutType-1.0.xsd" />
+	<xs:include schemaLocation="PanelType-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="TabType">
+		<xs:sequence>
+			<xs:element name="panel" type="ct:PanelType" minOccurs="1"
+				maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="title" type="ct:AttrTitleType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="tips" type="ct:AttrTipsType" />
+	</xs:complexType>
+
+	<xs:complexType name="TabPanelType">
+		<xs:sequence>
+			<xs:element name="tabs" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tab" type="ct:TabType" minOccurs="1"
+							maxOccurs="unbounded">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+	</xs:complexType>
+
+</xs:schema>

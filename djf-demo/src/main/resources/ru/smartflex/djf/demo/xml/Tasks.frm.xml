@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form welcome="${label.demo.task.welcome}">
+	<description>A DJF form with task list and special run button</description>
+	<layout clazz="java.awt.BorderLayout" />
+	<panel include="ru/smartflex/djf/demo/xml/Tasks.pnl.xml"
+		constraint="Center" />
+	<assist clazz="ru.smartflex.djf.demo.java.TaskAssistant" />
+
+	<models>
+		<model id="ts" readOnly="false" noSave="true">
+			<load method="${session.app.getTasks}" />
+			<bean clazz="ru.smartflex.djf.demo.java.TaskDemo" selfSet="leafTaskDemo" />
+		</model>
+	</models>
+</form>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="BeanPropertyType-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="BeanType">
+		<xs:sequence>
+			<xs:element name="prop" type="ct:BeanPropertyType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="set" type="ct:BeanType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Used in nested tags: "set" for purposes of tree
+					building.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="clazz" type="ct:AttrClazzType" />
+		<xs:attribute name="include" type="ct:AttrIncludeType" />
+
+		<xs:attribute name="selfCreated" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Determines that bean has to be created
+					automatically. This attribute is applicable only to root definition
+					of
+					bean (not to set). If this attribute is appeared then no load
+					method has to be defined. In case of using "include" attribute the
+					"selfCreated" nested attribute will be ignored, but this attribute
+					in parent bean will be applicable.
+					Also, such bean is created once and is not refreshing in form. 
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="selfSet" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Property name of collection. Each child of that collection is instance of root class.
+				In other words this property describes reference only of root class to itself.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="parent" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Parent property name (points to the parent class in this subclass that defined in the "set" tag).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+	</xs:complexType>
+
+</xs:schema>

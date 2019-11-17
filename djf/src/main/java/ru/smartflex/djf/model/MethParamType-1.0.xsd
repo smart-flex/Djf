@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model"
+	xmlns:ct="ru/smartflex/djf/model" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="ParameterType-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="MethParamType">
+		<xs:attribute name="type" type="ct:ParameterType" />
+		<xs:attribute name="value" type="xs:string" />
+		<xs:attribute name="clazz" type="ct:AttrClazzType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		
+		<xs:attribute name="default" type="xs:string" >
+			<xs:annotation>
+				<xs:documentation>Default value for parameter if value will be empty 
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		
+	</xs:complexType>
+
+</xs:schema>           

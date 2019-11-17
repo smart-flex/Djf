@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model"
+	xmlns:ct="ru/smartflex/djf/model" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="ru/smartflex/djf/model">
+	
+	<xs:simpleType name="ParameterType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string" />
+			<xs:enumeration value="int" />
+			<xs:enumeration value="boolean" />
+			<xs:enumeration value="stackDelete" />
+			<xs:enumeration value="stackSave" />
+			<xs:enumeration value="enum" />
+			<xs:enumeration value="object" />
+			<xs:enumeration value="objSource" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

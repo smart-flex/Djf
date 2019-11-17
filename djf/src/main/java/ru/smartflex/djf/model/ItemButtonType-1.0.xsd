@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="ItemButtonType">
+
+		<xs:attributeGroup ref="AttrFieldType"/>
+		<xs:attribute name="text" type="ct:AttrTextType" />
+		<xs:attribute name="tips" type="ct:AttrTipsType" />
+		<xs:attribute name="belong" type="ct:AttrBelongType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="form" type="ct:AttrFormType" />
+		<xs:attribute name="enabled" type="ct:AttrEnabledType" />
+		<xs:attribute name="icon" type="ct:AttrIconType" />
+		<xs:attribute name="actionLong" type="ct:AttrActionType" />
+		<xs:attribute name="actionLongMsg" type="ct:AttrActionMessageType" />
+
+	</xs:complexType>
+
+</xs:schema>

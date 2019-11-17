@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:simpleType name="AttrAccessibleType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>This attribute allows define access to widget (or
+					widget group, tab.).
+					Before application start you have to create
+					accessible list and pass it
+					into EngineConfigurator.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrOrderType">
+		<xs:restriction base="xs:integer">
+			<xs:annotation>
+				<xs:documentation>Determines the order of widgets within panel. If it
+					is omitted then order is defined as in XML tags.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrBindType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Allows connecting field/widget and POJO property
+					together. Also there is a link property with model.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrTipsType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>A small information about this field/widget.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrEnabledType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>If attribute is missed then it is equal by default
+					to true.
+					Enumeration of values are: yes, no, true, false; or
+					${form.sf.assist.enabled}
+					in dynamic case.
+					The attribute value:
+					byClick applies to Button and TextField widgets and means, that
+					button is
+					disabled by default and it may be enabled by mouse click,
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrConstraintType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Parameter for layout manager. If layout manager
+					does not require constraint parameter then it has to missed.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrTextType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>A label text for widget.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrAppendType">
+		<xs:restriction base="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Allows append record.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrSelectAbleType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Allows grid row to be selected by press INS button
+					on
+					info column or any text field. Enumeration of values are: yes,
+					no, true, false; or
+					bind expression, for example: "accountNumber".
+					In case of using bind there in grid widget has to be filled
+					"bindPref" attribute. 
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrNoInfoColumnType">
+		<xs:restriction base="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Prohibits info column to be showed.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrAlignType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Widget align.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:enumeration value="left" />
+			<xs:enumeration value="right" />
+			<xs:enumeration value="center" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="AttrWidthType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Grid column width.
+					The format width="100" means:
+					minWidth=100.
+					The format width="100:150" means: minWidth=100 and
+					prefWidth=150.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrTitleType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Title for column, tab, etc..
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrMaskType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Input mask.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrScrollType">
+		<xs:restriction base="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Scrolling attribute for panel.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrFillType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of property from which Djf get data for next
+					showing in combobox list.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrBorderType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Border type.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:enumeration value="line" />
+			<xs:enumeration value="raised" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrActionType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Method name from form assistant for button action.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrActionMessageType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Message for long action process.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrBelongType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Specifies relation to the model (for focus
+					grouping purposes and status management).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrFormType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Specifies path for form or just form name.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrIconType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Specifies path for icon or just icon name.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrIncludeType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Describes path to XML contained definition.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrClazzType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Specifies name of Java class.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrBoxTipsItemType">
+		<xs:restriction base="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>By default show tips for box item are enabled.
+					Using this attribute allows to disable tips for selected box item.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrSizeType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Specifies size of component. The format is:
+					"width,height". For example: "200,300" or "50%,50%".
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrMouseDClickType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Method name from form assistant for mouse double
+					click action.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrIdWidgetType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Widget identificator (optional).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:attributeGroup name="AttrFieldType">
+		<xs:attributeGroup ref="AttrFieldPassiveType" />
+		<xs:attribute name="action" type="ct:AttrActionType" />
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="AttrFieldPassiveType">
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="order" type="ct:AttrOrderType" />
+		<xs:attribute name="id" type="ct:AttrIdWidgetType" />
+	</xs:attributeGroup>
+
+	<xs:simpleType name="AttrRSyntaxStyleType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Syntax style types.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:enumeration value="ActionScript" />
+			<xs:enumeration value="x86 assembler" />
+			<xs:enumeration value="BBCode" />
+			<xs:enumeration value="C" />
+			<xs:enumeration value="Clojure" />
+			<xs:enumeration value="C++" />
+			<xs:enumeration value="C#" />
+			<xs:enumeration value="CSS" />
+			<xs:enumeration value="Delphi-Pascal" />
+			<xs:enumeration value="DTD files" />
+			<xs:enumeration value="Fortran" />
+			<xs:enumeration value="Groovy" />
+			<xs:enumeration value=".htaccess" />
+			<xs:enumeration value="HTML" />
+			<xs:enumeration value="Java" />
+			<xs:enumeration value="JavaScript" />
+			<xs:enumeration value="JSON" />
+			<xs:enumeration value="JSP" />
+			<xs:enumeration value="LaTeX" />
+			<xs:enumeration value="Lisp" />
+			<xs:enumeration value="Lua" />
+			<xs:enumeration value="makefiles" />
+			<xs:enumeration value="MXML" />
+			<xs:enumeration value="NSIS" />
+			<xs:enumeration value="Perl" />
+			<xs:enumeration value="PHP" />
+			<xs:enumeration value="properties file" />
+			<xs:enumeration value="Python" />
+			<xs:enumeration value="Ruby" />
+			<xs:enumeration value="SAS" />
+			<xs:enumeration value="Scala" />
+			<xs:enumeration value="SQL" />
+			<xs:enumeration value="Tcl" />
+			<xs:enumeration value="UNIX shell" />
+			<xs:enumeration value="Visual Basic" />
+			<xs:enumeration value="Windows batch" />
+			<xs:enumeration value="XML" />
+
+			<xs:enumeration value="HTMLView" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrBindPrefixType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Prefix of binding for grid and tgrid widgets.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrFont">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Font
+					The format font="Arial:14" means:
+					[family=Arial,name=Arial,style=plain,size=14]
+					The format
+					font="Arial:B14" means:
+					[family=Arial,name=Arial,style=bold,size=14]
+					The format
+					font="Arial:I14" means:
+					[family=Arial,name=Arial,style=italic,size=14]   
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrColor">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Color
+					The format fground="9:172:242" means RGB
+					notation for foreground
+					The format bgroung="#09ACF2" means HEX
+					notation for background
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrSetPropertyType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of property from which Djf get data for next
+					setting into bind property. It is special case.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrCmdType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Action acommand text for radio button.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

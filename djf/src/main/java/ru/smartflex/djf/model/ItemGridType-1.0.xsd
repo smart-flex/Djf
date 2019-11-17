@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="ItemGridTextType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridCheckboxType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridDateType-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridComboboxType-1.0.xsd" />
+	<xs:include schemaLocation="ItemTreeGridCellType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridPeriodType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridByteType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridShortType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridIntType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridLongType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridNumType-1.0.xsd" />
+
+	<xs:complexType name="ItemGridType">
+		<xs:sequence>
+			<xs:element name="cols" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:choice minOccurs="1" maxOccurs="unbounded">
+
+						<xs:element name="text" type="ct:ItemGridTextType" />
+						<xs:element name="checkbox" type="ct:ItemGridCheckboxType" />
+						<xs:element name="date" type="ct:ItemGridDateType" />
+						<xs:element name="combobox" type="ct:ItemGridComboboxType" />
+						<xs:element name="tree" type="ct:ItemTreeGridCellType" />
+						<xs:element name="period" type="ct:ItemGridPeriodType" />
+						<xs:element name="byte" type="ct:ItemGridByteType" />
+						<xs:element name="short" type="ct:ItemGridShortType" />
+						<xs:element name="int" type="ct:ItemGridIntType" />
+						<xs:element name="long" type="ct:ItemGridLongType" />
+						<xs:element name="num" type="ct:ItemGridNumType" />
+						
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="order" type="ct:AttrOrderType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="enabled" type="ct:AttrEnabledType" />
+		<xs:attribute name="append" type="ct:AttrAppendType" />
+		<xs:attribute name="selectAble" type="ct:AttrSelectAbleType" />
+		<xs:attribute name="noInfoColumn" type="ct:AttrNoInfoColumnType" />
+		<xs:attribute name="bindPref" type="AttrBindPrefixType" />
+		<xs:attribute name="initRow" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>The row number (beginning with 0) that has to be selected when grid instantiated at first time.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="id" type="ct:AttrIdWidgetType" />
+
+	</xs:complexType>
+
+</xs:schema>

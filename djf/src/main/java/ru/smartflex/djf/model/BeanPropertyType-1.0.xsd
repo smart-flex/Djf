@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:complexType name="BeanPropertyType">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="length" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>Length of field (text field). It is not worked when mask used.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="not-null" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Property must be filled in any case.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="pre-scale" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Attribute is described numeric properties precision and scale: NUMERIC(precision, scale). 
+				For example: "6.4" that means: the number 23.5141 has a precision of 6 and a scale of 4 (c)PostgreSql
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fill" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Expression of filling property
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="humanName" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>This is human or business name field. 
+				This name will be showed in warnings on UI.   
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+</xs:schema>           

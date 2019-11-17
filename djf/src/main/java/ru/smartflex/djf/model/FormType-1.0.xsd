@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="ModelType-1.0.xsd" />
+	<xs:include schemaLocation="LayoutType-1.0.xsd" />
+	<xs:include schemaLocation="PanelType-1.0.xsd" />
+	<xs:include schemaLocation="AssistType-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="FormType">
+		<xs:sequence>
+			<xs:element name="description" type="xs:string" minOccurs="0"
+				maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Some text described that form. This text is showed 
+					after form was launching.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="layout" type="ct:LayoutType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="panel" type="ct:PanelType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="assist" type="ct:AssistType" minOccurs="0"
+				maxOccurs="1" />
+
+			<xs:element name="models" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="model" type="ct:ModelType" minOccurs="1"
+							maxOccurs="unbounded">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+
+		<xs:attribute name="idForm" type="xs:string" />
+		<xs:attribute name="welcome" type="xs:string" />
+		<xs:attribute name="onlyOnce" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>The form most be showed only once.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="modal" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>The form is modal.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		
+		<xs:attribute name="size" type="ct:AttrSizeType" />
+
+		<xs:attribute name="parRefresh" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>The parent form has to be refreshed in case if data in current form is changed.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="closeOnSave" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>The form has to be close automatically after successful saving.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+	</xs:complexType>
+
+</xs:schema>

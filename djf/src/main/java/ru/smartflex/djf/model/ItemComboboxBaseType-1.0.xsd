@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model"
+	xmlns:ct="ru/smartflex/djf/model" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="ItemComboboxBaseType">
+
+		<xs:attribute name="bind" type="ct:AttrBindType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="fill" type="ct:AttrFillType" />
+		<xs:attribute name="enabled" type="ct:AttrEnabledType" />
+		<xs:attribute name="tipsItem" type="ct:AttrBoxTipsItemType" />
+		<xs:attribute name="parent" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Parent property name. Currently realized only one-to-one (or one-to-many may be) relationship.
+				But, anyway, there is only one parent and one child pair of combobox.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="pSet" type="ct:AttrSetPropertyType" />
+		
+	</xs:complexType>
+
+</xs:schema>

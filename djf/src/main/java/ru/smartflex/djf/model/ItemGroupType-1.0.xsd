@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="ItemRadioType-1.0.xsd" />
+
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="ItemGroupType">
+		<xs:sequence>
+			<xs:element name="radio" type="ct:ItemRadioType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+
+		<xs:attribute name="belong" type="ct:AttrBelongType" />
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="id" type="ct:AttrIdWidgetType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="MethParamType-1.0.xsd" />
+	<xs:include schemaLocation="BeanType-1.0.xsd" />
+
+	<xs:complexType name="ModelType">
+		<xs:sequence>
+			<xs:element name="load" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="param" type="ct:MethParamType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+					<xs:attribute name="method" type="xs:string" />
+					<xs:attribute name="delay" type="xs:string" />
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="save" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="param" type="ct:MethParamType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+					<xs:attribute name="method" type="xs:string" />
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="bean" minOccurs="1" maxOccurs="1"
+				type="ct:BeanType" />
+
+		</xs:sequence>
+
+		<xs:attribute name="id" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Identifier for model. Is is mandatory attribute.
+					This attribute is used as prefix for bind definition of UI items.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="readOnly" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Attribute is optional. readOnly means that all
+					records are not changed.
+					Also it means that this model will not be refreshed. 
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+	<xs:attribute name="noAppend" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Attribute is optional. noAppend means that adding
+				record is not allowed. 
+				</xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+
+		<xs:attribute name="noSave" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Attribute is optional. noSave means that all
+					changes are accepted but
+					will not be saved. Therefore special
+					managing buttons will not
+					change own status (in other words save, refresh and delete buttons are not appeared). 
+					Also it means that this model will not be refreshed.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+	<xs:attribute name="noDelete" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Attribute is optional. noDelete means that deleting
+				record is not allowed. 
+				</xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+	<description>Hello world form</description>
+	<layout clazz="java.awt.BorderLayout" />
+	<panel include="ru/smartflex/djf/demo/xml/HelloWorld.pnl.xml" constraint="Center" />
+</form>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+
+	<xs:complexType name="ItemLabelType">
+
+		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
+		<xs:attribute name="tips" type="ct:AttrTipsType" />
+		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="text" type="ct:AttrTextType" />
+		<xs:attribute name="align" type="ct:AttrAlignType" />
+		<xs:attribute name="mdClickAction" type="ct:AttrMouseDClickType" />
+		<xs:attribute name="font" type="ct:AttrFont" />
+		<xs:attribute name="fground" type="ct:AttrColor" />
+		<xs:attribute name="bground" type="ct:AttrColor" />
+		<xs:attribute name="id" type="ct:AttrIdWidgetType" />
+
+	</xs:complexType>
+
+</xs:schema>
