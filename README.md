@@ -3,12 +3,18 @@
 Djf is a desktop java forms, the compact and litle master-detail UI library like as FoxBase, but based on Swing.
 Djf uses Hibernate mapping concepts for data, for component layout - Miglayout and RSyntaxTextArea for text panels.
 
-Almost all of them, form description and examples of assistances you can see in demo application.
+Almost all of them, examples of forms definition and assistances you can see in [demo application](https://github.com/smart-flex/Djf/releases/download/1.0/djf-demo-1.0-standalone.jar).
 
-## Features
+![One of the Djf demo form](djf-demo.png)
 
-This forms allows us to moving between UI-items without mouse, by using up-down arrows (with CTRL combination).
-Also forms supports model: one parent to many children.
+## Main features
+
+This library allows:
+
+* easily do CRUD operations
+* view relationships between parent and more than one different kind of children
+* move between UI-items without mouse (like in DOS forms), by using tab button, up-down arrows (with CTRL combination for text panels)
+* support fulfilment long operations with showing wait panel
 
 ## Requirements
 
