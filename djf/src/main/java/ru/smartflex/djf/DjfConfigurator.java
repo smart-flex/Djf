@@ -117,9 +117,6 @@ public class DjfConfigurator {
                     .getProperty(SFConstants.PROPERTY_LABEL_RB_NAME);
 
             formClassName = props.getProperty(SFConstants.PROPERTY_FORM_CLASS);
-            if (formClassName == null) {
-                formClassName = "ru.smartflex.djf.widget.template.FormUI";
-            }
             frameClassName = props
                     .getProperty(SFConstants.PROPERTY_FRAME_CLASS);
 
@@ -135,41 +132,22 @@ public class DjfConfigurator {
                     maskDate = null;
                 }
             }
-            if (maskDate == null) {
-                maskDate = SFConstants.DEFAULT_MASK_DATE;
-            }
-            maskDateOnlyDelimiter = extractDelimitersFromDateMask(maskDate);
-
-            // mask period
-            maskPeriod = SFConstants.DEFAULT_MASK_PERIOD;
-            maskPeriodOnlyDelimiter = extractDelimitersFromPeriodMask(maskPeriod);
 
             // fonts
             fontCommon = props.getProperty(SFConstants.PROPERTY_FONT_COMMON);
             if (fontCommon != null) {
                 fontCommon = FontUtil.checkFontName(fontCommon);
             }
-            if (fontCommon == null) {
-                fontCommon = SFConstants.DEFAULT_FONT_COMMON;
-            }
-            //noinspection ResultOfMethodCallIgnored
-            FontUtil.checkFontName(fontCommon);
             fontTextInput = props
                     .getProperty(SFConstants.PROPERTY_FONT_TEXT_INPUT);
             if (fontTextInput != null) {
                 fontTextInput = FontUtil.checkMonoFontName(fontTextInput);
-            }
-            if (fontTextInput == null) {
-                fontTextInput = SFConstants.DEFAULT_FONT_TEXT_INPUT;
             }
             try {
                 String fz = props.getProperty(SFConstants.PROPERTY_FONT_SIZE);
                 fontSize = Integer.parseInt(fz);
             } catch (Exception e) {
                 fontSize = 0;
-            }
-            if (fontSize <= 0 || fontSize > SFConstants.DEFAULT_FONT_MAX_SIZE) {
-                fontSize = SFConstants.DEFAULT_FONT_SIZE;
             }
 
             pathToForm = props.getProperty(SFConstants.PROPERTY_PATH_TO_FORM);
@@ -181,6 +159,34 @@ public class DjfConfigurator {
             pathToIcon = props.getProperty(SFConstants.PROPERTY_PATH_TO_ICON);
             pathToIcon = addDelimiter(pathToIcon);
         }
+
+        //default settings
+        if (formClassName == null) {
+            formClassName = "ru.smartflex.djf.widget.template.FormUI";
+        }
+        if (frameClassName == null) {
+            frameClassName = "ru.smartflex.djf.widget.template.FrameUI";
+        }
+        if (maskDate == null) {
+            maskDate = SFConstants.DEFAULT_MASK_DATE;
+        }
+        maskDateOnlyDelimiter = extractDelimitersFromDateMask(maskDate);
+
+        // mask period
+        maskPeriod = SFConstants.DEFAULT_MASK_PERIOD;
+        maskPeriodOnlyDelimiter = extractDelimitersFromPeriodMask(maskPeriod);
+        if (fontCommon == null) {
+            fontCommon = SFConstants.DEFAULT_FONT_COMMON;
+        }
+        //noinspection ResultOfMethodCallIgnored
+        FontUtil.checkFontName(fontCommon);
+        if (fontTextInput == null) {
+            fontTextInput = SFConstants.DEFAULT_FONT_TEXT_INPUT;
+        }
+        if (fontSize <= 0 || fontSize > SFConstants.DEFAULT_FONT_MAX_SIZE) {
+            fontSize = SFConstants.DEFAULT_FONT_SIZE;
+        }
+
         loadMsgBundle(msgResourceBundlePath, msgResourceBundleName);
 
         initUIManager();
@@ -268,6 +274,10 @@ public class DjfConfigurator {
     }
 
     private static void loadMsgBundle(String path, String name) {
+        boolean noErrorShow = false;
+        if (path == null && name == null) {
+            noErrorShow = true;
+        }
         String bundle;
         if (path != null && name != null) {
             path = addDelimiter(path);
@@ -289,12 +299,18 @@ public class DjfConfigurator {
             labelCoreBundle = ResourceBundle
                     .getBundle(SFConstants.PROPERTY_LABEL_CORE_NAME);
             PrefixUtil.setLabelCoreBundle(labelCoreBundle);
+        } catch (java.util.MissingResourceException e) {
+            SFLogger.error("Error", e);
+        }
 
+        try {
             labelBundle = ResourceBundle.getBundle(bundle, locale);
             PrefixUtil.setLabelBundle(labelBundle);
             SFLogger.debug("Bundle is: ", labelBundle);
         } catch (java.util.MissingResourceException e) {
-            SFLogger.error("Error", e);
+            if (!noErrorShow) {
+                SFLogger.error("Error", e);
+            }
         }
 
     }

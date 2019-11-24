@@ -20,6 +20,31 @@ This library allows:
 
 Djf requires JDK 1.6 or higher.
 
+## Minimalistic code sample
+```java
+public class HelloWorldSimple {
+    public static void main(String[] args) {
+        Djf.getConfigurator().configure(null);
+        Djf.runForm("ru/smartflex/djf/demo/xml/HelloWorldSimple.frm.xml", SizeFrameEnum.HALF);
+    }
+}
+```
+```xml
+<form>
+    <description>Hello world simple form</description>
+    <layout clazz="java.awt.BorderLayout"/>
+    <panel>
+        <layout clazz="net.miginfocom.swing.MigLayout">
+            <param type="string" value="align 50% 50%"/>
+        </layout>
+        <items>
+            <label text="Djf just said: Hello world !!!" font="Arial:B30" fground="#09ACF2"/>
+        </items>
+    </panel>
+</form>
+```
+![Hello world form](djf-demo-hw-simple.png)
+
 ## Licensing
 
 Djf is issued on under the GNU Lesser General Public License.

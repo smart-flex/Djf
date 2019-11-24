@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+    <description>Hello world simple form</description>
+    <layout clazz="java.awt.BorderLayout"/>
+    <panel>
+        <layout clazz="net.miginfocom.swing.MigLayout">
+            <param type="string" value="align 50% 50%"/>
+        </layout>
+        <items>
+            <label text="Djf just said: Hello world !!!" font="Arial:B30" fground="#09ACF2"/>
+        </items>
+    </panel>
+</form>
