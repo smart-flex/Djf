@@ -15,28 +15,7 @@ import ru.smartflex.djf.controller.helper.AccessibleHelper;
 import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.controller.helper.UnMarshalHelper;
-import ru.smartflex.djf.model.gen.ItemButtonRunType;
-import ru.smartflex.djf.model.gen.ItemButtonType;
-import ru.smartflex.djf.model.gen.ItemByteType;
-import ru.smartflex.djf.model.gen.ItemCheckboxType;
-import ru.smartflex.djf.model.gen.ItemComboboxType;
-import ru.smartflex.djf.model.gen.ItemDateType;
-import ru.smartflex.djf.model.gen.ItemFileType;
-import ru.smartflex.djf.model.gen.ItemGridType;
-import ru.smartflex.djf.model.gen.ItemGroupType;
-import ru.smartflex.djf.model.gen.ItemIntType;
-import ru.smartflex.djf.model.gen.ItemLabelType;
-import ru.smartflex.djf.model.gen.ItemLongType;
-import ru.smartflex.djf.model.gen.ItemNumType;
-import ru.smartflex.djf.model.gen.ItemOperatorType;
-import ru.smartflex.djf.model.gen.ItemPasswordType;
-import ru.smartflex.djf.model.gen.ItemPeriodType;
-import ru.smartflex.djf.model.gen.ItemShortType;
-import ru.smartflex.djf.model.gen.ItemTextAreaType;
-import ru.smartflex.djf.model.gen.ItemTextType;
-import ru.smartflex.djf.model.gen.PanelType;
-import ru.smartflex.djf.model.gen.SeparatorType;
-import ru.smartflex.djf.model.gen.TabPanelType;
+import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.SFPanel;
 
@@ -164,6 +143,9 @@ class PanelBuilder {
                             ItemBuilder.build((ItemFileType) it, wm, sfPanel);
                         } else if (it instanceof ItemGroupType) {
                             ItemBuilder.build((ItemGroupType) it, wm, sfPanel);
+                        } else if (it instanceof ItemPhoneType) {
+                            ItemBuilder.build((ItemPhoneType) it, wm, sfPanel,
+                                    beanDef, bindPref);
                         }
                     }
                 }

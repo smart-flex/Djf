@@ -7,13 +7,10 @@ import javax.swing.JTextField;
 
 import ru.smartflex.djf.WidgetTypeEnum;
 import ru.smartflex.djf.controller.WidgetManager;
+import ru.smartflex.djf.controller.bean.PhoneBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
-import ru.smartflex.djf.widget.mask.ByteValidator;
-import ru.smartflex.djf.widget.mask.IFieldValidator;
-import ru.smartflex.djf.widget.mask.IntValidator;
-import ru.smartflex.djf.widget.mask.LongValidator;
-import ru.smartflex.djf.widget.mask.NumValidator;
-import ru.smartflex.djf.widget.mask.ShortValidator;
+import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
+import ru.smartflex.djf.widget.mask.*;
 
 /**
  * Focus handler for text field.
@@ -51,6 +48,9 @@ public class FieldFocusHandler implements FocusListener, ISFHandler {
                 break;
             case NUMERIC:
                 validator = new NumValidator(uiw);
+                break;
+            case PHONE:
+                validator = new PhoneValidator();
                 break;
         }
     }
@@ -91,6 +91,20 @@ public class FieldFocusHandler implements FocusListener, ISFHandler {
                 field.setText(prevAsString);
 
             } else {
+                switch (uiw.getWidgetType()) {
+                    case NUMERIC: {
+                        Object data = uiw.getCurrentValue();
+                        String dataAsText = uiw.getFormattedData(data);
+                        field.setText(dataAsText);
+                    }
+                    break;
+                    case PHONE: {
+                        Object data = uiw.getCurrentValue();
+                        PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone((String) data);
+                        field.setText(phoneBag.getPhoneFormatted());
+                    }
+                    break;
+                }
                 if (uiw.getWidgetType() == WidgetTypeEnum.NUMERIC) {
                     Object data = uiw.getCurrentValue();
                     String dataAsText = uiw.getFormattedData(data);

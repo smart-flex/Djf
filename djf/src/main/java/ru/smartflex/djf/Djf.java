@@ -48,12 +48,17 @@ public class Djf extends DesktopJavaForms {
 
     @SuppressWarnings("unused")
     public static void closeForm() {
-        FormUtil.closeForm();
+        FormUtil.closeForm(null, false);
     }
 
     @SuppressWarnings("unused")
     public static void closeForm(String welcomeForParent) {
-        FormUtil.closeForm(welcomeForParent);
+        FormUtil.closeForm(welcomeForParent, false);
+    }
+
+    @SuppressWarnings("unused")
+    public static void closeForm(String welcomeForParent, boolean forceRefresh) {
+        FormUtil.closeForm(welcomeForParent, forceRefresh);
     }
 
     @SuppressWarnings("unused")

@@ -212,6 +212,7 @@ public class SFGrid extends JScrollPane implements IRequestFocus {
         if (mouse != null) {
             table.removeMouseMotionListener(mouse);
         }
+        table.closeSFTableWrapper();
     }
 
     void setPreviousSelectedRow(int previousSelectedRow) {
@@ -240,4 +241,5 @@ public class SFGrid extends JScrollPane implements IRequestFocus {
     public void requestFocusOnNestedWidget() {
         requestGridFocus();
     }
+
 }

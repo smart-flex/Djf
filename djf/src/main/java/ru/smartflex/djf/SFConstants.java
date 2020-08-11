@@ -69,4 +69,8 @@ public interface SFConstants {
 
     String TEXT_VIEW_MODE_HTML = "HTMLView";
 
+    String PHONE_ZONE_PROP_FILE_NAME = "idd_phone_zone.properties";
+    char PHONE_PLUS = '+';
+    String PHONE_GROUP_DELIMITER = " ";
+
 }

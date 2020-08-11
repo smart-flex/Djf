@@ -118,7 +118,14 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
                 if (fm.getFormBag().isModelCanNotBeSaved(mt.getId())
                         || (!fm.getFormBag().isModelCanBeChanged(mt.getId()))) {
                     // data was loading through first iteration
-                    continue;
+                    // therefore and usually, we can miss this reloading
+                    // but....
+                    if (FormStack.getCurrentFormBag().isForceRefreshForParentForm()) {
+                        // we have to allow refreshing for this form at this time
+                        FormStack.getCurrentFormBag().setForceRefreshForParentForm(false);
+                    } else {
+                        continue;
+                    }
                 }
             }
 
@@ -254,14 +261,14 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
                     String msg = "Data form was reloaded successfully";
                     SFLogger.debug(FormManagerThread.class,
                             msg);
-                    SFLogger.activityInfo("*** Activity *** ", msg, ": ", fm.getFormBag().getFormXml());
+                    SFLogger.activityInfo(msg, ": ", fm.getFormBag().getFormXml());
                 } else {
                     // fm.getWidgetManager().goFirstWidget();
 
                     String msg = "Form was created successfully";
                     SFLogger.debug(FormManagerThread.class,
                             msg);
-                    SFLogger.activityInfo("*** Activity *** ", msg, ": ", fm.getFormBag().getFormXml());
+                    SFLogger.activityInfo( msg, ": ", fm.getFormBag().getFormXml());
                 }
 
                 if (welcomeMessageFromChildrenForm != null) {

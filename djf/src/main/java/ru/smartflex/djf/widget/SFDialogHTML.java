@@ -22,8 +22,8 @@ public class SFDialogHTML extends JDialog implements ISFDialogHTML {
     private static final long serialVersionUID = 5338411383171792890L;
 
     private BorderLayout borderLayout = new BorderLayout();
-    private JEditorPane editPane = new JEditorPane();
-    private JScrollPane calcScroller = new JScrollPane(editPane);
+    private JEditorPane htmlPane = new JEditorPane();
+    private JScrollPane calcScroller = new JScrollPane(htmlPane);
     private HTMLEditorKit kit = new HTMLEditorKit();
 
     public SFDialogHTML(String title) {
@@ -46,20 +46,28 @@ public class SFDialogHTML extends JDialog implements ISFDialogHTML {
                 dispose();
             }
         });
+
+        htmlPane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "dispose");
+        htmlPane.getActionMap().put("dispose", new AbstractAction() {
+            public void actionPerformed(ActionEvent event) {
+                dispose();
+            }
+        });
+
         this.getContentPane().add(calcScroller, BorderLayout.CENTER);
 
-        editPane.setEditable(false);
-        editPane.setEditorKit(kit);
+        htmlPane.setEditable(false);
+        htmlPane.setEditorKit(kit);
     }
 
     public void show(String html) {
         Document doc = kit.createDefaultDocument();
-        editPane.setDocument(doc);
-        editPane.getDocument().putProperty("Ignore-Charset", "true");  // this line makes no difference either way
+        htmlPane.setDocument(doc);
+        htmlPane.getDocument().putProperty("Ignore-Charset", "true");  // this line makes no difference either way
 
-        editPane.setContentType("text/html");
-        editPane.getDocument().putProperty("IgnoreCharsetDirective", Boolean.TRUE);
-        editPane.setText(html);
+        htmlPane.setContentType("text/html");
+        htmlPane.getDocument().putProperty("IgnoreCharsetDirective", Boolean.TRUE);
+        htmlPane.setText(html);
 
         FrameUtil.centerFitFrame(this);
         this.setVisible(true);

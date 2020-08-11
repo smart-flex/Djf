@@ -15,6 +15,7 @@
 	<xs:include schemaLocation="ItemGridIntType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGridLongType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGridNumType-1.0.xsd" />
+	<xs:include schemaLocation="ItemGridPhoneType-1.1.xsd" />
 
 	<xs:complexType name="ItemGridType">
 		<xs:sequence>
@@ -33,6 +34,7 @@
 						<xs:element name="int" type="ct:ItemGridIntType" />
 						<xs:element name="long" type="ct:ItemGridLongType" />
 						<xs:element name="num" type="ct:ItemGridNumType" />
+						<xs:element name="phone" type="ct:ItemGridPhoneType" />
 						
 					</xs:choice>
 				</xs:complexType>

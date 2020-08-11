@@ -130,6 +130,5 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
         field = null;
         wm = null;
         maskDelimiter = null;
-        ((AbstractDocument) field.getDocument()).setDocumentFilter(null);
     }
 }

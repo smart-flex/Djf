@@ -17,21 +17,7 @@ import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.widget.grid.GridCellFocusListener;
 import ru.smartflex.djf.widget.grid.GridCellListener;
 import ru.smartflex.djf.widget.grid.TFCellEditor;
-import ru.smartflex.djf.widget.mask.ByteValidator;
-import ru.smartflex.djf.widget.mask.DateValidator;
-import ru.smartflex.djf.widget.mask.IFieldValidator;
-import ru.smartflex.djf.widget.mask.ISFMaskConstants;
-import ru.smartflex.djf.widget.mask.IntValidator;
-import ru.smartflex.djf.widget.mask.LongValidator;
-import ru.smartflex.djf.widget.mask.MaskFieldFocusHandler;
-import ru.smartflex.djf.widget.mask.MaskFieldKeyHandler;
-import ru.smartflex.djf.widget.mask.MaskFieldMaskDateFilter;
-import ru.smartflex.djf.widget.mask.MaskFieldMouseHandler;
-import ru.smartflex.djf.widget.mask.MaskInfo;
-import ru.smartflex.djf.widget.mask.NumValidator;
-import ru.smartflex.djf.widget.mask.PeriodValidator;
-import ru.smartflex.djf.widget.mask.ShortValidator;
-import ru.smartflex.djf.widget.mask.SmartFlexMaskException;
+import ru.smartflex.djf.widget.mask.*;
 
 public class ItemHandler {
 
@@ -80,12 +66,14 @@ public class ItemHandler {
                 && prop.getNotNull()) {
             field.setBackground(SFConstants.FIELD_REQUIRED_BACKGROUND_COLOR);
         }
-        ItemHandler.moveCaretToStart(field, uiw.getMaskInfo()
-                .getMaskDelimiter());
+        if (uiw.getWidgetType() == WidgetTypeEnum.DATE || uiw.getWidgetType() == WidgetTypeEnum.PERIOD) {
+            ItemHandler.moveCaretToStart(field, uiw.getMaskInfo()
+                    .getMaskDelimiter());
+        }
     }
 
-    public static void setupMaskHandlerToColumn(TableColumn tableColumn,
-                                                WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
+    public static void setupHandlerToColumn(TableColumn tableColumn,
+                                            WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
 
         switch (colInfo.getWidgetType()) {
             case DATE:
@@ -95,7 +83,8 @@ public class ItemHandler {
             case INT:
             case LONG:
             case NUMERIC:
-                setupMaskHandlerToColumnMask(tableColumn, wm, uiw, colInfo);
+            case PHONE:
+                setupHandlerToColumnWithValidator(tableColumn, wm, uiw, colInfo);
                 break;
             default:
                 throw new SmartFlexMaskException("No handlers for this type: "
@@ -103,8 +92,8 @@ public class ItemHandler {
         }
     }
 
-    private static void setupMaskHandlerToColumnMask(TableColumn tableColumn,
-                                                     WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
+    private static void setupHandlerToColumnWithValidator(TableColumn tableColumn,
+                                                          WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
 
         if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD
                 || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
@@ -120,6 +109,7 @@ public class ItemHandler {
                 || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
             field.setText(colInfo.getMaskInfo().getMaskDelimiter());
         }
+
         field.setHorizontalAlignment(ItemBuilder
                 .getSwingAligmentConstant(colInfo.getAlign()));
 
@@ -135,6 +125,8 @@ public class ItemHandler {
                     .getMaskDelimiter(), wm, uiw, cellEditor);
             new MaskFieldMaskDateFilter(wm, colInfo.getMaskInfo(), field,
                     cellEditor, onlyDigit);
+        } else if (colInfo.getWidgetType() == WidgetTypeEnum.PHONE) {
+            new PhoneFieldFilter(cellEditor, wm);
         }
 
         IFieldValidator validator = null;
@@ -160,6 +152,9 @@ public class ItemHandler {
                 break;
             case NUMERIC:
                 validator = new NumValidator(colInfo);
+                break;
+            case PHONE:
+                validator = new PhoneValidator();
                 break;
         }
         cellEditor.setValidator(validator);
@@ -276,6 +271,11 @@ public class ItemHandler {
 
             if (uiw.getLength() > 0) {
                 new SFLengthFilter(wm, uiw.getLength(), field);
+            }
+            switch (uiw.getWidgetType()) {
+                case PHONE:
+                    new PhoneFieldFilter(wm, field);
+                    break;
             }
         }
 

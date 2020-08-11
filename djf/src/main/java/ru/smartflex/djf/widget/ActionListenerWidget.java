@@ -50,7 +50,7 @@ public class ActionListenerWidget implements ActionListener, ISFHandler {
 
     private void actionPerformedButton() {
         String formXMLName = wm.getFormBag().getFormXml();
-        SFLogger.activityInfo("*** Activity *** form: ", formXMLName, "; Click on: ", uiw.getUiName(), "; action: ", uiw.getAction());
+        SFLogger.activityInfo("form: ", formXMLName, "; Click on: ", uiw.getUiName(), "; action: ", uiw.getAction());
 
         ActionManager.doAction(wm, uiw);
 

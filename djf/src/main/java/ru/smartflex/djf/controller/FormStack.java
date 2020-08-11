@@ -222,6 +222,7 @@ public class FormStack {
             String welcomeForParent = currentForm
                     .getWelcomeMessageForParentForm();
             boolean closeFrame = false;
+            boolean formWasRefreshed = false;
             //noinspection ConstantConditions
             if (indexCurrent >= 0) {
                 FormBag previousForm = getPreviousFormRecursive(indexCurrent);
@@ -238,6 +239,7 @@ public class FormStack {
                             }
                             // refresh parent form
                             previousForm.refeshForm(welcomeForParent);
+                            formWasRefreshed = true;
                         }
                     }
 
@@ -251,6 +253,14 @@ public class FormStack {
                             FrameHelper.showStatusMessage(
                                     TaskStatusLevelEnum.OK,
                                     previousForm.getWelcomeMessage());
+                        }
+                    }
+
+                    if (currentForm.isForceRefreshForParentForm()) {
+                        if (!formWasRefreshed) {
+                            // pass flag to parent form
+                            previousForm.setForceRefreshForParentForm(currentForm.isForceRefreshForParentForm());
+                            previousForm.refeshForm(welcomeForParent);
                         }
                     }
                 }

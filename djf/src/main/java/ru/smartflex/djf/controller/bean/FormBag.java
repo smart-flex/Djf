@@ -17,6 +17,9 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.Document;
+import javax.swing.text.DocumentFilter;
 import javax.swing.text.JTextComponent;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -71,6 +74,7 @@ public class FormBag {
     private String welcomeMessageForParentForm = null;
     private String formXml;
     private boolean closeOnSave = false;
+    private boolean forceRefreshForParentForm = false;
 
     public FormBag(FormType formType, WidgetManager widgetManager,
                    UIWrapper formWrapper, FormAssistant assist,
@@ -639,6 +643,13 @@ public class FormBag {
                 closeHandler(((JTextField) ui).getKeyListeners());
                 closeHandler(((JTextField) ui).getMouseListeners());
                 // closeHandler(((JTextField) ui).getActionListeners());
+                Document doc = ((JTextField) ui).getDocument();
+                if (doc instanceof AbstractDocument) {
+                    DocumentFilter docFilter = ((AbstractDocument)doc).getDocumentFilter();
+                    if (docFilter instanceof ISFHandler) {
+                        ((ISFHandler)docFilter).closeHandler();
+                    }
+                }
             } else if (ui instanceof SFGrid) {
                 SFGrid grid = (SFGrid) ui;
                 // SFGridModel model = ((SFGrid) ui).getModel();
@@ -849,4 +860,11 @@ public class FormBag {
         return closeOnSave;
     }
 
+    public boolean isForceRefreshForParentForm() {
+        return forceRefreshForParentForm;
+    }
+
+    public void setForceRefreshForParentForm(boolean forceRefreshForParentForm) {
+        this.forceRefreshForParentForm = forceRefreshForParentForm;
+    }
 }

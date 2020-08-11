@@ -1,8 +1,12 @@
 package ru.smartflex.djf.widget.grid;
 
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -18,17 +22,7 @@ import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.bean.tree.TreeListUtils;
 import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.helper.AccessibleHelper;
-import ru.smartflex.djf.model.gen.ItemGridByteType;
-import ru.smartflex.djf.model.gen.ItemGridCheckboxType;
-import ru.smartflex.djf.model.gen.ItemGridComboboxType;
-import ru.smartflex.djf.model.gen.ItemGridDateType;
-import ru.smartflex.djf.model.gen.ItemGridIntType;
-import ru.smartflex.djf.model.gen.ItemGridLongType;
-import ru.smartflex.djf.model.gen.ItemGridNumType;
-import ru.smartflex.djf.model.gen.ItemGridPeriodType;
-import ru.smartflex.djf.model.gen.ItemGridShortType;
-import ru.smartflex.djf.model.gen.ItemGridTextType;
-import ru.smartflex.djf.model.gen.ItemTreeGridCellType;
+import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.widget.ItemHandler;
 import ru.smartflex.djf.widget.SFComboBox;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
@@ -45,8 +39,19 @@ public class SFTableWrapper extends JTable {
     // for case of determine row and col for linked combobox
     private int currentPointMouseRow = -1;
 
+    private Map<Integer, ColumnSettings> mapColSetting = new HashMap<Integer, ColumnSettings>();
+    private GridResizeListener gridResizeListener;
+
     SFTableWrapper(SFGrid grid) {
         this.grid = grid;
+        gridResizeListener = new GridResizeListener(this);
+        this.addComponentListener(gridResizeListener);
+    }
+
+    public void closeSFTableWrapper() {
+        this.removeComponentListener(gridResizeListener);
+        mapColSetting.clear();
+        gridResizeListener.closeGridResizeListener();
     }
 
     void determineCurrentPointMouse(java.awt.Point point) {
@@ -82,14 +87,15 @@ public class SFTableWrapper extends JTable {
     public void addColumns(List<Object> list, WidgetManager wm, UIWrapper uiw,
                            BeanFormDef beanDef, LabelBundle bundle, String bindPrefix) {
 
-        List<TitleRenderer> renderList = new ArrayList<TitleRenderer>();
         double maxHeight = 0;
+
+        List<TitleRenderer> titleRenderers = new ArrayList<TitleRenderer>();
 
         // info column
         TitleRenderer trInfo = null;
         if (uiw.isGridInfoColumnAllowed()) {
             trInfo = new TitleRenderer("${djf.grid.info.tips}");
-            renderList.add(trInfo);
+            titleRenderers.add(trInfo);
             model.addColumnInfo();
         }
 
@@ -145,6 +151,11 @@ public class SFTableWrapper extends JTable {
             } else if (ct instanceof ItemGridNumType) {
                 tr = new TitleRenderer((ItemGridNumType) ct, bundle);
                 type = WidgetTypeEnum.NUMERIC;
+
+            } else if (ct instanceof ItemGridPhoneType) {
+                tr = new TitleRenderer((ItemGridPhoneType) ct, bundle);
+                type = WidgetTypeEnum.PHONE;
+
             }
 
             //noinspection ConstantConditions
@@ -156,7 +167,7 @@ public class SFTableWrapper extends JTable {
                 throw new MissingException(
                         "There is missed bind definition for table column");
             }
-            renderList.add(tr);
+            titleRenderers.add(tr);
             colInfo.setTitle(tr.getTitle());
 
             if (tr.getPreferredSize().getHeight() > maxHeight) {
@@ -188,6 +199,7 @@ public class SFTableWrapper extends JTable {
             tableColumnInfo.setPreferredWidth(widthInfo);
             tableColumnInfo.setMinWidth(widthInfo);
             tableColumnInfo.setMaxWidth(widthInfo);
+            mapColSetting.put(indColumn, new ColumnSettings(widthInfo, widthInfo, widthInfo));
             indColumn = 1;
         }
 
@@ -217,7 +229,7 @@ public class SFTableWrapper extends JTable {
                     ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
                     ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
 
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
                 case DATE: {
@@ -226,11 +238,11 @@ public class SFTableWrapper extends JTable {
 
                     BeanFormDefProperty prop = gci.getBeanFormDefPropertyFromBind();
 
-                    ItemHandler.setupMaskHandlerToColumn(tableColumn, wm, uiw, gci);
+                    ItemHandler.setupHandlerToColumn(tableColumn, wm, uiw, gci);
 
                     ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
                     ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
                 case CHECKBOX: {
@@ -245,7 +257,7 @@ public class SFTableWrapper extends JTable {
                             WidgetTypeEnum.CHECKBOX, wm, uiw, gci, prop, this);
 
                     ((CheckBoxCellRenderer) cr).setUpBackGroundAsNotNull(prop);
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
                 case COMBOBOX: {
@@ -263,7 +275,7 @@ public class SFTableWrapper extends JTable {
                             WidgetTypeEnum.COMBOBOX, wm, uiw, gci, prop, this);
 
                     ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
                 case TGRID_TREE_FIELD: {
@@ -287,11 +299,11 @@ public class SFTableWrapper extends JTable {
 
                     BeanFormDefProperty prop = gci.getBeanFormDefPropertyFromBind();
 
-                    ItemHandler.setupMaskHandlerToColumn(tableColumn, wm, uiw, gci);
+                    ItemHandler.setupHandlerToColumn(tableColumn, wm, uiw, gci);
 
                     ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
                     ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
                 case BYTE:
@@ -303,11 +315,11 @@ public class SFTableWrapper extends JTable {
 
                     BeanFormDefProperty prop = gci.getBeanFormDefPropertyFromBind();
 
-                    ItemHandler.setupMaskHandlerToColumn(tableColumn, wm, uiw, gci);
+                    ItemHandler.setupHandlerToColumn(tableColumn, wm, uiw, gci);
 
                     ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
                     ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
                 case NUMERIC: {
@@ -315,26 +327,45 @@ public class SFTableWrapper extends JTable {
                     tableColumn = getColumnModel().getColumn(indColumn);
 
                     BeanFormDefProperty prop = gci.getBeanFormDefPropertyFromBind();
-                    ItemHandler.setupMaskHandlerToColumn(tableColumn, wm, uiw, gci);
+                    ItemHandler.setupHandlerToColumn(tableColumn, wm, uiw, gci);
 
                     ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
                     ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
-                    renderList.get(indColumn).markTitleAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
+                }
+                break;
+                case PHONE: {
+                    cr = new GridCellRenderer();
+                    tableColumn = getColumnModel().getColumn(indColumn);
+
+                    BeanFormDefProperty prop = gci.getBeanFormDefPropertyFromBind();
+
+                    ItemHandler.setupHandlerToColumn(tableColumn, wm, uiw, gci);
+
+                    ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
+                    ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
                 }
                 break;
 
             }
 
-            TitleRenderer tr = renderList.get(indColumn);
+            TitleRenderer tr = titleRenderers.get(indColumn);
             tr.setPreferredSize(new Dimension(columnWidth.getPrefWidth(),
                     (int) maxHeight));
 
             //noinspection ConstantConditions
             tableColumn.setHeaderRenderer(tr);
+
+            ColumnSettings cs;
             if (columnWidth.getPrefWidth() > 0) {
                 tableColumn.setPreferredWidth(columnWidth.getPrefWidth());
+                cs = new ColumnSettings(columnWidth.getMinWidth(), columnWidth.getPrefWidth());
+            } else {
+                cs = new ColumnSettings(columnWidth.getMinWidth());
             }
             tableColumn.setMinWidth(columnWidth.getMinWidth());
+            mapColSetting.put(indColumn, cs);
 
             // last column is to not set to maximum width
             // if (index < titleList.size()) {
@@ -344,6 +375,8 @@ public class SFTableWrapper extends JTable {
                 tableColumn.setMaxWidth(Math.max(columnWidth.getMinWidth(),
                         columnWidth.getPrefWidth()));
                 tableColumn.setResizable(false);
+                cs.setMaxWidth(Math.max(columnWidth.getMinWidth(),
+                        columnWidth.getPrefWidth()));
             }
 
             tableColumn.setCellRenderer(cr);
@@ -400,4 +433,88 @@ public class SFTableWrapper extends JTable {
         return currentPointMouseRow;
     }
 
+    class ColumnSettings {
+        private Integer minWidth;
+        private Integer maxWidth = null;
+        private Integer prefWidth = null;
+
+        public ColumnSettings(Integer minWidth) {
+            this.minWidth = minWidth;
+        }
+
+        public ColumnSettings(Integer minWidth, Integer prefWidth) {
+            this.minWidth = minWidth;
+            this.prefWidth = prefWidth;
+        }
+
+        public ColumnSettings(Integer minWidth, Integer prefWidth, Integer maxWidth) {
+            this.minWidth = minWidth;
+            this.maxWidth = maxWidth;
+            this.prefWidth = prefWidth;
+        }
+
+        public Integer getMinWidth() {
+            return minWidth;
+        }
+
+        public Integer getMaxWidth() {
+            return maxWidth;
+        }
+
+        public Integer getPrefWidth() {
+            return prefWidth;
+        }
+
+        public void setMaxWidth(Integer maxWidth) {
+            this.maxWidth = maxWidth;
+        }
+
+        @Override
+        public String toString() {
+            return "ColumnSettings{" +
+                    "minWidth=" + minWidth +
+                    ", maxWidth=" + maxWidth +
+                    ", prefWidth=" + prefWidth +
+                    '}';
+        }
+    }
+
+    class GridResizeListener extends ComponentAdapter {
+        private SFTableWrapper table;
+
+        public GridResizeListener(SFTableWrapper table) {
+            this.table = table;
+        }
+//1 при закрытии грида убрать листенер
+//2 пройтись по длинам колонок
+//3 привести в порядок телефоны
+
+        public void closeGridResizeListener() {
+            table = null;
+        }
+
+        public void componentResized(ComponentEvent e) {
+            int tableWidth = table.getWidth();
+            int colsMinWidth = 0;
+            for (int i = 0; i < getColumnCount(); i++) {
+                ColumnSettings cs = mapColSetting.get(i);
+                colsMinWidth += cs.getMinWidth();
+                TableColumn column = getColumnModel().getColumn(i);
+                if (colsMinWidth > tableWidth) {
+                    column.setMinWidth(0);
+                    column.setMaxWidth(0);
+                } else {
+                    if (cs.getMaxWidth() != null) {
+                        column.setMaxWidth(cs.getMaxWidth());
+                    } else {
+                        column.setMaxWidth(Integer.MAX_VALUE);
+                    }
+                    if (cs.getPrefWidth() != null) {
+                        column.setPreferredWidth(cs.getPrefWidth());
+                    }
+                    column.setMinWidth(cs.getMinWidth());
+                }
+            }
+        }
+    }
 }

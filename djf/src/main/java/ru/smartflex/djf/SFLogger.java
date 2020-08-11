@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 public class SFLogger {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SFLogger.class);
+    private static final String ACTIVITY_PREFIX = "*** Activity *** ";
 
     private SFLogger() {
     }
@@ -29,7 +30,10 @@ public class SFLogger {
         if (LOGGER.isInfoEnabled()) {
             StringBuilder sb = formMessage(msg);
             if (sb != null) {
-                LOGGER.info(sb.toString());
+                StringBuilder sbOut = new StringBuilder();
+                sbOut.append(ACTIVITY_PREFIX);
+                sbOut.append(sb.toString());
+                LOGGER.info(sbOut.toString());
             }
         }
     }

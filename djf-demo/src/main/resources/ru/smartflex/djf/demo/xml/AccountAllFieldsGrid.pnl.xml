@@ -7,23 +7,26 @@
 		<grid constraint="Center" bindPref="pa">
 			<cols>
 				<int bind="idAccount" title="${demo.gridfields.grid.idAcc}"
-					tips="${demo.gridfields.grid.idAcc.tips}" width="50" enabled="no" noResize="yes" />
+					tips="${demo.gridfields.grid.idAcc.tips}" width="30" enabled="no" noResize="yes" />
 				<text bind="accountNumber" title="${label.demo.gridfields.grid.an}"
-					width="100:150" />
+					width="120:150" />
 				<checkbox bind="hasChildren" title="${demo.gridfields.grid.hasChildren}"
 					tips="${demo.gridfields.grid.hasChildren.tips}" width="40:40" />
 				<date bind="dateCreate" title="${demo.gridfields.grid.dc}"
 					width="100:100" />
 				<period bind="calcPeriod" title="${demo.gridfields.grid.period}"
-					tips="$demo.gridfields.grid.period.tips}" width="55:80" align="right"/>
-				<int bind="innCode" title="${demo.gridfields.grid.inn_code}"
-					tips="${demo.gridfields.grid.inn_code.tips}" width="20:100"/>
+					tips="$demo.gridfields.grid.period.tips}" width="65:65" align="right"/>
+				<long bind="innCode" title="${demo.gridfields.grid.inn_code}"
+					tips="${demo.gridfields.grid.inn_code.tips}" width="115:115"/>
 
 				<!-- Two linked combobox's -->
 				<combobox bind="carType" fill="ct.carName"
-					title="${demo.gridfields.grid.ct}" />
+					title="${demo.gridfields.grid.ct}" width="150:150"/>
 				<combobox bind="carModel" fill="ct.modelList.modelName" parent="carType"
-					title="${demo.gridfields.grid.cm}" />
+					title="${demo.gridfields.grid.cm}" width="150:150"/>
+
+				<text bind="remark" title="${label.demo.gridfields.grid.remark}"
+					  width="150:1200" />
 			</cols>
 		</grid>
 	</items>

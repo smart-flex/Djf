@@ -79,6 +79,11 @@ public class ConverterUtil {
                 obj = getValue(widgetType, format, val, uiw);
             }
             break;
+            case PHONE: {
+                String val = ((javax.swing.JTextField) comp).getText();
+                obj = getValue(widgetType, format, val, uiw);
+            }
+            break;
             case TEXT: {
                 String val = ((javax.swing.JTextField) comp).getText();
                 obj = getValue(widgetType, format, val, uiw);
@@ -150,6 +155,7 @@ public class ConverterUtil {
                 }
                 break;
             case TEXT:
+            case PHONE:
             case TEXTAREA:
             case TGRID_TREE_FIELD:
                 if (!OtherUtil.isStringEmpty(val)) {

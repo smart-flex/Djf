@@ -9,10 +9,13 @@ import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 
 import ru.smartflex.djf.FrameHelper;
+import ru.smartflex.djf.WidgetTypeEnum;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.GridColumnInfo;
+import ru.smartflex.djf.controller.bean.PhoneBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.helper.ConverterUtil;
+import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 import ru.smartflex.djf.widget.mask.IFieldValidator;
@@ -92,6 +95,7 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
                     FrameHelper.showStatusMessage(TaskStatusLevelEnum.WARNING,
                             PrefixUtil.getMsg("${djf.message.warn.validate}", null));
                 }
+
             }
 
             if (valid) {
@@ -104,6 +108,14 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
     private void setUpNewValue(boolean invokeStop) {
         Object val = ConverterUtil.getValue(colInfo.getWidgetType(),
                 colInfo.getDateFormat(), field, colInfo);
+
+        if (colInfo.getWidgetType() == WidgetTypeEnum.PHONE) {
+            PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone((String) val);
+            if (phoneBag != null && phoneBag.getPhoneFormatted() != null) {
+                val = phoneBag.getPhoneFormatted();
+            }
+        }
+
         setUpNewValue(invokeStop, val);
     }
 

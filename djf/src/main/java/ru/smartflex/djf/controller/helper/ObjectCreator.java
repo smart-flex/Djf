@@ -79,6 +79,7 @@ public class ObjectCreator {
             case INT:
             case LONG:
             case NUMERIC:
+            case PHONE:
                 object = new JTextField();
                 break;
             case CHECKBOX:

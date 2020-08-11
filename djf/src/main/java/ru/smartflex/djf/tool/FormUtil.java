@@ -19,7 +19,7 @@ public class FormUtil {
 
     public static void exitForm() {
         FormBag fb = FormStack.getCurrentFormBag();
-        SFLogger.activityInfo("*** Activity *** exit form: ", fb.getFormXml());
+        SFLogger.activityInfo("exit form: ", fb.getFormXml());
         removeForm(fb);
     }
 
@@ -38,18 +38,14 @@ public class FormUtil {
         }
     }
 
-    public static void closeForm() {
-        closeForm(null);
-    }
-
-    public static void closeForm(String welcomeForParent) {
+    public static void closeForm(String welcomeForParent, boolean forceRefresh) {
         FormBag fb = FormStack.getCurrentFormBag();
-        SFLogger.activityInfo("*** Activity *** close form: ", fb.getFormXml());
+        SFLogger.activityInfo("close form: ", fb.getFormXml());
         fb.setFormWasSaved(true);
         fb.setWelcomeMessageForParentForm(welcomeForParent);
+        fb.setForceRefreshForParentForm(forceRefresh);
         removeForm(fb);
     }
-
 
     private static void removeForm(FormBag fb) {
         if (!fb.isFormModal()) {
@@ -95,7 +91,7 @@ public class FormUtil {
 
             if (fb.isCloseOnSave()) {
                 if (fb.isFormWasSaved()) {
-                    closeForm();
+                    closeForm(null, false);
                 }
             }
         }

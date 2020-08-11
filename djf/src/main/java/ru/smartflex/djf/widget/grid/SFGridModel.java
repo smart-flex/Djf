@@ -18,19 +18,7 @@ import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.bean.tree.BeanStatusEnum;
 import ru.smartflex.djf.controller.bean.tree.IBeanWrapper;
 import ru.smartflex.djf.controller.bean.tree.TreeListUtils;
-import ru.smartflex.djf.model.gen.ItemGridByteType;
-import ru.smartflex.djf.model.gen.ItemGridCheckboxType;
-import ru.smartflex.djf.model.gen.ItemGridComboboxType;
-import ru.smartflex.djf.model.gen.ItemGridDateType;
-import ru.smartflex.djf.model.gen.ItemGridIntType;
-import ru.smartflex.djf.model.gen.ItemGridLongType;
-import ru.smartflex.djf.model.gen.ItemGridNumType;
-import ru.smartflex.djf.model.gen.ItemGridPeriodType;
-import ru.smartflex.djf.model.gen.ItemGridShortType;
-import ru.smartflex.djf.model.gen.ItemGridTextType;
-import ru.smartflex.djf.model.gen.ItemInputType;
-import ru.smartflex.djf.model.gen.ItemPeriodBaseType;
-import ru.smartflex.djf.model.gen.ItemTreeGridCellType;
+import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.SFComboBox;
 import ru.smartflex.djf.widget.tgrid.SFTGridCellWidget;
@@ -379,6 +367,17 @@ public class SFGridModel extends DefaultTableModel {
                         ((ItemGridNumType) columnDefinition).getWidth());
                 noResize = UIWrapper
                         .translateStringToBoolean(((ItemGridNumType) columnDefinition)
+                                .getNoResize(), false);
+                break;
+            case PHONE:
+                ItemBuilder.fillTextBase(colInfo,
+                        WidgetTypeEnum.PHONE, (ItemGridPhoneType) columnDefinition,
+                        beanDef, false, bindPrefix, false);
+
+                columnWidth = new ColumnWidth(
+                        ((ItemGridPhoneType) columnDefinition).getWidth());
+                noResize = UIWrapper
+                        .translateStringToBoolean(((ItemGridPhoneType) columnDefinition)
                                 .getNoResize(), false);
                 break;
         }

@@ -101,14 +101,14 @@ public class AppEmulator {
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
         PojoAccount pa1 = new PojoAccount("19680201-grid", new Date(),
-                "8452 222222", "919 9999999", "410000", true, null,
+                null, "+7 927 220 31 17", "410000", true, null,
                 null, new BigDecimal("2000.23"));
         pa1.setStreet(address.getDergachevskayaStreet());
         pa1.setBuilding(address.getBld5());
         listAccount.add(pa1);
 
-        PojoAccount pa2 = new PojoAccount("19720202", null, "8452 333333",
-                "919 8888888", "410000", true, null, 199912, null);
+        PojoAccount pa2 = new PojoAccount("19720202", null, "+7 845 228 46 94",
+                "+7 919 825 76 58", "410000", true, null, 199912, null);
         pa2.setMilitaryRank("Captain");
         pa2.setMilitaryUnit("2014/1968");
         pa2.setHasCredit(Boolean.TRUE);
@@ -116,14 +116,16 @@ public class AppEmulator {
         pa2.setCarType(car.getSportCar());
         pa2.setCarModel(car.getLancerEvo());
         pa2.setFired(Boolean.FALSE);
+        pa2.setInnCode(6454011187094L);
+        pa2.setRemark("FoxPro 2 included the \"Rushmore\" optimizing engine, which used indices to accelerate data retrieval and updating. (c) Wiki");
         listAccount.add(pa2);
 
-        listAccount.add(new PojoAccount("19991203", new Date(), "8452 444444",
-                "919 7777777", "410000", false, ptPrivate, null,
+        listAccount.add(new PojoAccount("19991203", new Date(), null,
+                null, "410000", false, ptPrivate, null,
                 new BigDecimal("5050")));
 
         PojoAccount pa4 = new PojoAccount("19291704", new Date(),
-                "8452 444466", "919 7777722", "410003", true, ptMuni, 196802,
+                "+61 416 819 589", null, "410003", true, ptMuni, 196802,
                 new BigDecimal("4040.44"));
         pa4.setHasCredit(Boolean.FALSE);
         pa4.setHasChildren(Boolean.TRUE);
@@ -134,7 +136,7 @@ public class AppEmulator {
         //noinspection CatchMayIgnoreException
         try {
             PojoAccount pa5 = new PojoAccount("19293205", df.parse("10.10.50"),
-                    "8452 444468", "919 7777733", "410003", true, null, 196866,
+                    "5 30 50", "+7 495 851 30 50", "410003", true, null, 196866,
                     new BigDecimal("6060.66"));
             listAccount.add(pa5);
         } catch (ParseException e) {

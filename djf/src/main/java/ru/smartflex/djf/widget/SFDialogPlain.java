@@ -46,6 +46,14 @@ public class SFDialogPlain extends JDialog implements ISFDialog {
                 dispose();
             }
         });
+
+        textPane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "dispose");
+        textPane.getActionMap().put("dispose", new AbstractAction() {
+            public void actionPerformed(ActionEvent event) {
+                dispose();
+            }
+        });
+
         this.getContentPane().add(textScroller, BorderLayout.CENTER);
     }
 

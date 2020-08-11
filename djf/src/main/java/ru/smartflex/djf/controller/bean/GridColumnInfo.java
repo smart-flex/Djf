@@ -2,7 +2,6 @@ package ru.smartflex.djf.controller.bean;
 
 import ru.smartflex.djf.widget.grid.ColumnWidth;
 import ru.smartflex.djf.widget.grid.ICellEditor;
-import ru.smartflex.djf.widget.grid.TitleRenderer;
 
 public class GridColumnInfo extends UIWrapper {
     private String title = "";
@@ -10,8 +9,6 @@ public class GridColumnInfo extends UIWrapper {
     private ICellEditor cellEditor = null;
 
     private Object columnDefinition = null;
-
-    private TitleRenderer renderer = null;
 
     private boolean showComboBoxItemTips = false;
 
@@ -43,11 +40,6 @@ public class GridColumnInfo extends UIWrapper {
 
     public void setColumnDefinition(Object columnDefinition) {
         this.columnDefinition = columnDefinition;
-    }
-
-    @SuppressWarnings("unused")
-    public TitleRenderer getRenderer() {
-        return renderer;
     }
 
     @SuppressWarnings("unused")

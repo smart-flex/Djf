@@ -9,10 +9,8 @@
 	<!-- Example of dynamic access denied -->
 	<items accessible="sfAll">
 
-		<label text="${demo.gridfields.home_phone}" constraint="gap para" />
-		<text bind="pa.homePhone" constraint="wrap, span 2" />
 		<label text="${demo.gridfields.ceil_phone}" constraint="gap para" />
-		<text bind="pa.ceilPhone" constraint="wrap, span 2" align="right"
+		<phone bind="pa.ceilPhone" constraint="wrap, span 2"
 			tips="${demo.gridfields.ceil_phone.tips}" />
 		<label text="${demo.gridfields.date_create}" constraint="gap para" />
 		<date bind="pa.dateCreate" constraint="wrap, span 2" align="left" />
@@ -53,7 +51,7 @@
 			accessible="${form.itemsAccess}" tips="${demo.gridfields.calc_period.tips}" />
 
 		<label text="${demo.gridfields.inn_code}" constraint="gap para" accessible="${form.itemsAccess}" />
-		<int bind="pa.innCode" constraint="wrap, span 2"
+		<long bind="pa.innCode" constraint="wrap, span 2"
 			accessible="${form.itemsAccess}" tips="${demo.gridfields.inn_code.tips}" />
 
 		<label text="${demo.gridfields.salary}" constraint="gap para" accessible="${form.itemsAccess}" />

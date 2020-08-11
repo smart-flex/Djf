@@ -86,6 +86,7 @@ public class DjfConfigurator {
         mapAlign.put(WidgetTypeEnum.INT, AlignTypeEnum.RIGHT);
         mapAlign.put(WidgetTypeEnum.LONG, AlignTypeEnum.RIGHT);
         mapAlign.put(WidgetTypeEnum.NUMERIC, AlignTypeEnum.RIGHT);
+        mapAlign.put(WidgetTypeEnum.PHONE, AlignTypeEnum.LEFT);
     }
 
     public AlignTypeEnum getDefaultAlign(WidgetTypeEnum widget) {

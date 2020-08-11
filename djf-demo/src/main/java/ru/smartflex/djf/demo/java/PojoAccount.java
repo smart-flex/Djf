@@ -25,9 +25,10 @@ public class PojoAccount implements Serializable {
     private Boolean hasCredit = null;
     private Boolean hasChildren = null;
     private Integer calcPeriod = null;
-    private int innCode = 0;
+    private long innCode = 0;
     private BigDecimal salary = null;
     private Boolean fired = null;
+    private String remark = null;
 
     private PojoAccPropertyType typeAccount = null;
     private PojoAccount mother = null;
@@ -244,6 +245,14 @@ public class PojoAccount implements Serializable {
         this.calcPeriod = calcPeriod;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -275,12 +284,12 @@ public class PojoAccount implements Serializable {
     }
 
     @SuppressWarnings("unused")
-    public int getInnCode() {
+    public long getInnCode() {
         return innCode;
     }
 
     @SuppressWarnings("unused")
-    public void setInnCode(int innCode) {
+    public void setInnCode(long innCode) {
         this.innCode = innCode;
     }
 

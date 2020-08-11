@@ -27,34 +27,7 @@ import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.helper.AccessibleHelper;
 import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
-import ru.smartflex.djf.model.gen.AttrAlignType;
-import ru.smartflex.djf.model.gen.ItemButtonRunType;
-import ru.smartflex.djf.model.gen.ItemButtonType;
-import ru.smartflex.djf.model.gen.ItemByteType;
-import ru.smartflex.djf.model.gen.ItemCheckboxBaseType;
-import ru.smartflex.djf.model.gen.ItemCheckboxType;
-import ru.smartflex.djf.model.gen.ItemComboboxBaseType;
-import ru.smartflex.djf.model.gen.ItemComboboxType;
-import ru.smartflex.djf.model.gen.ItemDateType;
-import ru.smartflex.djf.model.gen.ItemFileType;
-import ru.smartflex.djf.model.gen.ItemGridDateType;
-import ru.smartflex.djf.model.gen.ItemGridPeriodType;
-import ru.smartflex.djf.model.gen.ItemGridType;
-import ru.smartflex.djf.model.gen.ItemGroupType;
-import ru.smartflex.djf.model.gen.ItemInputType;
-import ru.smartflex.djf.model.gen.ItemIntType;
-import ru.smartflex.djf.model.gen.ItemLabelType;
-import ru.smartflex.djf.model.gen.ItemLongType;
-import ru.smartflex.djf.model.gen.ItemNumType;
-import ru.smartflex.djf.model.gen.ItemOperatorType;
-import ru.smartflex.djf.model.gen.ItemPasswordType;
-import ru.smartflex.djf.model.gen.ItemPeriodBaseType;
-import ru.smartflex.djf.model.gen.ItemPeriodType;
-import ru.smartflex.djf.model.gen.ItemRadioType;
-import ru.smartflex.djf.model.gen.ItemShortType;
-import ru.smartflex.djf.model.gen.ItemTextAreaType;
-import ru.smartflex.djf.model.gen.ItemTextType;
-import ru.smartflex.djf.model.gen.ItemTreeGridCellType;
+import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.tool.ColorUtil;
 import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.tool.OtherUtil;
@@ -449,9 +422,9 @@ public class ItemBuilder {
         return wrapper;
     }
 
-    public static UIWrapper fillTgridTreeFieldBase(UIWrapper wrapper,
-                                                   WidgetTypeEnum widgetType, ItemTreeGridCellType item,
-                                                   BeanFormDef beanDef, boolean setupLength, String bindPrefix) {
+    public static void fillTgridTreeFieldBase(UIWrapper wrapper,
+                                              WidgetTypeEnum widgetType, ItemTreeGridCellType item,
+                                              BeanFormDef beanDef, boolean setupLength, String bindPrefix) {
         Object ui = ObjectCreator.createSwing(widgetType);
         wrapper.setObjectUI(ui);
         wrapper.setWidgetType(widgetType);
@@ -467,8 +440,6 @@ public class ItemBuilder {
         }
 
         wrapper.setEnableBehavior(item.getEnabled(), false);
-
-        return wrapper;
     }
 
     private static void setToolTipText(UIWrapper wrapper, String text,
@@ -902,6 +873,32 @@ public class ItemBuilder {
 
             uiPanel.add(ui, item.getConstraint());
         }
+    }
+
+    static void build(ItemPhoneType item, WidgetManager wm,
+                      SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
+
+        if (AccessibleHelper.isAccessible(item, wm)) {
+
+            UIWrapper wrapper = fillTextBase(new UIWrapper(), WidgetTypeEnum.PHONE, item, beanDef,
+                    false, bindPrefix, false);
+
+            wrapper.setOrder(item.getOrder());
+            wrapper.setupUIName(WidgetTypeEnum.PHONE, item.getId());
+            wrapper.setAction(item.getAction());
+            wrapper.setBelongToModel(item.getBelong());
+
+            wm.registerItemUIWrapper(wrapper);
+
+            ItemHandler.setupHandlerToTextField(wrapper, wm);
+
+            setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
+
+            java.awt.Container uiPanel = (Container) sfPanel.getPanel();
+
+            uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
+        }
+
     }
 
 }

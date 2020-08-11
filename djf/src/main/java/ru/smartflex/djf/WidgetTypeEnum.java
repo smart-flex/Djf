@@ -3,7 +3,7 @@ package ru.smartflex.djf;
 public enum WidgetTypeEnum {
 
     DATE, BUTTON, COMBOBOX, LABEL, TEXT, CHECKBOX, PANEL, TABPANEL, GRID, PASSWORD, RUN, TGRID, PERIOD, TGRID_TREE_FIELD, INT,
-    NUMERIC, OPERATOR, SEPARATOR, TEXTAREA, BYTE, SHORT, LONG, FILE, GROUP, RADIO;
+    NUMERIC, OPERATOR, SEPARATOR, TEXTAREA, BYTE, SHORT, LONG, FILE, GROUP, RADIO, PHONE;
 
     public static boolean isFocusAble(WidgetTypeEnum type) {
         boolean fok = true;
@@ -22,7 +22,8 @@ public enum WidgetTypeEnum {
                 || type == GRID || type == PASSWORD || type == RUN
                 || type == TGRID || type == PERIOD || type == INT
                 || type == BYTE || type == SHORT || type == LONG
-                || type == NUMERIC || type == OPERATOR || type == TEXTAREA || type == FILE || type == RADIO) {
+                || type == NUMERIC || type == OPERATOR || type == TEXTAREA || type == FILE || type == RADIO
+                || type == PHONE) {
             fok = true;
         }
 

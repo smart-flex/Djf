@@ -5,11 +5,15 @@
     <parent>
         <artifactId>djf-parent</artifactId>
         <groupId>ru.smartflex.djf</groupId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>djf</artifactId>
+
+    <properties>
+        <junit.version>4.12</junit.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -37,6 +41,12 @@
             <artifactId>rsyntaxtextarea</artifactId>
             <version>2.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -48,7 +58,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -73,6 +83,7 @@
                     <schemaDirectory>src/main/java/ru/smartflex/djf/model</schemaDirectory>
                     <outputDirectory>src/main/java</outputDirectory>
                     <clearOutputDir>false</clearOutputDir>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>

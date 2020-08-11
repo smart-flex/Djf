@@ -26,6 +26,7 @@
 	<xs:include schemaLocation="ItemTextAreaType-1.0.xsd" />
 	<xs:include schemaLocation="ItemFileType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGroupType-1.0.xsd" />
+	<xs:include schemaLocation="ItemPhoneType-1.1.xsd" />
 
 	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
 
@@ -57,6 +58,7 @@
 						<xs:element name="textarea" type="ct:ItemTextAreaType" />
 						<xs:element name="file" type="ct:ItemFileType" />
 						<xs:element name="group" type="ct:ItemGroupType" />
+						<xs:element name="phone" type="ct:ItemPhoneType" />
 
 					</xs:choice>
 
