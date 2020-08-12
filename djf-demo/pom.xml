@@ -95,7 +95,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>djf-demo-1.0-standalone</finalName>
+                    <finalName>djf-demo-1.1-standalone</finalName>
                     <archive>
                         <manifest>
                             <mainClass>ru.smartflex.djf.demo.MainDjfDemo</mainClass>
