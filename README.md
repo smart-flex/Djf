@@ -13,7 +13,11 @@ After downloading you can run this demo: java -jar djf-demo-1.1-standalone.jar
 This library allows:
 
 * easily doing CRUD operations;
-* viewing relationships between parent and more than one different kind of children;
+* viewing relationships between parent and more than one different kind of children; There can be various combinations, for example:
+  + master table and its detail table(s);
+  + master table and its nested detail table(s);
+  + master table and its several detail fields with table(s);
+  + several master tables and its detail table(s);
 * reusing components such as: forms, panels, beans;
 * each form has from none to n models and one control panel with folowing buttons: add record, refresh form, delete record, save, exit form;
 * each form invokes other form (there is no limit);
