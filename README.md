@@ -1,30 +1,29 @@
 # DJF - Desktop Java Forms
 
-Djf is a desktop java forms, the compact and litle master-detail UI library like FoxBase, but based on Swing.
+Djf is Desktop Java Forms, a compact master-detail UI library like FoxBase, but based on Swing.
 Djf uses Hibernate mapping concepts for data, for component layout - Miglayout and RSyntaxTextArea for text panels.
 
-Almost all of them, examples of forms definition, data bindings and assistances you can see in [demo application](https://github.com/smart-flex/Djf/releases/download/1.1/djf-demo-1.1-standalone.jar).
+You can see almost all examples of forms definition, data bindings and assistances in [demo application](https://github.com/smart-flex/Djf/releases/download/1.1/djf-demo-1.1-standalone.jar).
 After downloading you can run this demo: java -jar djf-demo-1.1-standalone.jar
 
 ![One of the Djf demo form](djf-demo.png)
 
 ## Main features
 
-This library allows:
-
-* easily doing CRUD operations;
-* viewing relationships between parent and more than one different kind of children; There can be various combinations, for example:
+* Easy CRUD operations.
+* View relationships between parent and multiple types of children. There can be various combinations, for example:
   + master table and its detail table(s);
   + master table and its nested detail table(s);
   + master table and its several detail fields with table(s);
-  + several master tables and its detail table(s);
-* reusing components such as: forms, panels, beans;
-* each form has from none to n models and one control panel with folowing buttons: add record, refresh form, delete record, save, exit form;
-* each form invokes other form (there is no limit);
-* moving between UI-items without mouse (like in DOS forms) by using tab button, up-down arrows (with CTRL combination for text panels);
-* adaptive displaying columns in the grid depending on the resolution;
-* support fulfilment long operations with showing wait panel;
-* support following widgets: table, tgrid (tree based on table), combobox and parent-child (linked) combobox, label, text, int, long, num, short, byte, date, textarea, checkbox, period, password, file, phone;
+  + several master tables and their detail table(s);
+* Reusing components, such as forms, panels and beans.
+* Each form has zero to n models and one control panel with following buttons: add record, refresh form, delete record, save, exit form.
+* Each form invokes another form (there is no limit).
+* Moving between UI-items without mouse (like in DOS forms) by using tab button, up-down arrows (with CTRL combination for text panels)
+* Adaptive column display in the grid depending on the resolution.
+* Shows wait panel during execution of long operations.
+* Supports the following widgets: table, tgrid (tree based on table), combobox and parent-child (linked) combobox, label, text, int, long, num, short, byte, date, textarea, checkbox, period, password, file, phone.
+* Supports user activity log.
 
 ## Requirements
 
