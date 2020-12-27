@@ -1,10 +1,6 @@
 package ru.smartflex.djf.widget;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.TableColumn;
 
 import ru.smartflex.djf.SFConstants;
@@ -394,4 +390,12 @@ public class ItemHandler {
 
         }  // else { out of edge. Nothing to do
     }
+
+    public static void setupHandlerToTabPanel(JTabbedPane tabpanel, UIWrapper uiw,
+                                              WidgetManager wm) {
+
+        new ChangeListenerTabPanel(tabpanel, uiw, wm);
+
+    }
+
 }

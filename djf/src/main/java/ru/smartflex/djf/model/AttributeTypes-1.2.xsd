@@ -408,4 +408,14 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="AttrSelectedTabPanelActionType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Method name from form assistant for tabpanel selection event. Method must contains one int parameter.
+					Djf pass's current tab panel index into this parameter.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
 </xs:schema>

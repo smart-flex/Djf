@@ -93,6 +93,7 @@ public class UIWrapper implements Comparable<UIWrapper> {
     private String idModelSelectAble = null;
     private boolean actionLong = false;
     private String actionLongMessage = null;
+    private String selAction = null;
 
     String getSelectAbleBindProperty() {
 
@@ -753,4 +754,11 @@ public class UIWrapper implements Comparable<UIWrapper> {
         this.actionLongMessage = actionLongMessage;
     }
 
+    public String getSelAction() {
+        return selAction;
+    }
+
+    public void setSelAction(String selAction) {
+        this.selAction = selAction;
+    }
 }

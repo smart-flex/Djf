@@ -32,6 +32,7 @@
 
 		<xs:attribute name="constraint" type="ct:AttrConstraintType" />
 		<xs:attribute name="accessible" type="ct:AttrAccessibleType" />
+		<xs:attribute name="selAction" type="ct:AttrSelectedTabPanelActionType" />
 	</xs:complexType>
 
 </xs:schema>

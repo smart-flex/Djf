@@ -10,13 +10,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
@@ -698,6 +692,8 @@ public class FormBag {
                 closeHandler(((SFFileChooser) ui).getActionListeners());
             } else if (ui instanceof SFGroup) {
                 ((SFGroup) ui).closeHandler();
+            } else if (ui instanceof JTabbedPane) {
+                closeHandler(((JTabbedPane) ui).getChangeListeners());
             }
 
         }

@@ -58,7 +58,15 @@ public class FormUtil {
     }
 
     public static boolean runActionMethod(WidgetManager wm, String method) {
-        if (method == null) {
+        return runActionMethod(wm, method, null,  false);
+    }
+
+    public static boolean runActionMethod(WidgetManager wm, String method, Object[] params) {
+        return runActionMethod(wm, method, params, true);
+    }
+
+    private static boolean runActionMethod(WidgetManager wm, String method, Object[] params, boolean withPars) {
+        if (method == null || wm.getFormBag() == null) {
             return true;
         }
 
@@ -70,7 +78,11 @@ public class FormUtil {
             noHandler = false;
             try {
                 //noinspection ConstantConditions
-                MethodUtils.invokeExactMethod(assist, method, pars);
+                if (withPars) {
+                    MethodUtils.invokeMethod(assist, method, params);
+                } else {
+                    MethodUtils.invokeExactMethod(assist, method, pars);
+                }
             } catch (Exception ee) {
                 SFLogger.error("Error by invoke assist method", ee);
                 Djf.showStatusErrorMessage("${djf.message.error.form.action}");

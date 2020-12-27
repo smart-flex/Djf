@@ -12,6 +12,9 @@ import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.model.gen.PanelType;
 import ru.smartflex.djf.model.gen.TabPanelType;
 import ru.smartflex.djf.model.gen.TabType;
+import ru.smartflex.djf.widget.ItemHandler;
+
+import javax.swing.*;
 
 class TabPanelBuilder {
 
@@ -20,6 +23,7 @@ class TabPanelBuilder {
 
     static UIWrapper build(TabPanelType tabPanel, WidgetManager wm, BeanFormDef beanDef) {
         UIWrapper panelWrapper = new UIWrapper();
+        panelWrapper.setSelAction(tabPanel.getSelAction());
 
         TabPanelType.Tabs tabs = tabPanel.getTabs();
         if (tabs != null) {
@@ -28,6 +32,8 @@ class TabPanelBuilder {
                 Object uiTabPanel = ObjectCreator
                         .createSwing(WidgetTypeEnum.TABPANEL);
                 panelWrapper.setObjectUI(uiTabPanel);
+
+                ItemHandler.setupHandlerToTabPanel((JTabbedPane)uiTabPanel, panelWrapper, wm);
 
                 for (TabType tt : tabList) {
                     if (AccessibleHelper.isAccessible(tt, wm)) {
