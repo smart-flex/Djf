@@ -5,7 +5,7 @@
 
 	<xs:include schemaLocation="LayoutType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGridType-1.0.xsd" />
-	<xs:include schemaLocation="TabPanelType-1.0.xsd" />
+	<xs:include schemaLocation="TabPanelType-1.2.xsd" />
 
 	<xs:include schemaLocation="ItemDateType-1.0.xsd" />
 	<xs:include schemaLocation="ItemButtonType-1.0.xsd" />
@@ -28,7 +28,7 @@
 	<xs:include schemaLocation="ItemGroupType-1.0.xsd" />
 	<xs:include schemaLocation="ItemPhoneType-1.1.xsd" />
 
-	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.2.xsd" />
 
 	<xs:complexType name="PanelType">
 		<xs:sequence>

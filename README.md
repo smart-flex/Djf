@@ -3,8 +3,8 @@
 Djf is Desktop Java Forms, a compact master-detail UI library like FoxBase, but based on Swing.
 Djf uses Hibernate mapping concepts for data, for component layout - Miglayout and RSyntaxTextArea for text panels.
 
-You can see almost all examples of forms definition, data bindings and assistances in [demo application](https://github.com/smart-flex/Djf/releases/download/1.1/djf-demo-1.1-standalone.jar).
-After downloading you can run this demo: java -jar djf-demo-1.1-standalone.jar
+You can see almost all examples of forms definition, data bindings and assistances in [demo application](https://github.com/smart-flex/Djf/releases/download/1.3/djf-demo-1.3-standalone.jar).
+After downloading you can run this demo: java -jar djf-demo-1.3-standalone.jar
 
 ![One of the Djf demo form](djf-demo.png)
 

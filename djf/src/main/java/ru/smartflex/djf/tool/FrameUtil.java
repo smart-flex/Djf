@@ -59,4 +59,18 @@ public class FrameUtil {
         c.setLocation(xs, ys);
     }
 
+    public static void centerOnFrame(Component c) {
+
+        Dimension size = c.getSize();
+        int h = (int) size.getHeight();
+        int w = (int) size.getWidth();
+
+        JFrame pfr = (JFrame) Djf.getConfigurator().getFrame();
+
+        int xs = pfr.getX() + (pfr.getWidth() - w) / 2;
+        int ys = pfr.getY() + (pfr.getHeight() - h) / 2;
+
+        c.setLocation(xs, ys);
+    }
+
 }

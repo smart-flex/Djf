@@ -5,7 +5,7 @@
 
 	<xs:include schemaLocation="ItemRadioType-1.0.xsd" />
 
-	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.2.xsd" />
 
 	<xs:complexType name="ItemGroupType">
 		<xs:sequence>

@@ -3,6 +3,9 @@ package ru.smartflex.djf;
 import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.LongTaskManagerThread;
 import ru.smartflex.djf.tool.FormUtil;
+import ru.smartflex.djf.tool.FrameUtil;
+
+import java.awt.*;
 
 public class Djf extends DesktopJavaForms {
 
@@ -83,5 +86,22 @@ public class Djf extends DesktopJavaForms {
 
         LongTaskManagerThread task = new LongTaskManagerThread(longMethod);
         task.execute();
+    }
+
+    @SuppressWarnings("unused")
+    public static void centerOnFrame(Component c) {
+        FrameUtil.centerOnFrame(c);
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean isCurrentFormWasChanged() {
+        boolean fok = false;
+
+        if (FormStack.getCurrentFormBag() != null
+                && FormStack.getCurrentFormBag().isFormWasChanged()) {
+            fok = true;
+        }
+
+        return fok;
     }
 }

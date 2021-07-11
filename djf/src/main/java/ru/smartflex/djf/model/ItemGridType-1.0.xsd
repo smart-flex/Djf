@@ -6,7 +6,7 @@
 	<xs:include schemaLocation="ItemGridTextType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGridCheckboxType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGridDateType-1.0.xsd" />
-	<xs:include schemaLocation="AttributeTypes-1.0.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.2.xsd" />
 	<xs:include schemaLocation="ItemGridComboboxType-1.0.xsd" />
 	<xs:include schemaLocation="ItemTreeGridCellType-1.0.xsd" />
 	<xs:include schemaLocation="ItemGridPeriodType-1.0.xsd" />
