@@ -101,7 +101,9 @@ public class FieldFocusHandler implements FocusListener, ISFHandler {
                     case PHONE: {
                         Object data = uiw.getCurrentValue();
                         PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone((String) data);
-                        field.setText(phoneBag.getPhoneFormatted());
+                        if (phoneBag != null) {
+                            field.setText(phoneBag.getPhoneFormatted());
+                        }
                     }
                     break;
                 }
