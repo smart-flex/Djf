@@ -32,6 +32,7 @@ import ru.smartflex.djf.controller.bean.tree.IBeanWrapper;
 import ru.smartflex.djf.controller.bean.tree.IBeanWrapperFactory;
 import ru.smartflex.djf.controller.bean.tree.TreeListException;
 import ru.smartflex.djf.controller.bean.tree.TreeListUtils;
+import ru.smartflex.djf.controller.exception.IExceptionHumanFriendly;
 import ru.smartflex.djf.controller.exception.PropertyNotFilledException;
 import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
@@ -493,6 +494,7 @@ public class FormBag {
             }
 
             if (validateNotNullOk && validateConfOk) {
+                String humanErrorMessage = null;
                 boolean saveMethodWasInvoked = false;
                 // saving
                 for (ModelType mt : modelList) {
@@ -517,8 +519,13 @@ public class FormBag {
                                         pair.getName(), pars);
                                 saveMethodWasInvoked = true;
                             } catch (Exception e) {
-                                SFLogger.error("Error by save bean", e);
+                                if (pair.getName() != null) {
+                                    SFLogger.error("Error by save bean: " + pair.getName(), e);
+                                } else {
+                                    SFLogger.error("Error by save bean (no name existed)", e);
+                                }
                                 wasError = true;
+                                humanErrorMessage = digHumanMessage(e);
                                 break;
                             }
                         }
@@ -530,7 +537,11 @@ public class FormBag {
                             "No one save method was invoked");
                 }
                 if (wasError) {
-                    Djf.showStatusErrorMessage("${label.djf.message.error.form.save}");
+                    if (humanErrorMessage != null) {
+                        Djf.showStatusErrorMessage(humanErrorMessage);
+                    } else {
+                        Djf.showStatusErrorMessage("${label.djf.message.error.form.save}");
+                    }
                 } else {
                     Djf.showStatusInfoMessage("${label.djf.message.info.form.save}");
                     formWasSaved = true;
@@ -545,6 +556,16 @@ public class FormBag {
                     Djf.showStatusWarnMessage("${label.djf.message.warn.sf.message.warn.validate_conf}");
                 }
             }
+        }
+    }
+
+    private String digHumanMessage(Throwable thr) {
+        if (thr == null) {
+            return null;
+        } else if (thr instanceof IExceptionHumanFriendly) {
+            return ((IExceptionHumanFriendly) thr).getHumanErrorMessage();
+        } else {
+            return digHumanMessage(thr.getCause());
         }
     }
 

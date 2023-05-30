@@ -3,6 +3,7 @@ Version history
 
 |Date      | Ver | Author                      | Description        |
 |----------|-----|-----------------------------|--------------------|
+|2023-05-30| 1.5 | galisha.                    | Добавлена возможность вывода информации об ошибке, в случае если исключение реализует интерфейс: IExceptionHumanFriendly |
 |2021-12-05| 1.4 | galisha.                    | Fixed phone bug with NPE |
 |2021-07-11| 1.3 | galisha.                    | Added method for centering non Djf dialog and checking data form modifying |
 |2020-12-27| 1.2 | galisha.                    | Added ability for tab panel selection event |

@@ -62,3 +62,5 @@ Djf is issued on under the GNU Lesser General Public License.
 
 If you have any issues or questions or suggestions you can send me a letter by email: <gali.shaimardanov@gmail.com>
 
+## Примечания
+Для работы в последних версиях IDEA необходимо проставить в каждом из трех модулей language level: 7
