@@ -11,6 +11,7 @@ import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.ButtonStatus;
 import ru.smartflex.djf.controller.bean.FormBag;
 import ru.smartflex.djf.widget.SFDialogForm;
+import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 
 public class FormUtil {
 
@@ -38,12 +39,18 @@ public class FormUtil {
         }
     }
 
-    public static void closeForm(String welcomeForParent, boolean forceRefresh) {
+    public static void closeForm(String welcomeForParent, boolean forceRefresh, TaskStatusLevelEnum taskStatusLevelEnum) {
         FormBag fb = FormStack.getCurrentFormBag();
         SFLogger.activityInfo("close form: ", fb.getFormXml());
         fb.setFormWasSaved(true);
         fb.setWelcomeMessageForParentForm(welcomeForParent);
         fb.setForceRefreshForParentForm(forceRefresh);
+        if (taskStatusLevelEnum != null) {
+            fb.setTaskStatusLevelEnumForParentForm(taskStatusLevelEnum);
+        } else {
+            // default value
+            fb.setTaskStatusLevelEnumForParentForm(TaskStatusLevelEnum.OK);
+        }
         removeForm(fb);
     }
 
@@ -103,7 +110,7 @@ public class FormUtil {
 
             if (fb.isCloseOnSave()) {
                 if (fb.isFormWasSaved()) {
-                    closeForm(null, false);
+                    closeForm(null, false, null);
                 }
             }
         }

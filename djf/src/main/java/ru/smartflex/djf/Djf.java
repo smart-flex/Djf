@@ -4,6 +4,7 @@ import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.LongTaskManagerThread;
 import ru.smartflex.djf.tool.FormUtil;
 import ru.smartflex.djf.tool.FrameUtil;
+import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 
 import java.awt.*;
 
@@ -51,17 +52,25 @@ public class Djf extends DesktopJavaForms {
 
     @SuppressWarnings("unused")
     public static void closeForm() {
-        FormUtil.closeForm(null, false);
+        FormUtil.closeForm(null, false, null);
     }
 
     @SuppressWarnings("unused")
     public static void closeForm(String welcomeForParent) {
-        FormUtil.closeForm(welcomeForParent, false);
+        FormUtil.closeForm(welcomeForParent, false, null);
+    }
+
+    public static void closeFormWarning(String warningForParent) {
+        FormUtil.closeForm(warningForParent, false, TaskStatusLevelEnum.WARNING);
+    }
+
+    public static void closeFormError(String errorForParent) {
+        FormUtil.closeForm(errorForParent, false, TaskStatusLevelEnum.ERROR);
     }
 
     @SuppressWarnings("unused")
     public static void closeForm(String welcomeForParent, boolean forceRefresh) {
-        FormUtil.closeForm(welcomeForParent, forceRefresh);
+        FormUtil.closeForm(welcomeForParent, forceRefresh, null);
     }
 
     @SuppressWarnings("unused")

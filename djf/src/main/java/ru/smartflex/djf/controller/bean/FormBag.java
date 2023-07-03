@@ -38,10 +38,7 @@ import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.model.gen.FormType;
 import ru.smartflex.djf.model.gen.ModelType;
-import ru.smartflex.djf.widget.ISFDialog;
-import ru.smartflex.djf.widget.ISFHandler;
-import ru.smartflex.djf.widget.SFFileChooser;
-import ru.smartflex.djf.widget.SFGroup;
+import ru.smartflex.djf.widget.*;
 import ru.smartflex.djf.widget.grid.ICellEditor;
 import ru.smartflex.djf.widget.grid.SFGrid;
 
@@ -70,6 +67,8 @@ public class FormBag {
     private String formXml;
     private boolean closeOnSave = false;
     private boolean forceRefreshForParentForm = false;
+
+    private TaskStatusLevelEnum taskStatusLevelEnumForParentForm = TaskStatusLevelEnum.OK;
 
     public FormBag(FormType formType, WidgetManager widgetManager,
                    UIWrapper formWrapper, FormAssistant assist,
@@ -424,15 +423,19 @@ public class FormBag {
         }
     }
 
+    public void refeshForm(String welcomeMessageFromChildrenForm, TaskStatusLevelEnum taskStatusLevelFromChildrenForm) {
+        refeshFormInt(welcomeMessageFromChildrenForm, taskStatusLevelFromChildrenForm);
+    }
+
     public void refeshForm(String welcomeMessageFromChildrenForm) {
-        refeshFormInt(welcomeMessageFromChildrenForm);
+        refeshFormInt(welcomeMessageFromChildrenForm, null);
     }
 
     public void refeshForm() {
-        refeshFormInt(null);
+        refeshFormInt(null, null);
     }
 
-    private void refeshFormInt(String welcomeMessageFromChildrenForm) {
+    private void refeshFormInt(String welcomeMessageFromChildrenForm, TaskStatusLevelEnum taskStatusLevelFromChildrenForm) {
         formWasChanged = false;
 
         setFormReady(false);
@@ -447,7 +450,7 @@ public class FormBag {
             FormManagerThread fm = new FormManagerThread(getFormManager());
             fm.execute();
         } else {
-            FormManagerThread fm = new FormManagerThread(getFormManager(), welcomeMessageFromChildrenForm);
+            FormManagerThread fm = new FormManagerThread(getFormManager(), welcomeMessageFromChildrenForm, taskStatusLevelFromChildrenForm);
             fm.execute();
         }
     }
@@ -883,5 +886,13 @@ public class FormBag {
 
     public void setForceRefreshForParentForm(boolean forceRefreshForParentForm) {
         this.forceRefreshForParentForm = forceRefreshForParentForm;
+    }
+
+    public TaskStatusLevelEnum getTaskStatusLevelEnumForParentForm() {
+        return taskStatusLevelEnumForParentForm;
+    }
+
+    public void setTaskStatusLevelEnumForParentForm(TaskStatusLevelEnum taskStatusLevelEnumForParentForm) {
+        this.taskStatusLevelEnumForParentForm = taskStatusLevelEnumForParentForm;
     }
 }

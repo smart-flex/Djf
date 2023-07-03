@@ -221,6 +221,7 @@ public class FormStack {
             FormBag currentForm = formStack.get(indexCurrent);
             String welcomeForParent = currentForm
                     .getWelcomeMessageForParentForm();
+            TaskStatusLevelEnum taskStatusLevelEnumForParentForm = currentForm.getTaskStatusLevelEnumForParentForm();
             boolean closeFrame = false;
             boolean formWasRefreshed = false;
             //noinspection ConstantConditions
@@ -238,7 +239,7 @@ public class FormStack {
                                 previousForm.setFormWasSaved(true);
                             }
                             // refresh parent form
-                            previousForm.refeshForm(welcomeForParent);
+                            previousForm.refeshForm(welcomeForParent, taskStatusLevelEnumForParentForm);
                             formWasRefreshed = true;
                         }
                     }
@@ -248,14 +249,13 @@ public class FormStack {
                     if (!currentForm.isParentHasToBeRefreshed()) {
                         if (welcomeForParent != null) {
                             FrameHelper.showStatusMessage(
-                                    TaskStatusLevelEnum.OK, welcomeForParent);
+                                    taskStatusLevelEnumForParentForm, welcomeForParent);
                         } else {
                             FrameHelper.showStatusMessage(
                                     TaskStatusLevelEnum.OK,
                                     previousForm.getWelcomeMessage());
                         }
                     }
-
                     if (currentForm.isForceRefreshForParentForm()) {
                         if (!formWasRefreshed) {
                             // pass flag to parent form

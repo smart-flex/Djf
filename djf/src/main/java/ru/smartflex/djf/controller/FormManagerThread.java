@@ -25,11 +25,15 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
     private FormManager fm;
     private boolean reLoading = false;
     private String welcomeMessageFromChildrenForm = null;
+    private TaskStatusLevelEnum taskStatusLevelEnum = TaskStatusLevelEnum.OK;
 
     public FormManagerThread(FormManager fm,
-                             String welcomeMessageFromChildrenForm) {
+                             String welcomeMessageFromChildrenForm, TaskStatusLevelEnum taskStatusLevelEnum) {
         this.fm = fm;
         this.welcomeMessageFromChildrenForm = welcomeMessageFromChildrenForm;
+        if (taskStatusLevelEnum != null) {
+            this.taskStatusLevelEnum = taskStatusLevelEnum;
+        }
     }
 
     public FormManagerThread(FormManager fm) {
@@ -272,7 +276,7 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
                 }
 
                 if (welcomeMessageFromChildrenForm != null) {
-                    FrameHelper.showStatusMessage(TaskStatusLevelEnum.OK,
+                    FrameHelper.showStatusMessage(taskStatusLevelEnum,
                             welcomeMessageFromChildrenForm);
                 } else {
                     FrameHelper.showStatusMessage(TaskStatusLevelEnum.OK, fm
