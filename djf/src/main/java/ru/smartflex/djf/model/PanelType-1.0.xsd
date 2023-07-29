@@ -11,9 +11,9 @@
 	<xs:include schemaLocation="ItemButtonType-1.0.xsd" />
 	<xs:include schemaLocation="ItemComboboxType-1.0.xsd" />
 	<xs:include schemaLocation="ItemLabelType-1.0.xsd" />
-	<xs:include schemaLocation="ItemTextType-1.0.xsd" />
+	<xs:include schemaLocation="ItemTextType-1.1.xsd" />
 	<xs:include schemaLocation="ItemCheckboxType-1.0.xsd" />
-	<xs:include schemaLocation="ItemPasswordType-1.0.xsd" />
+	<xs:include schemaLocation="ItemPasswordType-1.1.xsd" />
 	<xs:include schemaLocation="ItemButtonRunType-1.0.xsd" />
 	<xs:include schemaLocation="ItemPeriodType-1.0.xsd" />
 	<xs:include schemaLocation="ItemByteType-1.0.xsd" />
@@ -28,7 +28,7 @@
 	<xs:include schemaLocation="ItemGroupType-1.0.xsd" />
 	<xs:include schemaLocation="ItemPhoneType-1.1.xsd" />
 
-	<xs:include schemaLocation="AttributeTypes-1.2.xsd" />
+	<xs:include schemaLocation="AttributeTypes-1.3.xsd" />
 
 	<xs:complexType name="PanelType">
 		<xs:sequence>

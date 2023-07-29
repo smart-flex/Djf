@@ -256,6 +256,27 @@ public class ItemHandler {
         new ButtonKeyHandler(button, wm);
     }
 
+    public static void setupHandlerToPasswordField(UIWrapper uiw, WidgetManager wm) {
+
+        SFPassword password = (SFPassword) uiw.getObjectUI();
+        JPasswordField field = password.getPasswordField();
+        field.setFocusTraversalKeysEnabled(false);
+
+        new FieldKeyHandler(field, wm);
+        new FieldFocusHandler(wm, uiw, field);
+
+        if (uiw.getLength() > 0) {
+            new SFLengthFilter(wm, uiw.getLength(), field);
+        }
+
+        BeanFormDefProperty prop = uiw.getBeanFormDefPropertyFromBind();
+
+        if (prop != null && prop.getNotNull() != null
+                && prop.getNotNull()) {
+            field.setBackground(SFConstants.FIELD_REQUIRED_BACKGROUND_COLOR);
+        }
+    }
+
     public static void setupHandlerToTextField(UIWrapper uiw, WidgetManager wm) {
 
         JTextField field = (JTextField) uiw.getObjectUI();

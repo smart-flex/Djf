@@ -418,4 +418,14 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="AttrTransformType">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>Symbol transformation.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:enumeration value="ru-eng" />
+		</xs:restriction>
+	</xs:simpleType>
+
 </xs:schema>

@@ -22,6 +22,7 @@ import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.exception.ObjectCreationException;
 import ru.smartflex.djf.controller.helper.ConverterUtil;
 import ru.smartflex.djf.widget.ITextArea;
+import ru.smartflex.djf.widget.SFPassword;
 import ru.smartflex.djf.widget.grid.SFGrid;
 import ru.smartflex.djf.widget.mask.MaskInfo;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
@@ -484,7 +485,15 @@ public class UIWrapper implements Comparable<UIWrapper> {
         } else {
             uiName = Djf.getConfigurator().getNextUIId(type);
         }
-        ((java.awt.Component) objectUI).setName(uiName);
+
+        switch (type) {
+            case PASSWORD:
+                ((SFPassword)objectUI).getPasswordField().setName(uiName);
+                break;
+            default:
+                ((java.awt.Component) objectUI).setName(uiName);
+                break;
+        }
     }
 
     public boolean isFocusable() {

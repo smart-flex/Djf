@@ -1,12 +1,12 @@
 package ru.smartflex.djf.widget.mask;
 
 import javax.swing.JTextField;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import ru.smartflex.djf.controller.WidgetManager;
+import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.ISFHandler;
 import ru.smartflex.djf.widget.ItemHandler;
 import ru.smartflex.djf.widget.grid.TFCellEditor;
@@ -28,8 +28,7 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
         this.maskInfo = maskInfo;
         this.onlyDigit = onlyDigit;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     public MaskFieldMaskDateFilter(WidgetManager wm, MaskInfo maskInfo,
@@ -41,8 +40,7 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
         this.cellEditor = cellEditor;
         this.onlyDigit = onlyDigit;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     @SuppressWarnings("ConstantConditions")

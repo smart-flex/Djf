@@ -8,11 +8,11 @@
 		</layout>
 		<items>
 			<label text="${demo.login.login}" constraint="right" />
-			<text bind="ln.login" constraint="width 140:140:140" order="1" />
+			<text bind="ln.login" transform="ru-eng" constraint="width 140:140:140" order="1" />
 			<button belong="ln" text="${demo.login.connect}"
 				constraint="spany, grow, wrap" order="3" action="login" />
 			<label text="${demo.login.password}" constraint="right" />
-			<password bind="ln.password" constraint="width 140:140:140"
+			<password bind="ln.password" transform="ru-eng" constraint="width 140:140:140"
 				order="2" />
 		</items>
 	</panel>

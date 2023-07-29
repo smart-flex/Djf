@@ -64,3 +64,5 @@ If you have any issues or questions or suggestions you can send me a letter by e
 
 ## Примечания
 Для работы в последних версиях IDEA необходимо проставить в каждом из трех модулей language level: 7
+Это вызвано тем, что Djf собран под Jdk 1.6.
+Более детально о настройках IDEA написано тут https://stackoverflow.com/questions/12900373/idea-javac-source-release-1-7-requires-target-release-1-7

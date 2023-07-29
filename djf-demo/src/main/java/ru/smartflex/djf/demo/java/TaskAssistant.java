@@ -25,6 +25,10 @@ public class TaskAssistant extends FormAssistant implements IParameterMaker {
 
         TaskDemo td = (TaskDemo) Djf.getCurrentObject();
 
+        if (td.getIdTask() == null) {
+            return map;
+        }
+
         switch (td.getIdTask()) {
             case 4:
                 map.put("makeNetworkError", Boolean.TRUE);

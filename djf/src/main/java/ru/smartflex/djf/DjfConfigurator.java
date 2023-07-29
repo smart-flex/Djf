@@ -330,6 +330,7 @@ public class DjfConfigurator {
         UIManager.put("Table.font", getFontTextInput());
 
         UIManager.put("TextField.font", getFontTextInput());
+        UIManager.put("PasswordField.font", getFontTextInput());
         UIManager.put("Label.font", new Font(fontCommon, Font.PLAIN, fontSize));
         UIManager
                 .put("Button.font", new Font(fontCommon, Font.PLAIN, fontSize));

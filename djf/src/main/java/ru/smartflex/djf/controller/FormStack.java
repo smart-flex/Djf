@@ -43,6 +43,11 @@ public class FormStack {
     public static void createForm(String formXmlBody,
                                   Map<String, Object> formParameters) {
 
+        if (formXmlBody == null) {
+            Djf.showStatusWarnMessage("${label.djf.message.warn.no_form_is_there}");
+            return;
+        }
+
         if (getCurrentFormBag() != null
                 && getCurrentFormBag().isFormWasChanged()) {
             Djf.showStatusWarnMessage("${label.djf.message.warn.but_no_actn_allow_formwaschanged}");

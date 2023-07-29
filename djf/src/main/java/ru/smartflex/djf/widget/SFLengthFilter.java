@@ -1,7 +1,6 @@
 package ru.smartflex.djf.widget;
 
 import javax.swing.JTextField;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -9,6 +8,7 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.JTextComponent;
 
 import ru.smartflex.djf.controller.WidgetManager;
+import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.grid.TFCellEditor;
 
 public class SFLengthFilter extends DocumentFilter implements ISFHandler {
@@ -24,8 +24,7 @@ public class SFLengthFilter extends DocumentFilter implements ISFHandler {
 
         maxLength = length;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     SFLengthFilter(WidgetManager wm, int length, JTextField field) {
@@ -34,8 +33,7 @@ public class SFLengthFilter extends DocumentFilter implements ISFHandler {
 
         maxLength = length;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     SFLengthFilter(WidgetManager wm, int length, JTextField field,
@@ -46,8 +44,7 @@ public class SFLengthFilter extends DocumentFilter implements ISFHandler {
 
         maxLength = length;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     @Override
@@ -74,6 +71,7 @@ public class SFLengthFilter extends DocumentFilter implements ISFHandler {
     public void closeHandler() {
         textComponent = null;
         wm = null;
+        cellEditor = null;
     }
 
 }

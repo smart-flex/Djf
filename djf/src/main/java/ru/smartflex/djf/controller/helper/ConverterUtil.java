@@ -8,7 +8,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPasswordField;
 
 import ru.smartflex.djf.SFLogger;
 import ru.smartflex.djf.SmartFlexException;
@@ -16,6 +15,7 @@ import ru.smartflex.djf.WidgetTypeEnum;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.ITextArea;
+import ru.smartflex.djf.widget.SFPassword;
 import ru.smartflex.djf.widget.mask.MaskInfo;
 
 public class ConverterUtil {
@@ -100,7 +100,7 @@ public class ConverterUtil {
             }
             break;
             case PASSWORD:
-                char[] pwd = ((JPasswordField) comp).getPassword();
+                char[] pwd = (((SFPassword)comp).getPasswordField()).getPassword();
                 if (pwd != null && pwd.length > 0) {
                     obj = new String(pwd);
                 }

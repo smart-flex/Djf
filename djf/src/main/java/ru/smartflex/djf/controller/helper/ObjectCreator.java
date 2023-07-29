@@ -7,7 +7,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -38,19 +37,7 @@ import ru.smartflex.djf.model.gen.ItemTreeGridCellType;
 import ru.smartflex.djf.model.gen.MethParamType;
 import ru.smartflex.djf.model.gen.PanelType;
 import ru.smartflex.djf.model.gen.ParameterType;
-import ru.smartflex.djf.widget.ActionListenerCommonButton;
-import ru.smartflex.djf.widget.IForm;
-import ru.smartflex.djf.widget.IFrame;
-import ru.smartflex.djf.widget.ITextArea;
-import ru.smartflex.djf.widget.SFComboBox;
-import ru.smartflex.djf.widget.SFDialogForm;
-import ru.smartflex.djf.widget.SFFileChooser;
-import ru.smartflex.djf.widget.SFGroup;
-import ru.smartflex.djf.widget.SFOperator;
-import ru.smartflex.djf.widget.SFPanel;
-import ru.smartflex.djf.widget.SFTextAreaHTMLView;
-import ru.smartflex.djf.widget.SFTextAreaPlain;
-import ru.smartflex.djf.widget.SFTextAreaSyntax;
+import ru.smartflex.djf.widget.*;
 import ru.smartflex.djf.widget.grid.SFGrid;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
 
@@ -89,7 +76,7 @@ public class ObjectCreator {
                 object = new JTabbedPane();
                 break;
             case PASSWORD:
-                object = new JPasswordField();
+                object = new SFPassword();
                 break;
             case TGRID_TREE_FIELD:
                 object = new JTextField();

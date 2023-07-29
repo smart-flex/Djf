@@ -23,9 +23,9 @@ import ru.smartflex.djf.model.gen.ModelType;
 import ru.smartflex.djf.widget.FocusPolicy;
 import ru.smartflex.djf.widget.SFComboBox;
 import ru.smartflex.djf.widget.ITextArea;
+import ru.smartflex.djf.widget.SFPassword;
 import ru.smartflex.djf.widget.grid.SFGrid;
 import ru.smartflex.djf.widget.grid.SFGridMouseMotionFlag;
-import ru.smartflex.djf.widget.grid.TitleRenderer;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
 
 public class WidgetManagerHelper {
@@ -285,6 +285,8 @@ public class WidgetManagerHelper {
 
                 switch (uiw.getWidgetType()) {
                     case PASSWORD:
+                        ((SFPassword)uiw.getObjectUI()).getPasswordField().setText((String) obj);
+                        break;
                     case PHONE:
                     case TEXT:
                         ((JTextField) uiw.getObjectUI()).setText((String) obj);

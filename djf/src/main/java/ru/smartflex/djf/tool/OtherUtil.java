@@ -6,13 +6,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.JTextComponent;
 
 import ru.smartflex.djf.Djf;
 import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.SFLogger;
 import ru.smartflex.djf.controller.exception.MissingException;
+import ru.smartflex.djf.model.gen.AttrTransformType;
+import ru.smartflex.djf.widget.ISFHandler;
 
 public class OtherUtil {
+
+    private static String QWERTY_RU  = "ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮйцукенгшщзхъфывапролджэячсмитьбюё";
+    private static String QWERTY_ENG = "~QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>qwertyuiop[]asdfghjkl;'zxcvbnm,.`";
 
     private static final String CHARSET = "UTF-8";
 
@@ -130,4 +138,49 @@ public class OtherUtil {
         }
         return false;
     }
+
+    public static void setFilter(JTextComponent component, DocumentFilter filter) {
+        AbstractDocument doc = (AbstractDocument) component.getDocument();
+        DocumentFilter dfPrev = doc.getDocumentFilter();
+        if (dfPrev != null) {
+            if (dfPrev instanceof ISFHandler) {
+                SFLogger.warn(OtherUtil.class,"Previous doc filter class: ", dfPrev.getClass().getName(),
+                        " for widget: ", component.getName()," will be replaced");
+            }
+        }
+        doc.setDocumentFilter(filter);
+    }
+
+    public static String transformText(AttrTransformType transformType, String text) {
+        if (text == null || text.trim().length() == 0) {
+            return text;
+        }
+        String src = null;
+        String trn = null;
+
+        switch (transformType) {
+            case RU_ENG:
+                src = QWERTY_RU;
+                trn = QWERTY_ENG;
+                break;
+            default:
+                return text;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        int len = text.length();
+
+        for (int i=0; i<len; i++) {
+            char ch = text.charAt(i);
+            int found = src.indexOf(ch);
+            if (found != -1) {
+                ch = trn.charAt(found);
+            }
+            sb.append(String.valueOf(ch));
+        }
+
+        return sb.toString();
+    }
+
 }

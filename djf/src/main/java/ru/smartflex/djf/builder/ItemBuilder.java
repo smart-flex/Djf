@@ -5,12 +5,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.math.BigInteger;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import ru.smartflex.djf.AlignTypeEnum;
 import ru.smartflex.djf.Djf;
@@ -31,19 +26,7 @@ import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.tool.ColorUtil;
 import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.tool.OtherUtil;
-import ru.smartflex.djf.widget.ActionListenerRadioButton;
-import ru.smartflex.djf.widget.ButtonKeyHandler;
-import ru.smartflex.djf.widget.ITextArea;
-import ru.smartflex.djf.widget.ItemHandler;
-import ru.smartflex.djf.widget.MouseListenerButton;
-import ru.smartflex.djf.widget.MouseListenerLabel;
-import ru.smartflex.djf.widget.MouseListenerText;
-import ru.smartflex.djf.widget.SFFileChooser;
-import ru.smartflex.djf.widget.SFGroup;
-import ru.smartflex.djf.widget.SFLengthFilter;
-import ru.smartflex.djf.widget.SFPanel;
-import ru.smartflex.djf.widget.TextAreaFocusHandler;
-import ru.smartflex.djf.widget.TextAreaKeyHandler;
+import ru.smartflex.djf.widget.*;
 import ru.smartflex.djf.widget.mask.MaskInfo;
 
 public class ItemBuilder {
@@ -301,6 +284,9 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupHandlerToTextField(wrapper, wm);
+            if (item.getTransform() != null) {
+                new SFTransformFilter(wm, (JTextField)wrapper.getObjectUI(), item.getTransform());
+            }
 
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
 
@@ -458,6 +444,7 @@ public class ItemBuilder {
             UIWrapper wrapper = new UIWrapper();
 
             Object ui = ObjectCreator.createSwing(WidgetTypeEnum.PASSWORD);
+
             wrapper.setObjectUI(ui);
             wrapper.setWidgetType(WidgetTypeEnum.PASSWORD);
             wrapper.setBind(item.getBind(), bindPrefix);
@@ -477,7 +464,11 @@ public class ItemBuilder {
                 wrapper.setLength(prop.getLength());
             }
 
-            ItemHandler.setupHandlerToTextField(wrapper, wm);
+            ItemHandler.setupHandlerToPasswordField(wrapper, wm);
+            if (item.getTransform() != null) {
+                SFPassword password = (SFPassword) ui;
+                new SFTransformFilter(wm, password.getPasswordField(), item.getTransform());
+          }
 
             setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();

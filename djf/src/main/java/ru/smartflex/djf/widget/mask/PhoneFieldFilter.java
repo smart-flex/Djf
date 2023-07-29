@@ -4,11 +4,11 @@ import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.PhoneBag;
 import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
+import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.ISFHandler;
 import ru.smartflex.djf.widget.grid.TFCellEditor;
 
 import javax.swing.*;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -23,8 +23,7 @@ public class PhoneFieldFilter extends DocumentFilter implements ISFHandler {
         this.field = field;
         this.wm = wm;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     public PhoneFieldFilter(TFCellEditor cellEditor, WidgetManager wm) {
@@ -32,8 +31,7 @@ public class PhoneFieldFilter extends DocumentFilter implements ISFHandler {
         this.wm = wm;
         this.cellEditor = cellEditor;
 
-        AbstractDocument doc = (AbstractDocument) field.getDocument();
-        doc.setDocumentFilter(this);
+        OtherUtil.setFilter(field, this);
     }
 
     @SuppressWarnings("ConstantConditions")
