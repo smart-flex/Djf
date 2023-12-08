@@ -47,6 +47,9 @@ public class FrameUI extends JFrame implements IFrame {
     @SuppressWarnings("FieldCanBeLocal")
     private static int deltaWindow = 20;
 
+    private static int labelInfoFormSize = 20;
+    private static int labelInfoFormAddSize = 15;
+
     private FrameComponentListener fcListener = null;
 
     private int startWidth = 780;
@@ -121,10 +124,10 @@ public class FrameUI extends JFrame implements IFrame {
 
     private void flexInit() {
 
-        labelInfoForm.setFont(new Font("SansSerif", Font.BOLD, 20));
+        labelInfoForm.setFont(new Font("SansSerif", Font.BOLD, Djf.getIncreasedFontSize(labelInfoFormSize)));
         labelInfoForm.setForeground(infoColor);
         labelInfoForm.setName(IFrame.NAME_LABEL_INFO_FORM);
-        labelInfoFormAdd.setFont(new Font("SansSerif", Font.BOLD, 15));
+        labelInfoFormAdd.setFont(new Font("SansSerif", Font.BOLD, Djf.getIncreasedFontSize(labelInfoFormAddSize)));
         labelInfoFormAdd.setName(IFrame.NAME_LABEL_INFO_FORM_ADD);
 
         pnlNorthWest.setLayout(layPnlNorthWest);

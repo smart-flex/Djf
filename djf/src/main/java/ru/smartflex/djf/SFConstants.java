@@ -36,6 +36,9 @@ public interface SFConstants {
     //	String DEFAULT_FONT_TEXT_INPUT = "Monospaced";
     String DEFAULT_FONT_TEXT_INPUT = "DialogInput";
 
+    float FONT_TEXT_INPUT_RATE_INCREASING_MAXIMUM = 1.5f;
+    String PROPERTY_FONT_TEXT_INPUT_RATE_INCREASING = "font_incr";
+
     int DEFAULT_FONT_SIZE = 12; //12
     int DEFAULT_FONT_MAX_SIZE = 20;
 

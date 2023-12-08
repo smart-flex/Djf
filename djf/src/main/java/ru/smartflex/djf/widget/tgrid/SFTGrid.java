@@ -5,6 +5,7 @@ import javax.swing.tree.TreeModel;
 
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.UIWrapper;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.widget.grid.SFGrid;
 
 public class SFTGrid extends SFGrid {
@@ -18,7 +19,6 @@ public class SFTGrid extends SFGrid {
         // increase row height
         int h = getTable().getRowHeight();
         getTable().setRowHeight(h + 1);
-
         // DnD
         getTable().setDragEnabled(true);
         getTable().setDropMode(DropMode.INSERT_ROWS);

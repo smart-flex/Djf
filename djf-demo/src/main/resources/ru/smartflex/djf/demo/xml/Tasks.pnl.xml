@@ -18,8 +18,8 @@
 					<int bind="idTask" title="${demo.task.grid.id_task}"
 						width="25" noResize="yes" enabled="no" />
 					<tree bind="nameTask" title="${demo.task.grid.task_name}"
-						width="150:800" enabled="no"/>
-					<text bind="formXMLShortName" title="${demo.task.grid.form_name}" width="150" enabled="no" />
+						width="250:900" enabled="no"/>
+					<text bind="formXMLShortName" title="${demo.task.grid.form_name}" width="150:250" enabled="no" />
 				</cols>
 			</grid>
 			<run tips="${demo.task.run_form}" form="${form.selected.formXML}"

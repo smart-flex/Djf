@@ -50,6 +50,7 @@ public class DjfConfigurator {
     private static String fontCommon = null;
     private static String fontTextInput = null;
     private static int fontSize = 0;
+    private static float fontTextInputRateIncreasing = 0f;
 
     private static AtomicInteger uiCounter = new AtomicInteger(1);
     private static AtomicInteger uiOrder = new AtomicInteger(-1);
@@ -150,6 +151,12 @@ public class DjfConfigurator {
             } catch (Exception e) {
                 fontSize = 0;
             }
+            try {
+                String fi = props.getProperty(SFConstants.PROPERTY_FONT_TEXT_INPUT_RATE_INCREASING);
+                fontTextInputRateIncreasing = Float.parseFloat(fi);
+            } catch (Exception e) {
+                fontTextInputRateIncreasing = 0f;
+            }
 
             pathToForm = props.getProperty(SFConstants.PROPERTY_PATH_TO_FORM);
             pathToForm = addDelimiter(pathToForm);
@@ -187,6 +194,9 @@ public class DjfConfigurator {
         if (fontSize <= 0 || fontSize > SFConstants.DEFAULT_FONT_MAX_SIZE) {
             fontSize = SFConstants.DEFAULT_FONT_SIZE;
         }
+        if (fontTextInputRateIncreasing < 0 || fontTextInputRateIncreasing > SFConstants.FONT_TEXT_INPUT_RATE_INCREASING_MAXIMUM) {
+            fontTextInputRateIncreasing = 0;
+        }
 
         loadMsgBundle(msgResourceBundlePath, msgResourceBundleName);
 
@@ -203,6 +213,7 @@ public class DjfConfigurator {
         SFLogger.info("***      master-detail UI library       ***");
         SFLogger.info("*** like as FoxBase, but based on Swing ***");
         SFLogger.info("*** @author gali.shaimardanov@gmail.com ***");
+        SFLogger.info("***             ver: " + Djf.DJF_VERSION + "                ***");
         SFLogger.info("*******************************************");
     }
 
@@ -317,7 +328,7 @@ public class DjfConfigurator {
     }
 
     public static Font getFontTextInput() {
-        return new Font(fontTextInput, java.awt.Font.PLAIN, fontSize);
+        return new Font(fontTextInput, java.awt.Font.PLAIN, FontUtil.getIncreasedFontSize());
     }
 
     private static void initUIManager() {
@@ -331,25 +342,19 @@ public class DjfConfigurator {
 
         UIManager.put("TextField.font", getFontTextInput());
         UIManager.put("PasswordField.font", getFontTextInput());
-        UIManager.put("Label.font", new Font(fontCommon, Font.PLAIN, fontSize));
-        UIManager
-                .put("Button.font", new Font(fontCommon, Font.PLAIN, fontSize));
+        UIManager.put("Label.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("Button.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
 
         // Affects press Enter on active button.
         UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
 
-        UIManager.put("ToggleButton.font", new Font(fontCommon, Font.PLAIN,
-                fontSize));
-        UIManager.put("TabbedPane.font", new Font(fontCommon, Font.PLAIN,
-                fontSize));
-        UIManager.put("CheckBox.font", new Font(fontCommon, Font.PLAIN,
-                fontSize));
-        UIManager.put("RadioButtonMenuItem.font", new Font(fontCommon,
-                Font.PLAIN, fontSize));
-        UIManager.put("ComboBox.font", new Font(fontCommon, Font.PLAIN,
-                fontSize));
-        UIManager.put("RadioButton.font", new Font(fontCommon, Font.PLAIN,
-                fontSize));
+        UIManager.put("ToggleButton.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("TabbedPane.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("CheckBox.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("RadioButtonMenuItem.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("ComboBox.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("RadioButton.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+
         UIManager.put("Label.foreground", new Color(128, 0, 64));
         UIManager.put("CheckBox.foreground", new Color(128, 0, 64));
         UIManager.put("TextArea.inactiveForeground", new Color(104, 79, 81));
@@ -406,5 +411,17 @@ public class DjfConfigurator {
     public ButtonOperCache getButtonCache() {
         FormBag fb = FormStack.getCurrentFormBag();
         return fb.getButtonOperCache();
+    }
+
+    public static int getFontSize() {
+        return fontSize;
+    }
+
+    public static String getFontTextInputName() {
+        return fontTextInput;
+    }
+
+    public static float getFontTextInputRateIncreasing() {
+        return fontTextInputRateIncreasing;
     }
 }

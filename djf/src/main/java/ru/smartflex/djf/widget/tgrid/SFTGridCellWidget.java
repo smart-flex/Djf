@@ -29,12 +29,11 @@ public class SFTGridCellWidget extends JTree implements TableCellRenderer {
     private int indexTreeColumn;
 
     public SFTGridCellWidget(JTable table, WidgetManager widgetManager,
-                             SFGridModel model, int indColumn,
-                             ColumnWidth columnWidth, int height) {
+                             SFGridModel model, int indColumn, ColumnWidth columnWidth) {
         this.table = table;
         this.indexTreeColumn = indColumn;
 
-        init(widgetManager, model, indColumn, columnWidth, height);
+        init(widgetManager, model, indColumn, columnWidth);
 
         super.setModel(null); // to set off default model. In this case renderer
         // start to draw tree
@@ -43,7 +42,7 @@ public class SFTGridCellWidget extends JTree implements TableCellRenderer {
     }
 
     private void init(WidgetManager widgetManager, SFGridModel model,
-                      int indColumn, ColumnWidth columnWidth, int height) {
+                      int indColumn, ColumnWidth columnWidth) {
         super.setRootVisible(false);
         // super.setVisibleRowCount(0); // does not work
 
@@ -51,7 +50,7 @@ public class SFTGridCellWidget extends JTree implements TableCellRenderer {
         cell.setWidgetManager(widgetManager);
         cell.setModel(model);
         cell.setIndColumn(indColumn);
-        cell.setCellParam(columnWidth, height);
+        cell.setCellParam(columnWidth, table.getRowHeight());
 
         // set up cell renderer for tree widget (that located in table cell)
         super.setCellRenderer(cell);
@@ -61,19 +60,7 @@ public class SFTGridCellWidget extends JTree implements TableCellRenderer {
         super.getSelectionModel().setSelectionMode(
                 TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-    }
-
-    /**
-     * Sets the row height of the tree, and forwards the row height to the
-     * table.
-     */
-    public void setRowHeight(int rowHeight) {
-        if (rowHeight > 0) {
-            super.setRowHeight(rowHeight);
-            if (table.getRowHeight() != rowHeight) {
-                table.setRowHeight(getRowHeight());
-            }
-        }
+        super.setRowHeight(table.getRowHeight());
     }
 
     /**

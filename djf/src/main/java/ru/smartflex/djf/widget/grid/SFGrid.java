@@ -9,6 +9,7 @@ import javax.swing.ListSelectionModel;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.GridColumnInfo;
 import ru.smartflex.djf.controller.bean.UIWrapper;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.widget.IRequestFocus;
 import ru.smartflex.djf.widget.SFArrowKnob;
 
@@ -125,7 +126,6 @@ public class SFGrid extends JScrollPane implements IRequestFocus {
         this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         // this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.getViewport().add(table, null);
-
         model.init();
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -136,6 +136,7 @@ public class SFGrid extends JScrollPane implements IRequestFocus {
         setCorner(JScrollPane.UPPER_RIGHT_CORNER, rightCorner);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setRowHeight(FontUtil.getIncreasedGridRowHeight());
     }
 
     public SFTableWrapper getTable() {

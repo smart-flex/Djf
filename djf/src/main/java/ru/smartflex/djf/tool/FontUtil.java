@@ -7,9 +7,13 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ru.smartflex.djf.DjfConfigurator;
 import ru.smartflex.djf.SFConstants;
 
 public class FontUtil {
@@ -20,6 +24,12 @@ public class FontUtil {
     @SuppressWarnings("RegExpRedundantEscape")
     private static final String REG_FONT_ATTR = "(\\w*\\s*)(.*?)(\\:)(\\w*)";
     private static Pattern pattern = Pattern.compile(REG_FONT_ATTR, Pattern.DOTALL);
+    private static Lock lockFontIncrease = new ReentrantLock(false);
+    private static float rateIncrease = 0f;
+    private static AtomicBoolean increaseWasInit = new AtomicBoolean(false);
+    private static int increasedFontSize = 0;
+    private static int increasedGridRowHeight = 0;
+    private static float increasedFontSizeRate = 0f;
 
     static {
         monoFontMap = new HashSet<String>();
@@ -106,4 +116,60 @@ public class FontUtil {
         return new Font(fontFamily, style, size);
     }
 
+    public static float getRateWidthOfFontIncreasing() {
+        increasingFontCalculate();
+        return rateIncrease;
+    }
+
+    public static int getIncreasedFontSize() {
+        increasingFontCalculate();
+        return increasedFontSize;
+    }
+
+    public static int getIncreasedGridRowHeight() {
+        increasingFontCalculate();
+        return increasedGridRowHeight;
+    }
+
+    public static int getIncreasedFontSize(int size) {
+        increasingFontCalculate();
+        if (increasedFontSizeRate != 0) {
+            int newSize = Math.round((float)size * increasedFontSizeRate);
+            return newSize;
+        }
+        return size;
+    }
+
+    private static void increasingFontCalculate() {
+        if (!increaseWasInit.get()) {
+            lockFontIncrease.lock();
+            try {
+                if (!increaseWasInit.get()) {
+                    FontRenderContext frc = new FontRenderContext(null,
+                            RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT,
+                            RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT);
+                    Font font = new Font(DjfConfigurator.getFontTextInputName(), Font.PLAIN, DjfConfigurator.getFontSize());
+                    increasedFontSize = DjfConfigurator.getFontSize(); // default value
+                    increasedGridRowHeight = (int)Math.round(font.getStringBounds("A", frc).getWidth());
+                    if (DjfConfigurator.getFontTextInputRateIncreasing() > 0) {
+                        int newSize = Math.round((float)DjfConfigurator.getFontSize() * DjfConfigurator.getFontTextInputRateIncreasing());
+                        Font fontIncreasing = new Font(DjfConfigurator.getFontTextInputName(), Font.PLAIN, newSize);
+                        increasedFontSize = DjfConfigurator.getFontSize() + newSize;
+                        double newWidth = fontIncreasing.getStringBounds("A", frc).getWidth();
+                        fontIncreasing.getStringBounds("A", frc).getHeight();
+                        double width = font.getStringBounds("A", frc).getWidth();
+                        rateIncrease = (float) (newWidth / width);
+                        Font fontIncreasingForHeight = new Font(DjfConfigurator.getFontTextInputName(), Font.PLAIN, increasedFontSize);
+                        increasedGridRowHeight = (int)Math.round(fontIncreasingForHeight.getStringBounds("A", frc).getWidth());
+                        increasedFontSizeRate = (float)increasedFontSize / (float)DjfConfigurator.getFontSize();
+                    }
+                    increasedGridRowHeight += 15; // для пущей красоты в гриде
+                }
+            } finally {
+                lockFontIncrease.unlock();
+            }
+            increaseWasInit.set(true);
+        }
+    }
 }
+

@@ -16,6 +16,7 @@ import ru.smartflex.djf.controller.bean.tree.WidgetTreeNode;
 import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.controller.helper.UIFinder;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.widget.ISFDialog;
 import ru.smartflex.djf.widget.ISFDialogHTML;
 import ru.smartflex.djf.widget.SFDialogHTML;
@@ -221,4 +222,9 @@ public class DesktopJavaForms {
     public static void setFrameMinimumSize(int width, int height) {
         DjfConfigurator.getInstance().getFrame().setMinimumSize(width, height);
     }
+
+    public static int getIncreasedFontSize(int size) {
+        return FontUtil.getIncreasedFontSize(size);
+    }
+
 }

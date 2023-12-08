@@ -3,6 +3,7 @@ package ru.smartflex.djf.widget.grid;
 import java.util.StringTokenizer;
 
 import ru.smartflex.djf.SFConstants;
+import ru.smartflex.djf.tool.FontUtil;
 
 public class ColumnWidth {
 
@@ -39,14 +40,23 @@ public class ColumnWidth {
 
     public int getMinWidth() {
         if (amount <= 0) {
-            return SFConstants.DEFAULT_GRID_COLUMN_WIDTH;
+            return getIncreasedWidth(SFConstants.DEFAULT_GRID_COLUMN_WIDTH);
         } else {
-            return minWidth;
+            return getIncreasedWidth(minWidth);
         }
     }
 
     public int getPrefWidth() {
-        return prefWidth;
+        return getIncreasedWidth(prefWidth);
+    }
+
+    private int getIncreasedWidth(int wh) {
+        float rate = FontUtil.getRateWidthOfFontIncreasing();
+        if (rate != 0f) {
+            // нужно увеличение шрифта
+            return wh + Math.round(rate * (float)wh);
+        }
+        return wh;
     }
 
 }

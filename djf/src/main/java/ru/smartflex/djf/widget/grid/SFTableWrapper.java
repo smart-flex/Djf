@@ -23,6 +23,7 @@ import ru.smartflex.djf.controller.bean.tree.TreeListUtils;
 import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.helper.AccessibleHelper;
 import ru.smartflex.djf.model.gen.*;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.widget.ItemHandler;
 import ru.smartflex.djf.widget.SFComboBox;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
@@ -87,7 +88,7 @@ public class SFTableWrapper extends JTable {
     public void addColumns(List<Object> list, WidgetManager wm, UIWrapper uiw,
                            BeanFormDef beanDef, LabelBundle bundle, String bindPrefix) {
 
-        double maxHeight = 0;
+        double titleHeight = FontUtil.getIncreasedGridRowHeight() + 5;
 
         List<TitleRenderer> titleRenderers = new ArrayList<TitleRenderer>();
 
@@ -170,28 +171,28 @@ public class SFTableWrapper extends JTable {
             titleRenderers.add(tr);
             colInfo.setTitle(tr.getTitle());
 
-            if (tr.getPreferredSize().getHeight() > maxHeight) {
-                maxHeight = tr.getPreferredSize().getHeight();
+            if (tr.getPreferredSize().getHeight() > titleHeight) {
+                titleHeight = tr.getPreferredSize().getHeight();
             }
 
         }
 
         super.setModel(model);
 
-        if (maxHeight < 30) {
+        if (titleHeight < 34) {
             // Workaround with arrows in right corner
-            maxHeight = 30;
+            titleHeight = 34;
         }
 
         int indColumn = 0;
 
         if (uiw.isGridInfoColumnAllowed()) {
-            if (TitleRenderer.getIconStatusInfo().getIconHeight() > maxHeight) {
-                maxHeight = TitleRenderer.getIconStatusInfo().getIconHeight();
+            if (TitleRenderer.getIconStatusInfo().getIconHeight() > titleHeight) {
+                titleHeight = TitleRenderer.getIconStatusInfo().getIconHeight();
             }
             //noinspection ConstantConditions
             trInfo.setPreferredSize(new Dimension(TitleRenderer
-                    .getIconStatusInfo().getIconWidth(), (int) maxHeight));
+                    .getIconStatusInfo().getIconWidth(), (int) titleHeight));
             TableColumn tableColumnInfo = getColumnModel().getColumn(0);
             tableColumnInfo.setHeaderRenderer(trInfo);
             int widthInfo = TitleRenderer.getIconStatusInfo().getIconWidth()
@@ -199,7 +200,7 @@ public class SFTableWrapper extends JTable {
             tableColumnInfo.setPreferredWidth(widthInfo);
             tableColumnInfo.setMinWidth(widthInfo);
             tableColumnInfo.setMaxWidth(widthInfo);
-            mapColSetting.put(indColumn, new ColumnSettings(widthInfo, widthInfo, widthInfo));
+            mapColSetting.put(indColumn, new ColumnSettings(widthInfo, widthInfo));
             indColumn = 1;
         }
 
@@ -279,7 +280,8 @@ public class SFTableWrapper extends JTable {
                 }
                 break;
                 case TGRID_TREE_FIELD: {
-                    cr = new SFTGridCellWidget(this, wm, model, indColumn, columnWidth, (int) maxHeight);
+                    // ранее до 8-12-2023 передавался (int) maxHeight. Заменен внутри на table.getRowHeight()
+                    cr = new SFTGridCellWidget(this, wm, model, indColumn, columnWidth);
                     gci.setCelRenderer(cr);
 
                     tableColumn = getColumnModel().getColumn(indColumn);
@@ -352,7 +354,7 @@ public class SFTableWrapper extends JTable {
 
             TitleRenderer tr = titleRenderers.get(indColumn);
             tr.setPreferredSize(new Dimension(columnWidth.getPrefWidth(),
-                    (int) maxHeight));
+                    (int) titleHeight));
 
             //noinspection ConstantConditions
             tableColumn.setHeaderRenderer(tr);
@@ -375,8 +377,6 @@ public class SFTableWrapper extends JTable {
                 tableColumn.setMaxWidth(Math.max(columnWidth.getMinWidth(),
                         columnWidth.getPrefWidth()));
                 tableColumn.setResizable(false);
-                cs.setMaxWidth(Math.max(columnWidth.getMinWidth(),
-                        columnWidth.getPrefWidth()));
             }
 
             tableColumn.setCellRenderer(cr);
@@ -435,7 +435,6 @@ public class SFTableWrapper extends JTable {
 
     class ColumnSettings {
         private Integer minWidth;
-        private Integer maxWidth = null;
         private Integer prefWidth = null;
 
         public ColumnSettings(Integer minWidth) {
@@ -447,33 +446,18 @@ public class SFTableWrapper extends JTable {
             this.prefWidth = prefWidth;
         }
 
-        public ColumnSettings(Integer minWidth, Integer prefWidth, Integer maxWidth) {
-            this.minWidth = minWidth;
-            this.maxWidth = maxWidth;
-            this.prefWidth = prefWidth;
-        }
-
         public Integer getMinWidth() {
             return minWidth;
-        }
-
-        public Integer getMaxWidth() {
-            return maxWidth;
         }
 
         public Integer getPrefWidth() {
             return prefWidth;
         }
 
-        public void setMaxWidth(Integer maxWidth) {
-            this.maxWidth = maxWidth;
-        }
-
         @Override
         public String toString() {
             return "ColumnSettings{" +
                     "minWidth=" + minWidth +
-                    ", maxWidth=" + maxWidth +
                     ", prefWidth=" + prefWidth +
                     '}';
         }
@@ -485,35 +469,27 @@ public class SFTableWrapper extends JTable {
         public GridResizeListener(SFTableWrapper table) {
             this.table = table;
         }
-//1 при закрытии грида убрать листенер
-//2 пройтись по длинам колонок
-//3 привести в порядок телефоны
-
         public void closeGridResizeListener() {
             table = null;
         }
 
         public void componentResized(ComponentEvent e) {
-            int tableWidth = table.getWidth();
-            int colsMinWidth = 0;
+
+            // если уже установлен AUTO_RESIZE_OFF то смена на другие режимы уже не работает, мало того приводит к мерцанию (зацикливанию)
+            if (table.getAutoResizeMode() == JTable.AUTO_RESIZE_OFF) {
+                return;
+            }
+            int colsWidthTotal = 0;
+
             for (int i = 0; i < getColumnCount(); i++) {
                 ColumnSettings cs = mapColSetting.get(i);
-                colsMinWidth += cs.getMinWidth();
-                TableColumn column = getColumnModel().getColumn(i);
-                if (colsMinWidth > tableWidth) {
-                    column.setMinWidth(0);
-                    column.setMaxWidth(0);
-                } else {
-                    if (cs.getMaxWidth() != null) {
-                        column.setMaxWidth(cs.getMaxWidth());
-                    } else {
-                        column.setMaxWidth(Integer.MAX_VALUE);
-                    }
-                    if (cs.getPrefWidth() != null) {
-                        column.setPreferredWidth(cs.getPrefWidth());
-                    }
-                    column.setMinWidth(cs.getMinWidth());
-                }
+                colsWidthTotal += cs.getMinWidth();
+            }
+
+            // выставляем режим, в зависимости от ширины колонок
+            if (table.getWidth() < colsWidthTotal) {
+                // включаем скроллинг колонок
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             }
         }
     }
