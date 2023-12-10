@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import ru.smartflex.djf.controller.helper.PrefixUtil;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.tool.OtherUtil;
 
 /**
@@ -89,7 +90,7 @@ public class WaitLongPanel extends JComponent {
             }
         });
 
-        setFont(new Font("SansSerif", Font.BOLD, 13));
+        setFont(new Font("SansSerif", Font.BOLD, FontUtil.getIncreasedFontSize() - 1));
 
         if (icon == null) {
             icon = OtherUtil.loadSFImages("wait_rotate.gif");

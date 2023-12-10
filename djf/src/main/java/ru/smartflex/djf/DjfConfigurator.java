@@ -359,6 +359,18 @@ public class DjfConfigurator {
         UIManager.put("CheckBox.foreground", new Color(128, 0, 64));
         UIManager.put("TextArea.inactiveForeground", new Color(104, 79, 81));
         UIManager.put("RadioButton.foreground", new Color(128, 0, 64));
+
+        initUIManagerTips();
+    }
+
+    private static void initUIManagerTips() {
+        Font ft = (Font) UIManager.get("ToolTip.font");
+        int currentSize = ft.getSize();
+        int newSize = FontUtil.getIncreasedFontSize(currentSize);
+        if (newSize != currentSize) {
+            Font fontTips = new Font(ft.getName(), Font.PLAIN, newSize);
+            UIManager.put("ToolTip.font", fontTips);
+        }
     }
 
     @SuppressWarnings("UnnecessaryCallToStringValueOf")

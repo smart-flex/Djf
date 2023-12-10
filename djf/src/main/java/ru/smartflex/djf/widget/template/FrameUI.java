@@ -30,6 +30,7 @@ import ru.smartflex.djf.Djf;
 import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.SFLogger;
 import ru.smartflex.djf.SizeFrameEnum;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.IForm;
 import ru.smartflex.djf.widget.IFrame;
@@ -56,7 +57,7 @@ public class FrameUI extends JFrame implements IFrame {
     private int startHeight = 480;
     private int contentWidth = startWidth - 16;
     private int contentHeight = startHeight - 38;
-    private int heightNorth = 50;
+    private int heightNorth = 40;
     private int heightSouth = 55; // 55 allows to see exit button more accurate
 
     private Dimension startDimension = new Dimension(startWidth, startHeight);
@@ -91,12 +92,23 @@ public class FrameUI extends JFrame implements IFrame {
     public FrameUI() {
         super();
         try {
+            initBeforeSize();
             init();
             flexInit();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void initBeforeSize() {
+        heightNorth = FontUtil.getIncreasedHeight(heightNorth);
+        heightSouth = FontUtil.getIncreasedHeight(heightSouth);
+
+        startDimension = new Dimension(startWidth, startHeight);
+        northPanelDim = new Dimension(contentWidth, heightNorth);
+        southPanelDim = new Dimension(contentWidth, heightSouth);
+        centerPanelDim = new Dimension(contentWidth,contentHeight - heightNorth - heightSouth);
     }
 
     @SuppressWarnings("RedundantThrows")
@@ -119,7 +131,7 @@ public class FrameUI extends JFrame implements IFrame {
         pnlOper.add(butSave);
         pnlOper.add(butExit);
 
-        pnlSouth.add(pnlOper, BorderLayout.CENTER);
+        pnlSouth.add(pnlOper, BorderLayout.SOUTH);
     }
 
     private void flexInit() {
