@@ -150,7 +150,7 @@ public class WidgetManager {
 
     void disableItems() {
         for (UIWrapper uiw : listUI) {
-            uiw.setItemEnabled(false);
+            uiw.setItemDisabledDueToAbend();
         }
     }
 
@@ -716,7 +716,6 @@ public class WidgetManager {
                 // this is grid column
                 continue;
             }
-
             if (wtnc.isScrollWidget()) {
                 moveToRowRepaintScroll(wtnc);
 

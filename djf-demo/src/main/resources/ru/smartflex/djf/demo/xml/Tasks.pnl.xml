@@ -40,7 +40,7 @@
 				<panel>
 					<layout clazz="java.awt.BorderLayout" />
 					<items>
-						<textarea bind="ts.formDescription" syntax="HTMLView" constraint="Center" />
+						<textarea bind="ts.formDescription" enabled="false" syntax="HTMLView" constraint="Center" />
 					</items>
 				</panel>
 			</tab>
@@ -48,7 +48,7 @@
 				<panel>
 					<layout clazz="java.awt.BorderLayout" />
 					<items>
-						<textarea bind="ts.formBody" syntax="XML" constraint="Center" />
+						<textarea bind="ts.formBody" enabled="false" syntax="XML" constraint="Center" />
 					</items>
 				</panel>
 			</tab>
@@ -56,8 +56,7 @@
 				<panel>
 					<layout clazz="java.awt.BorderLayout" />
 					<items>
-						<textarea bind="ts.panelBodies" syntax="XML"
-							constraint="Center" />
+						<textarea bind="ts.panelBodies" enabled="false" syntax="XML" constraint="Center" />
 					</items>
 				</panel>
 			</tab>
@@ -65,8 +64,7 @@
 				<panel>
 					<layout clazz="java.awt.BorderLayout" />
 					<items>
-						<textarea bind="ts.beanBodies" syntax="XML"
-							constraint="Center" />
+						<textarea bind="ts.beanBodies" enabled="false" syntax="XML"	constraint="Center" />
 					</items>
 				</panel>
 			</tab>
@@ -74,8 +72,7 @@
 				<panel>
 					<layout clazz="java.awt.BorderLayout" />
 					<items>
-						<textarea bind="ts.javaHelperBodies" syntax="Java"
-							constraint="Center" />
+						<textarea bind="ts.javaHelperBodies" enabled="false" syntax="Java" constraint="Center" />
 					</items>
 				</panel>
 			</tab>
@@ -83,8 +80,7 @@
 				<panel>
 					<layout clazz="java.awt.BorderLayout" />
 					<items>
-						<textarea bind="ts.javaBeanBodies" syntax="Java"
-							constraint="Center" />
+						<textarea bind="ts.javaBeanBodies" enabled="false" syntax="Java" constraint="Center" />
 					</items>
 				</panel>
 			</tab>

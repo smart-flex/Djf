@@ -33,6 +33,11 @@ public class SFTextAreaSyntax extends RTextScrollPane implements ITextArea,
     }
 
     @Override
+    public void setEditable(boolean flag) {
+        textArea.setEditable(flag);
+    }
+
+    @Override
     public void requestFocusOnNestedWidget() {
         textArea.requestFocus();
     }

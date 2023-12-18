@@ -10,7 +10,7 @@
 	<items accessible="sfAll">
 
 		<label text="${demo.gridfields.ceil_phone}" constraint="gap para" />
-		<phone bind="pa.ceilPhone" constraint="wrap, span 2"
+		<phone bind="pa.ceilPhone" constraint="wrap, span 2" id="idPhone"
 			tips="${demo.gridfields.ceil_phone.tips}" />
 		<label text="${demo.gridfields.date_create}" constraint="gap para" />
 		<date bind="pa.dateCreate" constraint="wrap, span 2" align="left" />
@@ -25,11 +25,11 @@
 		<label text="${demo.gridfields.military_rank}" constraint="gap para"
 			accessible="${form.itemsAccess}" />
 		<text bind="pa.militaryRank" constraint="wrap, span 2"
-			accessible="${form.itemsAccess}" enabled="false"
+			accessible="${form.itemsAccess}" enabled="false" id="idRank"
 			tips="${demo.gridfields.military_rank.tips}" />
 		<label text="${demo.gridfields.military_unit}" constraint="gap para"
 			accessible="${form.itemsAccess}"/>
-		<text bind="pa.militaryUnit" constraint="wrap, span 2"
+		<text bind="pa.militaryUnit" constraint="wrap, span 2" id="mlUnit"
 			accessible="${form.itemsAccess}" enabled="${form.sf.assist.enabled}"
 			tips="${demo.gridfields.military_unit.tips}"/>
 

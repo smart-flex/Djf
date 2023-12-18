@@ -10,6 +10,8 @@ public interface ITextArea {
 
     void setEnabled(boolean flag);
 
+    void setEditable(boolean flag);
+
     JTextComponent getJTextComponent();
 
 }

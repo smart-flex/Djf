@@ -44,6 +44,11 @@ public class SFTextAreaHTMLView extends JScrollPane implements ITextArea,
     }
 
     @Override
+    public void setEditable(boolean flag) {
+        editPane.setEditable(flag);
+    }
+
+    @Override
     public void requestFocusOnNestedWidget() {
         editPane.requestFocus();
     }

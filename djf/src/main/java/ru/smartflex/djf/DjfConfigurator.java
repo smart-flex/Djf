@@ -336,6 +336,7 @@ public class DjfConfigurator {
         UIManager.put("Table.focusCellHighlightBorder", new LineBorder(
                 Color.white, 1));
         UIManager.put("TextField.inactiveForeground", Color.black);
+        UIManager.put("TextField.inactiveBackground", Color.white);
 
         UIManager.put("TextArea.font", getFontTextInput());
         UIManager.put("Table.font", getFontTextInput());

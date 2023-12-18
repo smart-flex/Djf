@@ -58,7 +58,9 @@ public class UIWrapper implements Comparable<UIWrapper> {
     // for button, checkbox
     private String belongToModel = null;
 
+    // todo del
     private Boolean isEnableDisableInStaticManner = null;
+    // todo del
     private boolean invokeEnabledMethodOnAssistant = false;
     private boolean appendAble = true;
 
@@ -95,6 +97,7 @@ public class UIWrapper implements Comparable<UIWrapper> {
     private boolean actionLong = false;
     private String actionLongMessage = null;
     private String selAction = null;
+    private UIWrapperEnabledState enabledState = null;
 
     String getSelectAbleBindProperty() {
 
@@ -221,26 +224,11 @@ public class UIWrapper implements Comparable<UIWrapper> {
      */
     public void setEnableBehavior(String info, boolean enabledByMouseClick) {
 
-        if (info != null) {
-            isEnableDisableInStaticManner = translateStringToBoolean(info, enabledByMouseClick);
+        enabledState = UIWrapperEnabledState.defineInitialStatus(info, enabledByMouseClick);
+        boolean currentState = enabledState.getCurrentState(this);
 
-            if (isEnableDisableInStaticManner == null) {
-                if (info.equals(SFConstants.INVOKE_ENABLED_METHOD_ON_ASSISTANT)) {
-                    invokeEnabledMethodOnAssistant = true;
-                } else {
-                    throw new ObjectCreationException(
-                            "There is not recognized enabled/disabled rules: "
-                                    + info);
-                }
-            }
-            // setup initial behavior
-            if (!isEnabledDisabledBehaviorNotDefined()) {
-                // without grid because line selection will prohibit
-                if (widgetType != WidgetTypeEnum.GRID) {
-                    setItemEnabledInt(isEnabledDisabledStaticBehavior());
-                }
-            }
-        }
+        setItemEnabledInt(currentState, false, true);
+
     }
 
     public static Boolean translateStringToBoolean(String info, boolean enabledByMouseClick) {
@@ -266,68 +254,122 @@ public class UIWrapper implements Comparable<UIWrapper> {
         return ret;
     }
 
+    // todo del
     public boolean isEnabledDisabledStaticBehavior() {
-        boolean fok = true;
-        if (isEnableDisableInStaticManner != null) {
-            fok = isEnableDisableInStaticManner;
-        }
-        return fok;
-    }
-
-    private boolean isEnabledDisabledBehaviorNotDefined() {
-        boolean fok = true;
-        if (isEnableDisableInStaticManner != null || invokeEnabledMethodOnAssistant) {
-            fok = false;
-        }
-        return fok;
+        return enabledState.getCurrentState(this);
     }
 
     public void setItemEnabled(boolean flag) {
-        if (isEnabledDisabledBehaviorNotDefined()) {
-            // The behavior is as usual, the item is enabled always. Then it is
-            // allowed to be on or off.
-            setItemEnabledInt(flag);
-        } else {
-            if (invokeEnabledMethodOnAssistant) {
-                FormAssistant fa = FormStack.getCurrentFormBag().getAssistant();
-                boolean fok = fa.enabled(bind, uiName);
-                setItemEnabledInt(fok);
-            }
-        }
+        setItemEnabledInt(flag, false, false);
     }
 
-    private void setItemEnabledInt(boolean flag) {
+    public void setItemDisabledDueToAbend() {
+        setItemEnabledInt(false /* этот параметр при force==true не имеет значения*/, true, false);
+    }
+
+    /**
+     *
+     * @param flag - true - возвращаем изначальный статус, false - отключаем
+     * @param force если true - принудительно переводим виджет в disable в виду аварии
+     * @param onInit - true означает начальную инициализацию
+     */
+    private void setItemEnabledInt(boolean flag, boolean force, boolean onInit) {
+
+        boolean currentState = enabledState.getCurrentState(this);
+
         JComponent comp;
         switch (widgetType) {
             case BUTTON:
             case COMBOBOX:
-            case TEXT:
-            case CHECKBOX:
             case RUN:
-            case DATE:
+            case CHECKBOX:
             case PASSWORD:
+                comp = (JComponent) objectUI;
+                if (force) {
+                    comp.setEnabled(false);
+                } else {
+                    if (onInit) {
+                        if (!flag) {
+                            comp.setEnabled(false);
+                        }
+                    } else {
+                        // регулярный проход
+                        if (flag) {
+                            comp.setEnabled(currentState);
+                        } else {
+                            comp.setEnabled(false);
+                        }
+                    }
+                }
+                break;
+            case DATE:
             case PERIOD:
             case BYTE:
             case SHORT:
             case INT:
             case LONG:
+            case TEXT:
+            case PHONE:
             case NUMERIC:
                 comp = (JComponent) objectUI;
-                comp.setEnabled(flag);
+                if (force) {
+                    comp.setEnabled(false);
+                } else {
+                    JTextComponent compText = (JTextComponent) objectUI;
+                    if (onInit) {
+                        if (!flag) {
+                            compText.setEditable(false);
+                        }
+                    } else {
+                        if (flag) {
+                            compText.setEditable(currentState);
+                        } else {
+                            compText.setEditable(false);
+                        }
+                    }
+                }
                 break;
             case GRID:
                 SFGrid grid = (SFGrid) objectUI;
                 comp = grid.getTable();
-                comp.setEnabled(flag);
+                if (force) {
+                    comp.setEnabled(false);
+                } else {
+                    if (!onInit) {
+                        // регулярный проход
+                        comp.setEnabled(flag);
+                    }
+                }
                 break;
             case TGRID:
                 SFTGrid tgrid = (SFTGrid) objectUI;
                 comp = tgrid.getTable();
-                comp.setEnabled(flag);
+                if (force) {
+                    comp.setEnabled(false);
+                } else {
+                    if (!onInit) {
+                        // регулярный проход
+                        comp.setEnabled(flag);
+                    }
+                }
                 break;
             case TEXTAREA:
                 ITextArea tArea = (ITextArea) objectUI;
-                tArea.setEnabled(flag);
+                if (force) {
+                    tArea.setEnabled(false);
+                } else {
+                    if (onInit) {
+                        if (!flag) {
+                            tArea.setEditable(false);
+                        }
+                    } else {
+                        if (flag) {
+                            tArea.setEditable(currentState);
+                        } else {
+                            tArea.setEditable(false);
+                        }
+                    }
+                }
                 break;
         }
     }

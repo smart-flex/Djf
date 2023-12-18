@@ -120,9 +120,11 @@ public class AppEmulator {
         pa2.setRemark("FoxPro 2 included the \"Rushmore\" optimizing engine, which used indices to accelerate data retrieval and updating. (c) Wiki");
         listAccount.add(pa2);
 
-        listAccount.add(new PojoAccount("19991203", new Date(), null,
+        PojoAccount pa3 = new PojoAccount("19991203", new Date(), null,
                 null, "410000", false, ptPrivate, null,
-                new BigDecimal("5050")));
+                new BigDecimal("5050"));
+        pa3.setMilitaryRank("Major");
+        listAccount.add(pa3);
 
         PojoAccount pa4 = new PojoAccount("19291704", new Date(),
                 "+61 416 819 589", null, "410003", true, ptMuni, 196802,

@@ -269,7 +269,6 @@ public class ItemBuilder {
                     WidgetTypeEnum.TEXT, item, beanDef, true, bindPrefix, true);
 
             wrapper.setOrder(item.getOrder());
-            wrapper.setupUIName(WidgetTypeEnum.TEXT, item.getId());
             wrapper.setAction(item.getAction());
             wrapper.setBelongToModel(item.getBelong());
 
@@ -300,7 +299,7 @@ public class ItemBuilder {
                       SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.BYTE,
-                item.getOrder(), item.getId(), item.getAction(),
+                item.getOrder(), item.getAction(),
                 item.getConstraint(), bindPrefix, item.getBelong());
     }
 
@@ -308,7 +307,7 @@ public class ItemBuilder {
                       SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.SHORT,
-                item.getOrder(), item.getId(), item.getAction(),
+                item.getOrder(), item.getAction(),
                 item.getConstraint(), bindPrefix, item.getBelong());
     }
 
@@ -316,7 +315,7 @@ public class ItemBuilder {
                       SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.INT,
-                item.getOrder(), item.getId(), item.getAction(),
+                item.getOrder(), item.getAction(),
                 item.getConstraint(), bindPrefix, item.getBelong());
     }
 
@@ -324,13 +323,13 @@ public class ItemBuilder {
                       SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.LONG,
-                item.getOrder(), item.getId(), item.getAction(),
+                item.getOrder(), item.getAction(),
                 item.getConstraint(), bindPrefix, item.getBelong());
     }
 
     private static void buildIntType(ItemInputType item, WidgetManager wm,
                                      SFPanel sfPanel, BeanFormDef beanDef, WidgetTypeEnum wType,
-                                     BigInteger order, String id, String action, String constraint,
+                                     BigInteger order, String action, String constraint,
                                      String bindPrefix, String belong) {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
@@ -339,7 +338,6 @@ public class ItemBuilder {
                     beanDef, false, bindPrefix, false);
 
             wrapper.setOrder(order);
-            wrapper.setupUIName(wType, id);
             wrapper.setAction(action);
             wrapper.setBelongToModel(belong);
 
@@ -364,7 +362,6 @@ public class ItemBuilder {
                     false);
 
             wrapper.setOrder(item.getOrder());
-            wrapper.setupUIName(WidgetTypeEnum.NUMERIC, item.getId());
             wrapper.setAction(item.getAction());
             wrapper.setBelongToModel(item.getBelong());
 
@@ -381,6 +378,58 @@ public class ItemBuilder {
 
     }
 
+    private static String getWidgetId(WidgetTypeEnum widgetType, ItemInputType item) {
+        String id = null;
+        switch (widgetType) {
+            case TEXT:
+                if (item instanceof ItemTextType) {
+                    id = ((ItemTextType)item).getId();
+                }
+                break;
+            case BYTE:
+                if (item instanceof ItemByteType) {
+                    id = ((ItemByteType)item).getId();
+                }
+                break;
+            case SHORT:
+                if (item instanceof ItemShortType) {
+                    id = ((ItemShortType)item).getId();
+                }
+                break;
+            case INT:
+                if (item instanceof ItemIntType) {
+                    id = ((ItemIntType)item).getId();
+                }
+                break;
+            case LONG:
+                if (item instanceof ItemLongType) {
+                    id = ((ItemLongType)item).getId();
+                }
+                break;
+            case NUMERIC:
+                if (item instanceof ItemNumType) {
+                    id = ((ItemNumType)item).getId();
+                }
+                break;
+            case PERIOD:
+                if (item instanceof ItemPeriodType) {
+                    id = ((ItemPeriodType)item).getId();
+                }
+                break;
+            case DATE:
+                if (item instanceof ItemDateType) {
+                    id = ((ItemDateType)item).getId();
+                }
+                break;
+            case PHONE:
+                if (item instanceof ItemPhoneType) {
+                    id = ((ItemPhoneType)item).getId();
+                }
+                break;
+        }
+
+        return id;
+    }
     public static UIWrapper fillTextBase(UIWrapper wrapper,
                                          WidgetTypeEnum widgetType, ItemInputType item, BeanFormDef beanDef,
                                          boolean setupLength, String bindPrefix, boolean enabledByMouseClick) {
@@ -388,7 +437,7 @@ public class ItemBuilder {
         wrapper.setObjectUI(ui);
         wrapper.setWidgetType(widgetType);
         wrapper.setBind(item.getBind(), bindPrefix);
-        wrapper.setupUIName(widgetType, null);
+        wrapper.setupUIName(widgetType, getWidgetId(widgetType, item));
         wrapper.setBeanFormDef(beanDef);
 
         if (setupLength) {
@@ -574,7 +623,6 @@ public class ItemBuilder {
                     bindPrefix);
 
             wrapper.setOrder(item.getOrder());
-            wrapper.setupUIName(WidgetTypeEnum.PERIOD, item.getId());
             wrapper.setAction(item.getAction());
             wrapper.setBelongToModel(item.getBelong());
 
@@ -624,7 +672,6 @@ public class ItemBuilder {
                     bindPrefix);
 
             wrapper.setOrder(item.getOrder());
-            wrapper.setupUIName(WidgetTypeEnum.DATE, item.getId());
             wrapper.setAction(item.getAction());
             wrapper.setBelongToModel(item.getBelong());
 
@@ -875,7 +922,6 @@ public class ItemBuilder {
                     false, bindPrefix, false);
 
             wrapper.setOrder(item.getOrder());
-            wrapper.setupUIName(WidgetTypeEnum.PHONE, item.getId());
             wrapper.setAction(item.getAction());
             wrapper.setBelongToModel(item.getBelong());
 

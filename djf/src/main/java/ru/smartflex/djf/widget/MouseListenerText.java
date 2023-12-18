@@ -19,8 +19,8 @@ public class MouseListenerText extends MouseAdapter implements ISFHandler {
     @Override
     public void mouseClicked(MouseEvent event) {
         if (event.getClickCount() == 2) {
-            if (!field.isEnabled()) {
-                field.setEnabled(true);
+            if (!field.isEditable()) {
+                field.setEditable(true);
             }
         }
     }
