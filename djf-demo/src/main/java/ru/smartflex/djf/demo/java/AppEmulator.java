@@ -423,6 +423,11 @@ public class AppEmulator {
     }
 
     @SuppressWarnings("unused")
+    public StepperPercentInfo getStepperPercentInfo() {
+        return new StepperPercentInfo();
+    }
+
+    @SuppressWarnings("unused")
     public List<TaskDemo> getTasks() {
         List<TaskDemo> list = new ArrayList<TaskDemo>();
 
@@ -515,6 +520,14 @@ public class AppEmulator {
                 new String[]{"ru/smartflex/djf/demo/xml/PojoCode.bean.xml"},
                 null,
                 new String[]{"ru/smartflex/djf/demo/java/PojoCode.java"}));
+
+        list.add(new TaskDemo(12, "Simple panel with stepper percent widget",
+                "ru/smartflex/djf/demo/xml/SFWidgets.frm.xml",
+                null,
+                null,
+                null,
+                new String[]{"ru/smartflex/djf/demo/java/StepperPercentInfo.java"}));
+
         return list;
     }
 

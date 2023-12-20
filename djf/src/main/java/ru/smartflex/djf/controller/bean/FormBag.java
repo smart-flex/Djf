@@ -718,6 +718,8 @@ public class FormBag {
                 ((SFGroup) ui).closeHandler();
             } else if (ui instanceof JTabbedPane) {
                 closeHandler(((JTabbedPane) ui).getChangeListeners());
+            } else if (ui instanceof SFStepperPercent) {
+                ((SFStepperPercent)ui).closeHandler();
             }
 
         }

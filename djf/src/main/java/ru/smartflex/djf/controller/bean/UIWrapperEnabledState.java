@@ -45,6 +45,10 @@ class UIWrapperEnabledState {
         return new UIWrapperEnabledState(staticEnableFlag, invokeEnabledMethodFromAssistant);
     }
 
+    static UIWrapperEnabledState getEditableStaticOffBehavior() {
+        return new UIWrapperEnabledState(Boolean.FALSE, false);
+    }
+
     boolean getCurrentState(UIWrapper uiw) {
         boolean state = true;
 

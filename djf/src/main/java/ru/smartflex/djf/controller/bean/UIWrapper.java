@@ -23,6 +23,7 @@ import ru.smartflex.djf.controller.exception.ObjectCreationException;
 import ru.smartflex.djf.controller.helper.ConverterUtil;
 import ru.smartflex.djf.widget.ITextArea;
 import ru.smartflex.djf.widget.SFPassword;
+import ru.smartflex.djf.widget.SFStepperPercent;
 import ru.smartflex.djf.widget.grid.SFGrid;
 import ru.smartflex.djf.widget.mask.MaskInfo;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
@@ -58,10 +59,6 @@ public class UIWrapper implements Comparable<UIWrapper> {
     // for button, checkbox
     private String belongToModel = null;
 
-    // todo del
-    private Boolean isEnableDisableInStaticManner = null;
-    // todo del
-    private boolean invokeEnabledMethodOnAssistant = false;
     private boolean appendAble = true;
 
     // JScrollPane
@@ -223,12 +220,17 @@ public class UIWrapper implements Comparable<UIWrapper> {
      * Setup static or dynamic behavior for enable/disable mode of item
      */
     public void setEnableBehavior(String info, boolean enabledByMouseClick) {
-
         enabledState = UIWrapperEnabledState.defineInitialStatus(info, enabledByMouseClick);
         boolean currentState = enabledState.getCurrentState(this);
 
         setItemEnabledInt(currentState, false, true);
+    }
 
+    public void setEditableStaticOffBehavior() {
+        enabledState = UIWrapperEnabledState.getEditableStaticOffBehavior();
+        boolean currentState = enabledState.getCurrentState(this);
+
+        setItemEnabledInt(currentState, false, true);
     }
 
     public static Boolean translateStringToBoolean(String info, boolean enabledByMouseClick) {
@@ -254,7 +256,6 @@ public class UIWrapper implements Comparable<UIWrapper> {
         return ret;
     }
 
-    // todo del
     public boolean isEnabledDisabledStaticBehavior() {
         return enabledState.getCurrentState(this);
     }
@@ -325,6 +326,22 @@ public class UIWrapper implements Comparable<UIWrapper> {
                             compText.setEditable(currentState);
                         } else {
                             compText.setEditable(false);
+                        }
+                    }
+                }
+                break;
+            case STEPPER_PERCENT:
+                SFStepperPercent stepper = (SFStepperPercent) objectUI;
+                if (force) {
+                    stepper.setItemDisabledDueToAbend();
+                } else {
+                    if (onInit) {
+                        // ничего не делаем, т.к. по дефолту уже все выставлено как надо
+                    } else {
+                        if (flag) {
+                            stepper.enableAction();
+                        } else {
+                            stepper.disableAction();
                         }
                     }
                 }

@@ -16,6 +16,7 @@ import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.ITextArea;
 import ru.smartflex.djf.widget.SFPassword;
+import ru.smartflex.djf.widget.SFStepperPercent;
 import ru.smartflex.djf.widget.mask.MaskInfo;
 
 public class ConverterUtil {
@@ -128,6 +129,11 @@ public class ConverterUtil {
             case NUMERIC: {
                 String val = ((javax.swing.JTextField) comp).getText();
                 obj = getValue(widgetType, format, val, uiw);
+            }
+            break;
+            case STEPPER_PERCENT: {
+                SFStepperPercent percent = (SFStepperPercent) comp;
+                obj = percent.getPercent();
             }
             break;
         }

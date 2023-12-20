@@ -98,6 +98,10 @@ public class ObjectCreator {
         return object;
     }
 
+    public static SFStepperPercent createStepperPercent(WidgetManager widgetManager) {
+        return new SFStepperPercent(widgetManager);
+    }
+
     public static SFComboBox createSwingComboBox(boolean tipsItem) {
         return new SFComboBox(tipsItem);
     }

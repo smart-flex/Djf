@@ -21,7 +21,7 @@ public class MainDjfDemo {
         props.put(SFConstants.PROPERTY_MASK_DATE, "dd-MM-yyyy");
 
         props.put(SFConstants.PROPERTY_FONT_SIZE, "14"); //12
-        props.put(SFConstants.PROPERTY_FONT_TEXT_INPUT_RATE_INCREASING, "0"); // 1.5
+        props.put(SFConstants.PROPERTY_FONT_TEXT_INPUT_RATE_INCREASING, "0.5"); // 1.5
 
         // Setup for application type
 

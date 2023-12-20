@@ -146,6 +146,8 @@ class PanelBuilder {
                         } else if (it instanceof ItemPhoneType) {
                             ItemBuilder.build((ItemPhoneType) it, wm, sfPanel,
                                     beanDef, bindPref);
+                        } else if (it instanceof ItemStepperPercentType) {
+                            ItemBuilder.build((ItemStepperPercentType) it, wm, sfPanel, beanDef, bindPref);
                         }
                     }
                 }

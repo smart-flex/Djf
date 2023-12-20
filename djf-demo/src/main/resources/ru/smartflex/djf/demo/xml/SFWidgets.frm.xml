@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+    <description>Hello world simple form</description>
+    <layout clazz="java.awt.BorderLayout"/>
+    <panel>
+        <layout clazz="net.miginfocom.swing.MigLayout">
+            <param type="string" value="align 50% 50%"/>
+        </layout>
+        <items>
+            <stepPercent bind="sp.percent"/>
+        </items>
+    </panel>
+    <models>
+        <model id="sp" noSave="true">
+            <load method="${session.app.getStepperPercentInfo}" delay="0" />
+            <bean clazz="ru.smartflex.djf.demo.java.StepperPercentInfo" />
+        </model>
+    </models>
+</form>

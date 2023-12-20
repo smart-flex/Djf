@@ -20,10 +20,7 @@ import ru.smartflex.djf.controller.bean.tree.TreeListUtils;
 import ru.smartflex.djf.controller.bean.tree.WidgetTreeNode;
 import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.model.gen.ModelType;
-import ru.smartflex.djf.widget.FocusPolicy;
-import ru.smartflex.djf.widget.SFComboBox;
-import ru.smartflex.djf.widget.ITextArea;
-import ru.smartflex.djf.widget.SFPassword;
+import ru.smartflex.djf.widget.*;
 import ru.smartflex.djf.widget.grid.SFGrid;
 import ru.smartflex.djf.widget.grid.SFGridMouseMotionFlag;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
@@ -313,6 +310,10 @@ public class WidgetManagerHelper {
                     case TEXTAREA:
                         ((ITextArea) uiw.getObjectUI()).setText(uiw
                                 .getFormattedData(obj));
+                        break;
+                    case STEPPER_PERCENT:
+                        SFStepperPercent stepper = (SFStepperPercent) uiw.getObjectUI();
+                        stepper.setPercent(uiw.getFormattedData(obj));
                         break;
                 }
             }

@@ -938,4 +938,40 @@ public class ItemBuilder {
 
     }
 
+    static void build(ItemStepperPercentType item, WidgetManager wm, SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
+
+        if (AccessibleHelper.isAccessible(item, wm)) {
+            UIWrapper wrapper = new UIWrapper();
+
+            Object ui = ObjectCreator.createStepperPercent(wm);
+            wrapper.setObjectUI(ui);
+            wrapper.setWidgetType(WidgetTypeEnum.STEPPER_PERCENT);
+            wrapper.setBind(item.getBind(), bindPrefix);
+            wrapper.setBeanFormDef(beanDef);
+            wrapper.setEditableStaticOffBehavior();
+
+            String tips = item.getTips();
+            if (tips != null) {
+//                tips = PrefixUtil.getMsg(tips, sfPanel.getBundle());
+//                SFFileChooser fc = (SFFileChooser) wrapper.getObjectUI();
+//                fc.setToolTipText(tips);
+            }
+
+            wrapper.setupUIName(WidgetTypeEnum.STEPPER_PERCENT, item.getId());
+
+            wrapper.setBelongToModel(item.getBelong()); // for only focus policy
+            // and status management
+
+            wm.registerItemUIWrapper(wrapper);
+
+//            ((SFFileChooser) ui).createKeyHandler(wm);
+//            ((SFFileChooser) ui).setPanel((JComponent) sfPanel.getPanel());
+
+            java.awt.Container uiPanel = (Container) sfPanel.getPanel();
+
+            uiPanel.add((Component) ui, item.getConstraint());
+        }
+    }
+
+
 }

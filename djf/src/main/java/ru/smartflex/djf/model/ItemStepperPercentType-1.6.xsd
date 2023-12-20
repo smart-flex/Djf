@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="ru/smartflex/djf/model" xmlns:ct="ru/smartflex/djf/model"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="ru/smartflex/djf/model">
+
+    <xs:include schemaLocation="AttributeTypes-1.3.xsd"/>
+
+    <xs:complexType name="ItemStepperPercentType">
+
+        <xs:attribute name="tips" type="ct:AttrTipsType"/>
+        <xs:attribute name="belong" type="ct:AttrBelongType"/>
+        <xs:attribute name="accessible" type="ct:AttrAccessibleType"/>
+        <xs:attribute name="constraint" type="ct:AttrConstraintType"/>
+        <xs:attribute name="id" type="ct:AttrIdWidgetType"/>
+        <xs:attribute name="bind" type="ct:AttrBindType"/>
+
+        <xs:attribute name="delta" type="xs:int"/>
+        <xs:attribute name="edgeMin" type="xs:int"/>
+        <xs:attribute name="edgeMax" type="xs:int"/>
+
+        <xs:attribute name="persist" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Saved/restored value from local resource. In that case binding is not necessary.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+
+
+    </xs:complexType>
+
+</xs:schema>
