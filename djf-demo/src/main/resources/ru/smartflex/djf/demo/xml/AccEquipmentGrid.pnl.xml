@@ -6,9 +6,9 @@
 		<grid constraint="Center" bindPref="pa.equipment" selectAble="disabled" id="idEquipmentGrid">
 			<cols>
 				<int bind="idEquipment" title="${demo.gridfields.grideq.idEq}" width="30" noResize="yes" />
-				<num bind="amount" title="${demo.gridfields.grideq.amount}" />
-				<text bind="serialNumber" title="${demo.gridfields.grideq.sn}" />				
-				<text bind="remark" title="${demo.gridfields.grideq.remark}" width="250"/>
+				<num bind="amount" title="${demo.gridfields.grideq.amount}" width="50:120" />
+				<text bind="serialNumber" title="${demo.gridfields.grideq.sn}" width="50:200"/>
+				<text bind="remark" title="${demo.gridfields.grideq.remark}" width="250:1200"/>
 			</cols>
 		</grid>
 	</items>

@@ -189,7 +189,6 @@ public class WidgetManager {
                                        String property, boolean suppressExcp) {
         Object obj = null;
         String idModel = uiw.getModelBase().getIdModel();
-
         if (idModel != null) {
             TreeList treeList = modelLoadResult.getTreeList(idModel);
 
@@ -522,6 +521,38 @@ public class WidgetManager {
             }
         }
 
+    }
+
+    public void setValueUsualWidgetFromLocalStorage(UIWrapper uiw) {
+        if (uiw.getWidgetType() != WidgetTypeEnum.STEPPER_PERCENT) {
+            return;
+        }
+
+        Integer intValue = null;
+        String value = uiw.getPersistValue();
+        if (value != null) {
+            try {
+                intValue = Integer.parseInt(value);
+            } catch (Exception e) {
+                return;
+            }
+        }
+
+        String idModel = uiw.getModelBase().getIdModel();
+
+        if (idModel != null && intValue != null) {
+            TreeList treeList = modelLoadResult.getTreeList(idModel);
+
+            lockTree.lock();
+            try {
+                IBeanWrapper bw = treeList.getCurrentBeanWrapper(uiw.getModelBase().getTreeNode());
+                TreeListUtils.setPropertyValue(bw.getData(), uiw.getModelBase().getProperty(), intValue);
+            } catch (Exception e) {
+                SFLogger.error("Error by data reading", e);
+            } finally {
+                lockTree.unlock();
+            }
+        }
     }
 
 

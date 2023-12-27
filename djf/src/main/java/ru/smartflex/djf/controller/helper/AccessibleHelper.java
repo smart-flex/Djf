@@ -2,21 +2,7 @@ package ru.smartflex.djf.controller.helper;
 
 import ru.smartflex.djf.Djf;
 import ru.smartflex.djf.controller.WidgetManager;
-import ru.smartflex.djf.model.gen.ItemButtonRunType;
-import ru.smartflex.djf.model.gen.ItemButtonType;
-import ru.smartflex.djf.model.gen.ItemCheckboxBaseType;
-import ru.smartflex.djf.model.gen.ItemComboboxBaseType;
-import ru.smartflex.djf.model.gen.ItemFileType;
-import ru.smartflex.djf.model.gen.ItemGridType;
-import ru.smartflex.djf.model.gen.ItemGroupType;
-import ru.smartflex.djf.model.gen.ItemInputType;
-import ru.smartflex.djf.model.gen.ItemLabelType;
-import ru.smartflex.djf.model.gen.ItemPasswordType;
-import ru.smartflex.djf.model.gen.ItemTextAreaType;
-import ru.smartflex.djf.model.gen.PanelType;
-import ru.smartflex.djf.model.gen.SeparatorType;
-import ru.smartflex.djf.model.gen.TabPanelType;
-import ru.smartflex.djf.model.gen.TabType;
+import ru.smartflex.djf.model.gen.*;
 
 public class AccessibleHelper {
 
@@ -58,9 +44,22 @@ public class AccessibleHelper {
             return isAccessible((ItemGroupType) item, wm);
         } else if (item instanceof TabPanelType) {
             return isAccessible((TabPanelType) item, wm);
+        } else if (item instanceof ItemStepperPercentType) {
+            return isAccessible((ItemStepperPercentType) item, wm);
         } else {
             return true;
         }
+    }
+
+    private static boolean isAccessible(ItemStepperPercentType item, WidgetManager wm) {
+        boolean fok = true;
+
+        if (item.getAccessible() != null) {
+            String[] infos = PrefixUtil.getFormParameterAccessible(
+                    item.getAccessible(), wm);
+            fok = Djf.getConfigurator().isAccessible(infos);
+        }
+        return fok;
     }
 
     private static boolean isAccessible(TabPanelType item, WidgetManager wm) {

@@ -31,6 +31,7 @@ import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.SFLogger;
 import ru.smartflex.djf.SizeFrameEnum;
 import ru.smartflex.djf.tool.FontUtil;
+import ru.smartflex.djf.tool.LocalStorage;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.IForm;
 import ru.smartflex.djf.widget.IFrame;
@@ -199,6 +200,7 @@ public class FrameUI extends JFrame implements IFrame {
     public void closeFrame() {
         this.removeComponentListener(fcListener);
         Djf.getConfigurator().closeClientResources();
+        LocalStorage.saveSettings();
 
         System.exit(0);
     }

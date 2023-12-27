@@ -8,23 +8,33 @@
     <xs:complexType name="ItemStepperPercentType">
 
         <xs:attribute name="tips" type="ct:AttrTipsType"/>
-        <xs:attribute name="belong" type="ct:AttrBelongType"/>
         <xs:attribute name="accessible" type="ct:AttrAccessibleType"/>
         <xs:attribute name="constraint" type="ct:AttrConstraintType"/>
         <xs:attribute name="id" type="ct:AttrIdWidgetType"/>
         <xs:attribute name="bind" type="ct:AttrBindType"/>
 
-        <xs:attribute name="delta" type="xs:int"/>
-        <xs:attribute name="edgeMin" type="xs:int"/>
-        <xs:attribute name="edgeMax" type="xs:int"/>
-
-        <xs:attribute name="persist" type="xs:boolean">
+        <xs:attribute name="delta" type="xs:int">
             <xs:annotation>
-                <xs:documentation>Saved/restored value from local resource. In that case binding is not necessary.
+                <xs:documentation>Decrement/increment stepper delta. The value must be positive. Default value is 10.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
 
+        <xs:attribute name="low" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>Stepper value has to be greater than or equal to the low.  Default value is 0.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+
+        <xs:attribute name="high" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>Stepper value has to be less than or equal to the high.  Default value is 50.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+
+        <xs:attribute name="persist" type="ct:AttrPersistType"/>
 
     </xs:complexType>
 

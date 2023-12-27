@@ -47,6 +47,7 @@ public class BeanBuilder {
                 if (bt.getSelfSet() != null) {
                     beanDef.setPropertyNameSelf(bt.getSelfSet());
                 }
+                // не трогать передачу beanDef, beanDef - инчае поломается работа со сложенностью - тут магия от 2019 года
                 fillPropertyDefinition(mt.getId(), bt, beanDef, beanDef);
 
                 fillSetDefinition(bt, mt.getId(), beanDef, beanDef);

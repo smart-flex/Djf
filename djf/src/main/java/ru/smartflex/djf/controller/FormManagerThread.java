@@ -54,6 +54,7 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
         parseAndLoad(data);
 
         WidgetManagerHelper.checksGetters(fm, data);
+        WidgetManagerHelper.restoreValueFromLocalStorage(fm, data);
 
         // winking
         // fm.getWidgetManager().enableItems(); // enables forms items for

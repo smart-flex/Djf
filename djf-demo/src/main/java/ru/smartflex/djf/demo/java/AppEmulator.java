@@ -166,7 +166,7 @@ public class AppEmulator {
         listAccount
                 .get(0)
                 .getEquipment()
-                .add(new PojoAccEquipment(new BigDecimal("4.025"),
+                .add(new PojoAccEquipment(new BigDecimal("4.025"), "g20231227anr",
                         "Equipment for account is very important thing"));
 
         listAccount.get(2).getEquipment()
@@ -420,11 +420,6 @@ public class AppEmulator {
     @SuppressWarnings("unused")
     public CredentialInfo getCredentialInfo() {
         return new CredentialInfo(null, null);
-    }
-
-    @SuppressWarnings("unused")
-    public StepperPercentInfo getStepperPercentInfo() {
-        return new StepperPercentInfo();
     }
 
     @SuppressWarnings("unused")

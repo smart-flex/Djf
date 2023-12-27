@@ -88,6 +88,33 @@ public class WidgetManagerHelper {
         }
     }
 
+    static void restoreValueFromLocalStorage(FormManager fm, ModelLoadResult data) {
+        if (data.isWasLoadError()) {
+            return;
+        }
+
+        List<ModelType> modelList = fm.getForm().getModels().getModel();
+        for (ModelType mt : modelList) {
+            String idModel = mt.getId();
+
+            WidgetManager wm = fm.getWidgetManager();
+            WidgetTreeNode<UIWrapper> wtn = wm.getWidgetTreeNode(idModel);
+            List<WidgetTreeNode<UIWrapper>> orderedList = wtn
+                    .getOrderedTreeNode();
+            for (WidgetTreeNode<UIWrapper> wtno : orderedList) {
+                UIWrapper uiw = wtno.getWidget();
+
+                if (wtno.getWidget().getBelongToModel() != null) {
+                    continue;
+                }
+                if (!wtno.isScrollWidget()) {
+                    wm.setValueUsualWidgetFromLocalStorage(uiw);
+                }
+            }
+        }
+
+    }
+
     static void restoreSelectionOnScrollableWidgets(FormManager fm, ModelLoadResult data, boolean firstTime) {
         if (data.isWasLoadError()) {
             return;

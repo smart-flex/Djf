@@ -1,6 +1,8 @@
 package ru.smartflex.djf.widget;
 
 import ru.smartflex.djf.controller.WidgetManager;
+import ru.smartflex.djf.controller.bean.UIWrapper;
+import ru.smartflex.djf.tool.LocalStorage;
 import ru.smartflex.djf.tool.OtherUtil;
 
 import javax.swing.*;
@@ -12,6 +14,8 @@ public class SFStepperPercent extends javax.swing.JPanel implements ISFHandler {
 
     private static ImageIcon imagePlus = null;
     private static ImageIcon imageMinus = null;
+    private WidgetManager widgetManager = null;
+    private UIWrapper wrapper = null;
     private BorderLayout layout = new BorderLayout(2, 2);
     private JButton buttonPlus = new JButton();
     private JButton buttonMinus = new JButton();
@@ -22,14 +26,20 @@ public class SFStepperPercent extends javax.swing.JPanel implements ISFHandler {
     private AtomicBoolean allowedStep = new AtomicBoolean(true);
     private AtomicInteger intValue = new AtomicInteger(0);
 
+    private int delta = 10;
+    private int low = 0;
+    private int high = 50;
+
     public SFStepperPercent() {
         super();
         initImages();
         panelInit();
     }
 
-    public SFStepperPercent(WidgetManager widgetManager) {
+    public SFStepperPercent(WidgetManager widgetManager, UIWrapper wrapper) {
         super();
+        this.widgetManager = widgetManager;
+        this.wrapper = wrapper;
         initImages();
         panelInit();
         initAl(widgetManager);
@@ -55,7 +65,10 @@ public class SFStepperPercent extends javax.swing.JPanel implements ISFHandler {
         this.add(percent, BorderLayout.CENTER);
     }
 
-    //todo
+    public void setTips(String tips) {
+        percent.setToolTipText(tips);
+    }
+
     public void setItemDisabledDueToAbend() {
         buttonPlus.setEnabled(false);
         buttonMinus.setEnabled(false);
@@ -89,13 +102,22 @@ public class SFStepperPercent extends javax.swing.JPanel implements ISFHandler {
         int newVal = intValue.get();
         switch (action) {
             case INCREMENT:
-                newVal += 10;
+                if ((newVal + delta) <= high) {
+                    newVal += delta;
+                }
                 break;
             case DECREMENT:
-                newVal -= 10;
+                if ((newVal - delta) >= low) {
+                    newVal -= delta;
+                }
                 break;
         }
         intValue.set(newVal);
+        if (wrapper.isIdWasAssigned()) {
+            // обновляем значение в LocalStorage
+            LocalStorage.setValue(wrapper.getUiName(), newVal);
+        }
+        widgetManager.setValueUsualWidget(wrapper);
         showPercent();
     }
 
@@ -143,5 +165,17 @@ public class SFStepperPercent extends javax.swing.JPanel implements ISFHandler {
         alMinus.closeHandler();
         alPlus = null;
         alMinus = null;
+    }
+
+    public void setDelta(int delta) {
+        this.delta = delta;
+    }
+
+    public void setLow(int low) {
+        this.low = low;
+    }
+
+    public void setHigh(int high) {
+        this.high = high;
     }
 }

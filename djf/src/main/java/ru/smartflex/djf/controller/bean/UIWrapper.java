@@ -95,6 +95,8 @@ public class UIWrapper implements Comparable<UIWrapper> {
     private String actionLongMessage = null;
     private String selAction = null;
     private UIWrapperEnabledState enabledState = null;
+    private String persistValue = null;
+    private boolean idWasAssigned = false;
 
     String getSelectAbleBindProperty() {
 
@@ -218,6 +220,8 @@ public class UIWrapper implements Comparable<UIWrapper> {
 
     /**
      * Setup static or dynamic behavior for enable/disable mode of item
+     * @param info - can be: yes, no, true, false OR ${form.sf.assist.enabled} . The value: byClick applies ONLY to Button and TextField
+     * @param enabledByMouseClick - has to be true ONLY for ItemButtonType and non-grid widgets: Text, Byte, Short, Int, Long, Num, Period, Phone, File
      */
     public void setEnableBehavior(String info, boolean enabledByMouseClick) {
         enabledState = UIWrapperEnabledState.defineInitialStatus(info, enabledByMouseClick);
@@ -275,6 +279,10 @@ public class UIWrapper implements Comparable<UIWrapper> {
      * @param onInit - true означает начальную инициализацию
      */
     private void setItemEnabledInt(boolean flag, boolean force, boolean onInit) {
+        if (widgetType == WidgetTypeEnum.LABEL) {
+            // иначе NPE, т.к. state для label не определен
+            return;
+        }
 
         boolean currentState = enabledState.getCurrentState(this);
 
@@ -541,6 +549,7 @@ public class UIWrapper implements Comparable<UIWrapper> {
     public void setupUIName(WidgetTypeEnum type, String id) {
         if (id != null) {
             uiName = id;
+            idWasAssigned = true;
         } else {
             uiName = Djf.getConfigurator().getNextUIId(type);
         }
@@ -828,5 +837,17 @@ public class UIWrapper implements Comparable<UIWrapper> {
 
     public void setSelAction(String selAction) {
         this.selAction = selAction;
+    }
+
+    public String getPersistValue() {
+        return persistValue;
+    }
+
+    public void setPersistValue(String persistValue) {
+        this.persistValue = persistValue;
+    }
+
+    public boolean isIdWasAssigned() {
+        return idWasAssigned;
     }
 }

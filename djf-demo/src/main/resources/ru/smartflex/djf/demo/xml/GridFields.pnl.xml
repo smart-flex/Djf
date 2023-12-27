@@ -35,7 +35,7 @@
 			<layout clazz="net.miginfocom.swing.MigLayout">
 				<param type="string" value="insets 5 0 0 0" />
 				<param type="string" value="[grow, fill][grow, fill]" />
-				<param type="string" value="[50%, grow, fill][50%, grow, fill]" />
+				<param type="string" value="[grow, fill][grow, fill]" />
 			</layout>
 			<panel include="ru/smartflex/djf/demo/xml/AccountFields.pnl.xml"
 				constraint="span 2, wrap" />

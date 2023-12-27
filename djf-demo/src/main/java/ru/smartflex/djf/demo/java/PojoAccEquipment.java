@@ -42,6 +42,14 @@ public class PojoAccEquipment implements Serializable {
         this.remark = remark;
     }
 
+    public PojoAccEquipment(BigDecimal amount, String serialNumber, String remark) {
+        super();
+        this.idEquipment = id.incrementAndGet();
+        this.amount = amount;
+        this.serialNumber = serialNumber;
+        this.remark = remark;
+    }
+
     @SuppressWarnings("unused")
     public int getIdEquipment() {
         return idEquipment;

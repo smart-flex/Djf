@@ -8,13 +8,12 @@
             <param type="string" value="align 50% 50%"/>
         </layout>
         <items>
-            <stepPercent bind="sp.percent"/>
+            <stepPercent bind="sp.percent" tips="Font percent value" persist="true" id="idFontPercent" low="0" high="50" delta="10"/>
         </items>
     </panel>
     <models>
         <model id="sp" noSave="true">
-            <load method="${session.app.getStepperPercentInfo}" delay="0" />
-            <bean clazz="ru.smartflex.djf.demo.java.StepperPercentInfo" />
+            <bean clazz="ru.smartflex.djf.demo.java.StepperPercentInfo" selfCreated="true"/>
         </model>
     </models>
 </form>

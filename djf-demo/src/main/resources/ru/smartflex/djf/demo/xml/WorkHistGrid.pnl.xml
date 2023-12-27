@@ -9,8 +9,8 @@
 				<int bind="idHistory" title="${label.demo.gridfields_tab.gridwh.idWH}"
 					width="50" noResize="yes"/>
 				<date bind="dateWork" title="${label.demo.gridfields_tab.gridwh.date}"
-					width="80" />
-				<text bind="remark" title="${label.demo.gridfields_tab.gridwh.remark}" />
+					width="100:100" />
+				<text bind="remark" title="${label.demo.gridfields_tab.gridwh.remark}" width="200:1200"/>
 			</cols>
 		</grid>
 	</items>

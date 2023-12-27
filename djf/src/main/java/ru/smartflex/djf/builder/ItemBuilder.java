@@ -20,11 +20,13 @@ import ru.smartflex.djf.controller.bean.LabelBundle;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.helper.AccessibleHelper;
+import ru.smartflex.djf.controller.helper.ConverterUtil;
 import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.tool.ColorUtil;
 import ru.smartflex.djf.tool.FontUtil;
+import ru.smartflex.djf.tool.LocalStorage;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.*;
 import ru.smartflex.djf.widget.mask.MaskInfo;
@@ -265,8 +267,7 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
-            UIWrapper wrapper = fillTextBase(new UIWrapper(),
-                    WidgetTypeEnum.TEXT, item, beanDef, true, bindPrefix, true);
+            UIWrapper wrapper = fillTextBase(new UIWrapper(), WidgetTypeEnum.TEXT, item, beanDef, true, bindPrefix, true);
 
             wrapper.setOrder(item.getOrder());
             wrapper.setAction(item.getAction());
@@ -334,8 +335,7 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
-            UIWrapper wrapper = fillTextBase(new UIWrapper(), wType, item,
-                    beanDef, false, bindPrefix, false);
+            UIWrapper wrapper = fillTextBase(new UIWrapper(), wType, item, beanDef, false, bindPrefix, true);
 
             wrapper.setOrder(order);
             wrapper.setAction(action);
@@ -357,9 +357,7 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
-            UIWrapper wrapper = fillTextBase(new UIWrapper(),
-                    WidgetTypeEnum.NUMERIC, item, beanDef, false, bindPrefix,
-                    false);
+            UIWrapper wrapper = fillTextBase(new UIWrapper(), WidgetTypeEnum.NUMERIC, item, beanDef, false, bindPrefix,true);
 
             wrapper.setOrder(item.getOrder());
             wrapper.setAction(item.getAction());
@@ -592,10 +590,9 @@ public class ItemBuilder {
     }
 
     public static UIWrapper fillPeriodBase(UIWrapper wrapper,
-                                           ItemPeriodBaseType item, BeanFormDef beanDef, String bindPrefix) {
+                                           ItemPeriodBaseType item, BeanFormDef beanDef, String bindPrefix, boolean enabledByMouseClick) {
 
-        fillTextBase(wrapper, WidgetTypeEnum.PERIOD, item, beanDef,
-                false, bindPrefix, false);
+        fillTextBase(wrapper, WidgetTypeEnum.PERIOD, item, beanDef, false, bindPrefix, enabledByMouseClick);
 
         String maskDelimiter = null;
         String mask = null;
@@ -619,8 +616,7 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
-            UIWrapper wrapper = fillPeriodBase(new UIWrapper(), item, beanDef,
-                    bindPrefix);
+            UIWrapper wrapper = fillPeriodBase(new UIWrapper(), item, beanDef, bindPrefix, true);
 
             wrapper.setOrder(item.getOrder());
             wrapper.setAction(item.getAction());
@@ -638,10 +634,10 @@ public class ItemBuilder {
 
     }
 
-    public static UIWrapper fillDateBase(UIWrapper wrapper, ItemInputType item,
-                                         BeanFormDef beanDef, String bindPrefix) {
-        fillTextBase(wrapper, WidgetTypeEnum.DATE, item, beanDef,
-                false, bindPrefix, false);
+    public static UIWrapper fillDateBase(UIWrapper wrapper, ItemInputType item, BeanFormDef beanDef, String bindPrefix, boolean enabledByMouseClick) {
+
+        fillTextBase(wrapper, WidgetTypeEnum.DATE, item, beanDef, false, bindPrefix, enabledByMouseClick);
+
         String maskDelimiter = null;
         String mask = null;
 
@@ -668,8 +664,7 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
-            UIWrapper wrapper = fillDateBase(new UIWrapper(), item, beanDef,
-                    bindPrefix);
+            UIWrapper wrapper = fillDateBase(new UIWrapper(), item, beanDef, bindPrefix, true);
 
             wrapper.setOrder(item.getOrder());
             wrapper.setAction(item.getAction());
@@ -918,8 +913,7 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
-            UIWrapper wrapper = fillTextBase(new UIWrapper(), WidgetTypeEnum.PHONE, item, beanDef,
-                    false, bindPrefix, false);
+            UIWrapper wrapper = fillTextBase(new UIWrapper(), WidgetTypeEnum.PHONE, item, beanDef,false, bindPrefix, true);
 
             wrapper.setOrder(item.getOrder());
             wrapper.setAction(item.getAction());
@@ -943,7 +937,7 @@ public class ItemBuilder {
         if (AccessibleHelper.isAccessible(item, wm)) {
             UIWrapper wrapper = new UIWrapper();
 
-            Object ui = ObjectCreator.createStepperPercent(wm);
+            SFStepperPercent ui = ObjectCreator.createStepperPercent(wm, wrapper);
             wrapper.setObjectUI(ui);
             wrapper.setWidgetType(WidgetTypeEnum.STEPPER_PERCENT);
             wrapper.setBind(item.getBind(), bindPrefix);
@@ -952,24 +946,40 @@ public class ItemBuilder {
 
             String tips = item.getTips();
             if (tips != null) {
-//                tips = PrefixUtil.getMsg(tips, sfPanel.getBundle());
-//                SFFileChooser fc = (SFFileChooser) wrapper.getObjectUI();
-//                fc.setToolTipText(tips);
+                tips = PrefixUtil.getMsg(tips, sfPanel.getBundle());
+                ui.setTips(tips);
             }
+            Boolean persist = item.isPersist();
+            handleAttrPersistType(wrapper, item.getId(), persist);
 
             wrapper.setupUIName(WidgetTypeEnum.STEPPER_PERCENT, item.getId());
-
-            wrapper.setBelongToModel(item.getBelong()); // for only focus policy
-            // and status management
-
             wm.registerItemUIWrapper(wrapper);
 
-//            ((SFFileChooser) ui).createKeyHandler(wm);
-//            ((SFFileChooser) ui).setPanel((JComponent) sfPanel.getPanel());
+            if (item.getDelta() != null && item.getDelta().intValue() > 0) {
+                ui.setDelta(item.getDelta().intValue());
+            }
+            if (item.getLow() != null) {
+                ui.setLow(item.getLow().intValue());
+            }
+            if (item.getHigh() != null) {
+                ui.setHigh(item.getHigh().intValue());
+            }
 
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
+            uiPanel.add(ui, item.getConstraint());
+        }
+    }
 
-            uiPanel.add((Component) ui, item.getConstraint());
+    static void handleAttrPersistType(UIWrapper wrapper, String id, Boolean val) {
+        if (val != null && val.booleanValue()) {
+            if (id == null) {
+                SFLogger.warn(ItemBuilder.class,"The id attribute must be filled for stepPercent widget");
+                return;
+            }
+            String value = LocalStorage.getValue(id);
+            if (!OtherUtil.isStringEmpty(value)) {
+                wrapper.setPersistValue(value);
+            }
         }
     }
 

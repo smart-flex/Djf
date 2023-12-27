@@ -428,4 +428,16 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="AttrPersistType">
+		<xs:restriction base="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Saved/restored value from local file: sf.settings.txt. Restored value will override the value in bean.
+					This attribute is not applicable for master-detail relations.
+					In other words this attribute has to use for single entity.
+					P.S. the widget must have unique id attribute.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
 </xs:schema>

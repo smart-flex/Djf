@@ -1,5 +1,6 @@
 package ru.smartflex.djf.demo;
 
+import java.math.BigDecimal;
 import java.util.Properties;
 
 import ru.smartflex.djf.Djf;
@@ -9,6 +10,7 @@ import ru.smartflex.djf.SizeFrameEnum;
 import ru.smartflex.djf.demo.java.AddressFactory;
 import ru.smartflex.djf.demo.java.AppEmulator;
 import ru.smartflex.djf.demo.java.CarFactory;
+import ru.smartflex.djf.tool.LocalStorage;
 
 public class MainDjfDemo {
 
@@ -21,7 +23,16 @@ public class MainDjfDemo {
         props.put(SFConstants.PROPERTY_MASK_DATE, "dd-MM-yyyy");
 
         props.put(SFConstants.PROPERTY_FONT_SIZE, "14"); //12
-        props.put(SFConstants.PROPERTY_FONT_TEXT_INPUT_RATE_INCREASING, "0.5"); // 1.5
+
+        BigDecimal rateIncreasing = new BigDecimal("0.00");
+        String val = LocalStorage.getValue("idFontPercent");
+        if (val != null) {
+            try {
+                rateIncreasing = new BigDecimal(val).divide(new BigDecimal(("100.00"))).setScale(BigDecimal.ROUND_HALF_UP, 2);
+            } catch (Exception e) {
+            }
+        }
+        props.put(SFConstants.PROPERTY_FONT_TEXT_INPUT_RATE_INCREASING, rateIncreasing.toString()); // 1.5
 
         // Setup for application type
 

@@ -2,7 +2,7 @@ package ru.smartflex.djf.demo.java;
 
 public class StepperPercentInfo {
 
-    private int percent = 10;
+    private int percent = 0;
 
     public int getPercent() {
         return percent;

@@ -252,8 +252,7 @@ public class SFGridModel extends DefaultTableModel {
                                 .getNoResize(), false);
                 break;
             case DATE:
-                ItemBuilder.fillDateBase(colInfo,
-                        (ItemGridDateType) columnDefinition, beanDef, bindPrefix);
+                ItemBuilder.fillDateBase(colInfo, (ItemGridDateType) columnDefinition, beanDef, bindPrefix, false);
 
                 columnWidth = new ColumnWidth(
                         ((ItemGridDateType) columnDefinition).getWidth());
@@ -301,7 +300,7 @@ public class SFGridModel extends DefaultTableModel {
                 break;
             case PERIOD:
                 ItemBuilder.fillPeriodBase(colInfo,
-                        (ItemPeriodBaseType) columnDefinition, beanDef, bindPrefix);
+                        (ItemPeriodBaseType) columnDefinition, beanDef, bindPrefix, false);
 
                 columnWidth = new ColumnWidth(
                         ((ItemGridPeriodType) columnDefinition).getWidth());
