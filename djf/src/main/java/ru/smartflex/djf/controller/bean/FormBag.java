@@ -38,6 +38,7 @@ import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.model.gen.FormType;
 import ru.smartflex.djf.model.gen.ModelType;
+import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.widget.*;
 import ru.smartflex.djf.widget.grid.ICellEditor;
 import ru.smartflex.djf.widget.grid.SFGrid;
@@ -830,7 +831,9 @@ public class FormBag {
                             }
                         }
                     } else if (pixel[0] != null && pixel[1] != null) {
-                        return new Dimension(pixel[0], pixel[1]);
+                        int width = FontUtil.getIncreasedWidth(pixel[0]);
+                        int height = FontUtil.getIncreasedHeight(pixel[1]);
+                        return new Dimension(width, height);
                     }
 
                     SFLogger.warn(FormBag.class, "Size for form is incorrect");
