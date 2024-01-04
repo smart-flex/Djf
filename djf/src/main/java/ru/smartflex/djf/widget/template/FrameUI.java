@@ -347,6 +347,7 @@ public class FrameUI extends JFrame implements IFrame {
 
                         Dimension newSize = new Dimension(width - screenSize.width
                                 / 2, height);
+                        logWindowResolution(newSize);
                         this.setSize(newSize);
                         this.setLocation(taskbar.left + screenSize.width / 4
                                 + deltaWindow / 2, taskbar.top + deltaWindow / 2);
@@ -357,6 +358,7 @@ public class FrameUI extends JFrame implements IFrame {
                     if (width > startWidth && height > startHeight) {
 
                         Dimension newSize = new Dimension(width, height);
+                        logWindowResolution(newSize);
                         this.setSize(newSize);
                         this.setLocation(taskbar.left + deltaWindow / 2,
                                 taskbar.top + deltaWindow / 2);
@@ -366,6 +368,7 @@ public class FrameUI extends JFrame implements IFrame {
                 case CUSTOM:
 
                     Dimension newSize = new Dimension(size.getWidth(), size.getHeight());
+                    logWindowResolution(newSize);
                     this.setSize(newSize);
                     this.setLocation(taskbar.left + deltaWindow / 2,
                             taskbar.top + deltaWindow / 2);
@@ -375,6 +378,9 @@ public class FrameUI extends JFrame implements IFrame {
         }
     }
 
+    private void logWindowResolution(Dimension dim) {
+        SFLogger.info("Window resolution: " + dim);
+    }
     @Override
     public void toFront() {
         SwingUtilities.invokeLater(new Runnable() {

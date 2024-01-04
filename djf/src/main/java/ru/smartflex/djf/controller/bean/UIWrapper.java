@@ -279,8 +279,8 @@ public class UIWrapper implements Comparable<UIWrapper> {
      * @param onInit - true означает начальную инициализацию
      */
     private void setItemEnabledInt(boolean flag, boolean force, boolean onInit) {
-        if (widgetType == WidgetTypeEnum.LABEL) {
-            // иначе NPE, т.к. state для label не определен
+        if (widgetType == WidgetTypeEnum.LABEL || widgetType == WidgetTypeEnum.GROUP || widgetType == WidgetTypeEnum.RADIO) {
+            // иначе NPE, т.к. state не определен
             return;
         }
 
