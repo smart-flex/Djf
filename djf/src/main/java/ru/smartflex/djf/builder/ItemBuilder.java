@@ -289,7 +289,7 @@ public class ItemBuilder {
             }
 
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
-
+//((JTextField)wrapper.getObjectUI()).setColumns(14);
             uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
 
         }
@@ -628,6 +628,8 @@ public class ItemBuilder {
 
             setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
+
+            ((JTextField)wrapper.getObjectUI()).setColumns(7);
 
             uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
         }

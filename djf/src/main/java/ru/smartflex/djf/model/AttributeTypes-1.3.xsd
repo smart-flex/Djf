@@ -440,4 +440,22 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="AttrColsType">
+		<xs:restriction base="xs:integer">
+			<xs:annotation>
+				<xs:documentation>Determines the number of columns for TextField and TextArea widgets. See Swing method setColumns(int columns).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttrRowsType">
+		<xs:restriction base="xs:integer">
+			<xs:annotation>
+				<xs:documentation>Determines the number of rows for TextArea widget. See Swing method setRows(int rows).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:restriction>
+	</xs:simpleType>
+
 </xs:schema>
