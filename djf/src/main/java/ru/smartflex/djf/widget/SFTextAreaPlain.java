@@ -50,4 +50,11 @@ public class SFTextAreaPlain extends JScrollPane implements ITextArea,
         return textArea.getText();
     }
 
+    public void setColumns(int columns) {
+        textArea.setColumns(columns);
+    }
+
+    public void setRows(int rows) {
+        textArea.setRows(rows);
+    }
 }

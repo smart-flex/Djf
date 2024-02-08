@@ -20,7 +20,6 @@ import ru.smartflex.djf.controller.bean.LabelBundle;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.exception.MissingException;
 import ru.smartflex.djf.controller.helper.AccessibleHelper;
-import ru.smartflex.djf.controller.helper.ConverterUtil;
 import ru.smartflex.djf.controller.helper.ObjectCreator;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.model.gen.*;
@@ -284,14 +283,14 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupHandlerToTextField(wrapper, wm);
+            setColsAttributeForJTextField(wrapper.getObjectUI(), item.getCols());
             if (item.getTransform() != null) {
                 new SFTransformFilter(wm, (JTextField)wrapper.getObjectUI(), item.getTransform());
             }
 
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
-//((JTextField)wrapper.getObjectUI()).setColumns(14);
-            uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
 
+            uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
         }
 
     }
@@ -301,7 +300,7 @@ public class ItemBuilder {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.BYTE,
                 item.getOrder(), item.getAction(),
-                item.getConstraint(), bindPrefix, item.getBelong());
+                item.getConstraint(), bindPrefix, item.getBelong(), item.getCols());
     }
 
     static void build(ItemShortType item, WidgetManager wm,
@@ -309,7 +308,7 @@ public class ItemBuilder {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.SHORT,
                 item.getOrder(), item.getAction(),
-                item.getConstraint(), bindPrefix, item.getBelong());
+                item.getConstraint(), bindPrefix, item.getBelong(), item.getCols());
     }
 
     static void build(ItemIntType item, WidgetManager wm,
@@ -317,7 +316,7 @@ public class ItemBuilder {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.INT,
                 item.getOrder(), item.getAction(),
-                item.getConstraint(), bindPrefix, item.getBelong());
+                item.getConstraint(), bindPrefix, item.getBelong(), item.getCols());
     }
 
     static void build(ItemLongType item, WidgetManager wm,
@@ -325,13 +324,13 @@ public class ItemBuilder {
 
         buildIntType(item, wm, sfPanel, beanDef, WidgetTypeEnum.LONG,
                 item.getOrder(), item.getAction(),
-                item.getConstraint(), bindPrefix, item.getBelong());
+                item.getConstraint(), bindPrefix, item.getBelong(), item.getCols());
     }
 
     private static void buildIntType(ItemInputType item, WidgetManager wm,
                                      SFPanel sfPanel, BeanFormDef beanDef, WidgetTypeEnum wType,
                                      BigInteger order, String action, String constraint,
-                                     String bindPrefix, String belong) {
+                                     String bindPrefix, String belong, BigInteger cols) {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
@@ -345,6 +344,7 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupHandlerToTextField(wrapper, wm);
+            setColsAttributeForJTextField(wrapper.getObjectUI(), cols);
 
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
 
@@ -512,6 +512,7 @@ public class ItemBuilder {
             }
 
             ItemHandler.setupHandlerToPasswordField(wrapper, wm);
+            setColsAttributeForJTextField(wrapper.getObjectUI(), item.getCols());
             if (item.getTransform() != null) {
                 SFPassword password = (SFPassword) ui;
                 new SFTransformFilter(wm, password.getPasswordField(), item.getTransform());
@@ -629,7 +630,8 @@ public class ItemBuilder {
             setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
 
-            ((JTextField)wrapper.getObjectUI()).setColumns(7);
+            //+1 убирает проблему движения данных в TextField влево после ввода последнего символа
+            ((JTextField)wrapper.getObjectUI()).setColumns(7 + 1);
 
             uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
         }
@@ -675,6 +677,7 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupMaskHandlerToField(wrapper, wm);
+            ((JTextField)wrapper.getObjectUI()).setColumns(10 + 1);
 
             setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
 
@@ -775,6 +778,8 @@ public class ItemBuilder {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
+            SFTextAreaPlain textAreaPlain = null;
+
             UIWrapper wrapper = new UIWrapper();
             ITextArea ui;
             if (item.getSyntax() != null
@@ -787,6 +792,7 @@ public class ItemBuilder {
                 if (rSyntaxStyle == null) {
                     ui = ObjectCreator.createSwingTextArea(
                             WidgetTextAreaTypeEnum.PLAIN, null);
+                    textAreaPlain = (SFTextAreaPlain)ui;
                 } else {
                     ui = ObjectCreator.createSwingTextArea(
                             WidgetTextAreaTypeEnum.R_SYNTAX_TEXT_AREA,
@@ -820,6 +826,15 @@ public class ItemBuilder {
                 if (wrapper.getLength() > 0) {
                     new SFLengthFilter(wm, wrapper.getLength(),
                             ui.getJTextComponent());
+                }
+            }
+
+            if (textAreaPlain != null) {
+                if (item.getCols() != null) {
+                    textAreaPlain.setColumns(item.getCols().intValue() + 1);
+                }
+                if (item.getRows() != null) {
+                    textAreaPlain.setRows(item.getRows().intValue());
                 }
             }
 
@@ -924,6 +939,7 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupHandlerToTextField(wrapper, wm);
+            ((JTextField)wrapper.getObjectUI()).setColumns(16 + 1);
 
             setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
 
@@ -982,6 +998,13 @@ public class ItemBuilder {
             if (!OtherUtil.isStringEmpty(value)) {
                 wrapper.setPersistValue(value);
             }
+        }
+    }
+
+    private static void setColsAttributeForJTextField(Object ui, BigInteger cols) {
+        if (cols != null) {
+            JTextField jtf = (JTextField) ui;
+            jtf.setColumns(cols.intValue() + 1);
         }
     }
 

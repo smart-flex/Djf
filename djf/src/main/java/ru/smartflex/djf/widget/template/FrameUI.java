@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 import ru.smartflex.djf.Djf;
 import ru.smartflex.djf.SFConstants;
@@ -70,8 +71,6 @@ public class FrameUI extends JFrame implements IFrame {
     private BorderLayout blSouth = new BorderLayout();
     private JPanel panelNorth = new JPanel();
     private BorderLayout layPnlNorth = new BorderLayout();
-    private JPanel pnlNorthWest = new JPanel();
-    private FlowLayout layPnlNorthWest = new FlowLayout(FlowLayout.LEFT, 5, 5);
 
     private JPanel pnlSouth = new JPanel();
     private JDesktopPane pnlDesktop = new JDesktopPane();
@@ -140,13 +139,12 @@ public class FrameUI extends JFrame implements IFrame {
         labelInfoForm.setFont(new Font("SansSerif", Font.BOLD, Djf.getIncreasedFontSize(labelInfoFormSize)));
         labelInfoForm.setForeground(infoColor);
         labelInfoForm.setName(IFrame.NAME_LABEL_INFO_FORM);
-        labelInfoFormAdd.setFont(new Font("SansSerif", Font.BOLD, Djf.getIncreasedFontSize(labelInfoFormAddSize)));
+        labelInfoFormAdd.setFont(new Font("SansSerif", Font.PLAIN, Djf.getIncreasedFontSize(labelInfoFormSize)));
         labelInfoFormAdd.setName(IFrame.NAME_LABEL_INFO_FORM_ADD);
 
-        pnlNorthWest.setLayout(layPnlNorthWest);
-        pnlNorthWest.add(labelInfoForm);
-        pnlNorthWest.add(labelInfoFormAdd);
-        panelNorth.add(pnlNorthWest, BorderLayout.WEST);
+        labelInfoForm.setBorder(new EmptyBorder(0, 10, 0, 10));
+        panelNorth.add(labelInfoForm, BorderLayout.WEST);
+        panelNorth.add(labelInfoFormAdd, BorderLayout.CENTER);
 
         panelNorth.setName(IFrame.PANEL_NORTH_NAME);
         pnlSouth.setName(IFrame.PANEL_SOUTH_NAME);
