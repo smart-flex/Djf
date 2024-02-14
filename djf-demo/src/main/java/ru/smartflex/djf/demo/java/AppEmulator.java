@@ -516,12 +516,12 @@ public class AppEmulator {
                 null,
                 new String[]{"ru/smartflex/djf/demo/java/PojoCode.java"}));
 
-        list.add(new TaskDemo(12, "Simple panel with stepper percent widget",
+        list.add(new TaskDemo(12, "Simple form with some widgets",
                 "ru/smartflex/djf/demo/xml/SFWidgets.frm.xml",
                 null,
                 null,
                 null,
-                new String[]{"ru/smartflex/djf/demo/java/StepperPercentInfo.java"}));
+                new String[]{"ru/smartflex/djf/demo/java/StepperPercentInfo.java", "ru/smartflex/djf/demo/java/PojoStreet.java"}));
 
         return list;
     }

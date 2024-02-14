@@ -353,7 +353,7 @@ public class DjfConfigurator {
         UIManager.put("TabbedPane.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
         UIManager.put("CheckBox.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
         UIManager.put("RadioButtonMenuItem.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
-        UIManager.put("ComboBox.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
+        UIManager.put("ComboBox.font", getFontTextInput());
         UIManager.put("RadioButton.font", new Font(fontCommon, Font.PLAIN, FontUtil.getIncreasedFontSize()));
 
         UIManager.put("Label.foreground", new Color(128, 0, 64));

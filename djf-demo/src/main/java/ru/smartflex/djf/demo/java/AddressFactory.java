@@ -10,6 +10,7 @@ import ru.smartflex.djf.controller.bean.tree.IBeanWrapper;
 public class AddressFactory {
 
     private List<PojoStreet> listAddress = new ArrayList<PojoStreet>();
+    private List<PojoStreet> emptyListAddress = new ArrayList<PojoStreet>();
     private byte[] listAddressStore = null;
     private boolean listAddressFilled = false;
 
@@ -67,6 +68,10 @@ public class AddressFactory {
         listAddressStore = FactoryHelper.saveToStore(listAddress);
 
         return listAddress;
+    }
+
+    public List<PojoStreet> getEmptyListAddress() {
+        return emptyListAddress;
     }
 
     private void initialFilling() {

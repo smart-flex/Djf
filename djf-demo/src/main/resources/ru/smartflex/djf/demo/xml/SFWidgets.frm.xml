@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <form>
-    <description>Hello world simple form</description>
+    <description>Simple form with some widgets</description>
     <layout clazz="java.awt.BorderLayout"/>
     <panel>
         <layout clazz="net.miginfocom.swing.MigLayout">
-            <param type="string" value="align 50% 50%"/>
+            <param type="string" value="align 0% 50%"/>
+            <param type="string" value="[pref!][pref]" />
         </layout>
         <items>
-            <stepPercent bind="sp.percent" tips="Font percent value" persist="true" id="idFontPercent" low="0" high="50" delta="10"/>
+            <label text="Увеличение размера шрифта" tips="Изменения вступят в силу после перезапуска программы" constraint="gap para" />
+            <stepPercent bind="sp.percent" tips="Font percent value" persist="true" id="idFontPercent" low="0" high="50" delta="10" constraint="gap para, wrap"/>
+            <label text="Пустой список улиц" tips="Комбобокс без заполненного списка выглядит коряво" constraint="gap para" />
+            <combobox bind="sp.emptyStreet" fill="ste.streetName" constraint="gap para, wrap"/>
+            <label text="Поле шириной в 15 символов" constraint="gap para" />
+            <text bind="sp.text15" cols="15" constraint="gap para, wrap"/>
+            <label text="Пустой список улиц в 15 символов" tips="Пустой список улиц шириной в 15 символов" constraint="gap para" />
+            <combobox bind="sp.emptyStreet15" fill="ste.streetName" cols="15" constraint="gap para, wrap"/>
+            <label text="Cписок улиц" tips="Заполненный список улиц шириной в 15 символов" constraint="gap para" />
+            <combobox bind="sp.street" fill="st.streetName" cols="15" constraint="gap para, wrap"/>
         </items>
     </panel>
     <models>
         <model id="sp" noSave="true">
             <bean clazz="ru.smartflex.djf.demo.java.StepperPercentInfo" selfCreated="true"/>
+        </model>
+        <model id="ste">
+            <load method="${session.adr.getEmptyListAddress}" />
+            <bean clazz="ru.smartflex.djf.demo.java.PojoStreet" />
+        </model>
+        <model id="st">
+            <load method="${session.adr.getAddress}" />
+            <bean clazz="ru.smartflex.djf.demo.java.PojoStreet" />
         </model>
     </models>
 </form>

@@ -12,6 +12,7 @@
 			<xs:extension base="ItemComboboxBaseType">
 				<xs:attributeGroup ref="AttrFieldPassiveType"/>
 				<xs:attribute name="belong" type="ct:AttrBelongType" />
+				<xs:attribute name="cols" type="ct:AttrColsType" />
 			</xs:extension>
 		</xs:complexContent>
 
