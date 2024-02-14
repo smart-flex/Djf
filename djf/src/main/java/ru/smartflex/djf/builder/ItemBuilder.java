@@ -383,6 +383,7 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupHandlerToTextField(wrapper, wm);
+            setColsAttributeForJTextField(wrapper.getObjectUI(), item.getCols());
 
             java.awt.Container uiPanel = (Container) sfPanel.getPanel();
 
