@@ -116,7 +116,7 @@ public class FontUtil {
             } catch (Exception e) {
             }
         }
-        return new Font(fontFamily, style, size);
+        return new Font(fontFamily, style, FontUtil.getIncreasedFontSize(size));
     }
 
     public static int getIncreasedHeight(int height) {
