@@ -104,13 +104,14 @@ public class ItemBuilder {
             wm.registerItemUIWrapper(wrapper);
 
             ItemHandler.setupHandlerToFieldCombobox(wrapper, wm);
-            buildComboboxType(item, wrapper);
+            doAdditionalComboboxBehavior(item, wrapper);
 
             uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
         }
     }
 
-    private static void buildComboboxType(ItemComboboxType item, UIWrapper wrapper) {
+    private static void doAdditionalComboboxBehavior(ItemComboboxType item, UIWrapper wrapper) {
+        ((JComboBox)wrapper.getObjectUI()).addPopupMenuListener(new SFComboBoxPopupMenuListener());
         if (item.getCols() == null || item.getCols().intValue() <= 0 || item.getCols().intValue() > 1024) {
             return;
         }
@@ -118,7 +119,6 @@ public class ItemBuilder {
             // невозможно выставить длину combobox'a по длине JtextField.setCols
 //            String fillByGali = new String(new char[item.getCols().intValue() - 1]).replace('\0', 'Г');
 //            ((JComboBox)wrapper.getObjectUI()).setPrototypeDisplayValue(fillByGali);
-            ((JComboBox)wrapper.getObjectUI()).addPopupMenuListener(new SFComboBoxPopupMenuListener());
             int width = Math.round((item.getCols().intValue() + 1) * FontUtil.getIncreasedSymbolWidth()) + 3;
             Dimension d = new Dimension(width, FontUtil.getIncreasedGridRowHeight() + 1);
             ((JComboBox)wrapper.getObjectUI()).setMinimumSize(d);
