@@ -33,6 +33,9 @@ public class FontUtil {
     private static float increasedFontHeightRate = 0f;
     private static float increasedFontWidthRate = 0f;
     private static float increasedSymbolWidth = 0f;
+    private static float usualFontHeight = 0f;
+    private static float increasedFontHeight = 0f;
+    private static float usualFontWidth = 0f;
 
     static {
         monoFontMap = new HashSet<String>();
@@ -164,6 +167,21 @@ public class FontUtil {
         return increasedSymbolWidth;
     }
 
+    public static float getUsualFontHeight() {
+        increasingFontCalculate();
+        return usualFontHeight;
+    }
+
+    public static float getIncreasedFontHeight() {
+        increasingFontCalculate();
+        return increasedFontHeight;
+    }
+
+    public static float getUsualFontWidth() {
+        increasingFontCalculate();
+        return usualFontWidth;
+    }
+
     private static void increasingFontCalculate() {
         if (!increaseWasInit.get()) {
             lockFontIncrease.lock();
@@ -175,9 +193,11 @@ public class FontUtil {
                     Font font = new Font(DjfConfigurator.getFontTextInputName(), Font.PLAIN, DjfConfigurator.getFontSize());
                     increasedFontSize = DjfConfigurator.getFontSize(); // default value
                     float fontHeigh = (float)font.getStringBounds("A", frc).getHeight();
+                    usualFontHeight = fontHeigh;
                     increasedGridRowHeight = Math.round(fontHeigh);
                     double width = font.getStringBounds("A", frc).getWidth();
                     increasedSymbolWidth = (float) width;
+                    usualFontWidth = (float) width;
                     if (DjfConfigurator.getFontTextInputRateIncreasing() > 0) {
                         int newSize = Math.round((float)DjfConfigurator.getFontSize() * DjfConfigurator.getFontTextInputRateIncreasing());
                         Font fontIncreasingDelta = new Font(DjfConfigurator.getFontTextInputName(), Font.PLAIN, newSize);
@@ -187,6 +207,7 @@ public class FontUtil {
                         rateIncrease = (float) (newWidth / width);
                         Font fontIncreasingNewSize = new Font(DjfConfigurator.getFontTextInputName(), Font.PLAIN, increasedFontSize);
                         float fontHeighIncreased = (float)fontIncreasingNewSize.getStringBounds("A", frc).getHeight();
+                        increasedFontHeight = fontHeighIncreased;
                         increasedGridRowHeight = Math.round(fontHeighIncreased);
                         increasedFontSizeRate = (float)increasedFontSize / (float)DjfConfigurator.getFontSize();
                         increasedFontHeightRate = fontHeighIncreased / fontHeigh;

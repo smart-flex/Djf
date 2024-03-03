@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import ru.smartflex.djf.Djf;
 import ru.smartflex.djf.controller.FormStack;
@@ -45,15 +45,10 @@ public class FrameUtil {
         if (sizeModal == null) {
             c.setSize(rect.getSize());
         } else {
-            if (sizeModal.getWidth() <= rect.getWidth()
-                    && sizeModal.getHeight() <= rect.getHeight()) {
-                c.setSize(sizeModal);
+            c.setSize(sizeModal);
 
-                xs = (int) (xs + (rect.getWidth() - sizeModal.getWidth()) / 2);
-                ys = (int) (ys + (rect.getHeight() - sizeModal.getHeight()) / 2);
-            } else {
-                c.setSize(rect.getSize());
-            }
+            xs = (int) (xs + (rect.getWidth() - sizeModal.getWidth()) / 2);
+            ys = (int) (ys + (rect.getHeight() - sizeModal.getHeight()) / 2);
         }
 
         c.setLocation(xs, ys);

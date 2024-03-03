@@ -18,12 +18,7 @@ import javax.swing.text.JTextComponent;
 
 import org.apache.commons.beanutils.MethodUtils;
 
-import ru.smartflex.djf.Djf;
-import ru.smartflex.djf.FormAssistant;
-import ru.smartflex.djf.FormStepEnum;
-import ru.smartflex.djf.FrameHelper;
-import ru.smartflex.djf.SFConstants;
-import ru.smartflex.djf.SFLogger;
+import ru.smartflex.djf.*;
 import ru.smartflex.djf.controller.FormManager;
 import ru.smartflex.djf.controller.FormManagerThread;
 import ru.smartflex.djf.controller.WidgetManager;
@@ -831,9 +826,23 @@ public class FormBag {
                             }
                         }
                     } else if (pixel[0] != null && pixel[1] != null) {
-                        int width = FontUtil.getIncreasedWidth(pixel[0]);
-                        int height = FontUtil.getIncreasedHeight(pixel[1]);
-                        return new Dimension(width, height);
+                        if (DjfConfigurator.getFontTextInputRateIncreasing() == 0) {
+                            return new Dimension(pixel[0], pixel[1]);
+                        } else {
+                            float usualHeight = FontUtil.getUsualFontHeight();
+                            // кол-во строчек в jtextfield
+                            int amountLines = Math.round((float)pixel[1] / (usualHeight + 7));
+                            int width = FontUtil.getIncreasedWidth(pixel[0]);
+                            int height = FontUtil.getIncreasedHeight(pixel[1]);
+                            height = Math.round((FontUtil.getIncreasedFontHeight() + 7) * amountLines);
+                            float usualWidth = FontUtil.getUsualFontWidth();
+                            // кол-во колонок
+                            int amountSymbols = Math.round((float) pixel[0] / (usualWidth + 1));
+                            width = Math.round((FontUtil.getIncreasedSymbolWidth() + 1) * amountSymbols);
+
+                            return new Dimension(width, height);
+
+                        }
                     }
 
                     SFLogger.warn(FormBag.class, "Size for form is incorrect");
