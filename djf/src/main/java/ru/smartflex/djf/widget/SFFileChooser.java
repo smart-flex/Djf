@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -134,6 +135,12 @@ public class SFFileChooser extends JPanel implements IRequestFocus {
     @Override
     public void requestFocusOnNestedWidget() {
         button.requestFocus();
+    }
+
+    public void setColsAttribute(BigInteger cols) {
+        if (cols != null) {
+            field.setColumns(cols.intValue() + 1);
+        }
     }
 
 }

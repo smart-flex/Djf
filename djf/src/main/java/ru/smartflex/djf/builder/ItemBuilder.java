@@ -889,6 +889,7 @@ public class ItemBuilder {
             wrapper.setEnableBehavior(item.getEnabled(), true);
 
             wm.registerItemUIWrapper(wrapper);
+            ((SFFileChooser) wrapper.getObjectUI()).setColsAttribute(item.getCols());
 
             ((SFFileChooser) ui).createKeyHandler(wm);
             ((SFFileChooser) ui).setPanel((JComponent) sfPanel.getPanel());
@@ -1024,6 +1025,5 @@ public class ItemBuilder {
             jtf.setColumns(cols.intValue() + 1);
         }
     }
-
 
 }
