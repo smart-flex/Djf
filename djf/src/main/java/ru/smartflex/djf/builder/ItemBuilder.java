@@ -1021,8 +1021,12 @@ public class ItemBuilder {
 
     private static void setColsAttributeForJTextField(Object ui, BigInteger cols) {
         if (cols != null) {
-            JTextField jtf = (JTextField) ui;
-            jtf.setColumns(cols.intValue() + 1);
+            if (ui instanceof JTextField) {
+                JTextField jtf = (JTextField) ui;
+                jtf.setColumns(cols.intValue() + 1);
+            } else if (ui instanceof SFPassword) {
+                ((SFPassword)ui).getPasswordField().setColumns(cols.intValue() + 1);
+            }
         }
     }
 
