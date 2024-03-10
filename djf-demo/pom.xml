@@ -5,7 +5,7 @@
     <parent>
         <artifactId>djf-parent</artifactId>
         <groupId>ru.smartflex.djf</groupId>
-        <version>1.5</version>
+        <version>1.6</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>ru.smartflex.djf</groupId>
             <artifactId>djf</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -95,7 +95,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>djf-demo-1.5-standalone</finalName>
+                    <finalName>djf-demo-1.6-standalone</finalName>
                     <archive>
                         <manifest>
                             <mainClass>ru.smartflex.djf.demo.MainDjfDemo</mainClass>
