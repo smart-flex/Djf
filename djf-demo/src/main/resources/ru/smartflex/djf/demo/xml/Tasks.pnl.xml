@@ -4,7 +4,7 @@
 	<layout clazz="net.miginfocom.swing.MigLayout">
 		<param type="string" value="wrap 1" />
 		<param type="string" value="[100%, grow, fill]" />
-		<param type="string" value="[35%][20px][60%, grow, fill]" />
+		<param type="string" value="[37%, grow, fill][20px][60%, grow, fill]" />
 	</layout>
 
 	<panel>
@@ -23,7 +23,7 @@
 				</cols>
 			</grid>
 			<run tips="${demo.task.run_form}" form="${form.selected.formXML}"
-				constraint="h 50, w 100, gapleft 15px" />
+				constraint="h 50, growx, gapleft 15px, bottom" />
 		</items>
 	</panel>
 

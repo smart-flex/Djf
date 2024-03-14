@@ -3,62 +3,51 @@
 <panel scroll="true">
 	<layout clazz="net.miginfocom.swing.MigLayout">
 		<param type="string" value="" />
-		<param type="string" value="[pref!][grow,fill][pref]" />
+		<param type="string" value="[pref!][pref!]" />
 	</layout>
 
 	<!-- Example of dynamic access denied -->
 	<items accessible="sfAll">
 
 		<label text="${demo.gridfields.ceil_phone}" constraint="gap para" />
-		<phone bind="pa.ceilPhone" constraint="wrap, span 2" id="idPhone"
-			tips="${demo.gridfields.ceil_phone.tips}" />
+		<phone bind="pa.ceilPhone" id="idPhone"	tips="${demo.gridfields.ceil_phone.tips}" constraint="wrap" />
 		<label text="${demo.gridfields.date_create}" constraint="gap para" />
-		<date bind="pa.dateCreate" constraint="wrap, span 2" align="left" />
-		<label text="${demo.gridfields.postal_index}" constraint="gap para"
-			tips="${demo.gridfields.postal_index.lab_tips}" />
-		<text bind="pa.postalIndex" constraint="wrap, span 2"
-			tips="Only 10 symbol can be allowed" />
+		<date bind="pa.dateCreate" constraint="wrap" />
+		<label text="${demo.gridfields.postal_index}" tips="${demo.gridfields.postal_index.lab_tips}" constraint="gap para" />
+		<text bind="pa.postalIndex" tips="Only 10 symbol can be allowed" cols="10" constraint="wrap"/>
 
 		<!-- This block is intended only for special services. Example of static 
 			control. In other words before application was started you have to define 
 			these accessible labels -->
-		<label text="${demo.gridfields.military_rank}" constraint="gap para"
-			accessible="${form.itemsAccess}" />
-		<text bind="pa.militaryRank" constraint="wrap, span 2"
-			accessible="${form.itemsAccess}" enabled="false" id="idRank"
-			tips="${demo.gridfields.military_rank.tips}" />
-		<label text="${demo.gridfields.military_unit}" constraint="gap para"
-			accessible="${form.itemsAccess}"/>
-		<text bind="pa.militaryUnit" constraint="wrap, span 2" id="mlUnit"
+		<label text="${demo.gridfields.military_rank}" accessible="${form.itemsAccess}" constraint="gap para" />
+		<text bind="pa.militaryRank" accessible="${form.itemsAccess}" enabled="false" id="idRank"
+			tips="${demo.gridfields.military_rank.tips}" cols="10" constraint="wrap"/>
+		<label text="${demo.gridfields.military_unit}" accessible="${form.itemsAccess}" constraint="gap para" />
+		<text bind="pa.militaryUnit" id="mlUnit"
 			accessible="${form.itemsAccess}" enabled="${form.sf.assist.enabled}"
-			tips="${demo.gridfields.military_unit.tips}"/>
+			tips="${demo.gridfields.military_unit.tips}" cols="10" constraint="wrap, span 2"/>
 
 		<label text="${demo.gridfields.account_type}" constraint="gap para" />
-		<combobox bind="pa.typeAccount" fill="pt.nameType"  
-			constraint="wrap, span 2" />
+		<combobox bind="pa.typeAccount" fill="pt.nameType" cols="20" constraint="wrap" />
 
 		<label text="${demo.gridfields.street}" constraint="gap para" />
-		<combobox bind="pa.street" fill="st.streetName"	/>
-		<combobox bind="pa.building" fill="st.buildings.buildingNumber" parent="street"
-			constraint="wrap, w 20:70:90" />
+		<combobox bind="pa.street" fill="st.streetName"	cols="20" constraint="wrap"/>
+		<label text="${demo.gridfields.home}" constraint="gap para" />
+		<combobox bind="pa.building" fill="st.buildings.buildingNumber" parent="street" cols="7" constraint="wrap" />
 
-		<label constraint="gap para" accessible="${form.itemsAccessBank}" />
-		<checkbox bind="pa.hasCredit" constraint="wrap, span 2" text="Has a credit?"
-			accessible="${form.itemsAccessBank}" tips="If a person has a credit then check it field" />
+		<label accessible="${form.itemsAccessBank}" constraint="gap para" />
+		<checkbox bind="pa.hasCredit" text="Has a credit?" accessible="${form.itemsAccessBank}"
+				  tips="If a person has a credit then check it field" constraint="wrap" />
 
-		<label text="${demo.gridfields.calc_period}" constraint="gap para" accessible="${form.itemsAccess}"/>
-		<period bind="pa.calcPeriod" constraint="wrap, span 2" align="left"
-			accessible="${form.itemsAccess}" tips="${demo.gridfields.calc_period.tips}" />
+		<label text="${demo.gridfields.calc_period}" accessible="${form.itemsAccess}" constraint="gap para" />
+		<period bind="pa.calcPeriod" accessible="${form.itemsAccess}" tips="${demo.gridfields.calc_period.tips}" constraint="wrap" />
 
-		<label text="${demo.gridfields.inn_code}" constraint="gap para" accessible="${form.itemsAccess}" />
-		<long bind="pa.innCode" constraint="wrap, span 2"
-			accessible="${form.itemsAccess}" tips="${demo.gridfields.inn_code.tips}" />
+		<label text="${demo.gridfields.inn_code}" accessible="${form.itemsAccess}" constraint="gap para" />
+		<long bind="pa.innCode" accessible="${form.itemsAccess}" tips="${demo.gridfields.inn_code.tips}" cols="20" constraint="wrap" />
 
-		<label text="${demo.gridfields.salary}" constraint="gap para" accessible="${form.itemsAccess}" />
-		<num bind="pa.salary" constraint="wrap, span 2"
-			accessible="${form.itemsAccess}" tips="${demo.gridfields.salary.tips}" />
+		<label text="${demo.gridfields.salary}" accessible="${form.itemsAccess}" constraint="gap para" />
+		<num bind="pa.salary" accessible="${form.itemsAccess}" tips="${demo.gridfields.salary.tips}" cols="10" constraint="wrap" />
 
-		<button belong="pa" text="Address dictionary"
-			constraint="gap para" action="goAddress" />
+		<button belong="pa" text="Address dictionary" action="goAddress" constraint="span 2, gap para, gaptop 10, gapbottom 10" />
 	</items>
 </panel>

@@ -9,7 +9,7 @@
 					width="30" enabled="no" noResize="yes" />
 
 				<text bind="accountNumber" title="${demo.gridfields.grid.an}"
-					width="120:150" />
+					width="110:120" />
 				<checkbox bind="hasChildren" title="${demo.gridfields.grid.hasChildren}"
 					width="40:40" accessible="${form.itemsAccessBank}"
 					enabled="yes" />
@@ -17,11 +17,11 @@
 					width="100:100" />
 				<combobox bind="carType" fill="ct.carName"
 					title="${label.demo.gridfields.grid.ct}"
-						  width="150:150"/>
+						  width="120:120"/>
 
 				<phone bind="homePhone" title="${demo.gridfields.grid.home_phone}" width="135:135"/>
 				<text bind="remark" title="${label.demo.gridfields.grid.remark}"
-					  width="150:1200" />
+					  width="50:1200" />
 
 			</cols>
 		</grid>

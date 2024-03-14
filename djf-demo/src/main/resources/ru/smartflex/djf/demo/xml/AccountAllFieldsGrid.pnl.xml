@@ -9,7 +9,7 @@
 				<int bind="idAccount" title="${demo.gridfields.grid.idAcc}"
 					tips="${demo.gridfields.grid.idAcc.tips}" width="30" enabled="no" noResize="yes" />
 				<text bind="accountNumber" title="${label.demo.gridfields.grid.an}"
-					width="120:150" />
+					width="110:120" />
 				<checkbox bind="hasChildren" title="${demo.gridfields.grid.hasChildren}"
 					tips="${demo.gridfields.grid.hasChildren.tips}" width="40:40" />
 				<date bind="dateCreate" title="${demo.gridfields.grid.dc}"
@@ -21,12 +21,12 @@
 
 				<!-- Two linked combobox's -->
 				<combobox bind="carType" fill="ct.carName"
-					title="${demo.gridfields.grid.ct}" width="150:150"/>
+					title="${demo.gridfields.grid.ct}" width="120:120"/>
 				<combobox bind="carModel" fill="ct.modelList.modelName" parent="carType"
-					title="${demo.gridfields.grid.cm}" width="150:150"/>
+					title="${demo.gridfields.grid.cm}" width="120:120"/>
 
 				<text bind="remark" title="${label.demo.gridfields.grid.remark}"
-					  width="150:1200" />
+					  width="50:1200" />
 			</cols>
 		</grid>
 	</items>
