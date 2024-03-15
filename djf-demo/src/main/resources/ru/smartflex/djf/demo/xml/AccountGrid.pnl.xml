@@ -17,7 +17,7 @@
 					width="100:100" />
 				<combobox bind="carType" fill="ct.carName"
 					title="${label.demo.gridfields.grid.ct}"
-						  width="120:120"/>
+						  width="80:120"/>
 
 				<phone bind="homePhone" title="${demo.gridfields.grid.home_phone}" width="135:135"/>
 				<text bind="remark" title="${label.demo.gridfields.grid.remark}"

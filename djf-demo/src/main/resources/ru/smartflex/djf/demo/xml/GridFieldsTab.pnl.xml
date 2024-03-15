@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <panel>
-	<layout clazz="java.awt.GridLayout">
-		<param type="int" value="1" />
-		<param type="int" value="2" />
-		<param type="int" value="5" />
-		<param type="int" value="5" />
+	<layout clazz="net.miginfocom.swing.MigLayout">
+		<param type="string" value="insets 5" />
+		<param type="string" value="[grow, fill] [pref!]" />
+		<param type="string" value="[20%, grow, fill] [grow, fill]" />
 	</layout>
 
+	<!-- constraint="cell 0 0 -->
 	<panel include="ru/smartflex/djf/demo/xml/AccountGrid.pnl.xml" />
 
-	<tabpanel>
+	<panel border="line" constraint="wrap">
+		<layout clazz="net.miginfocom.swing.MigLayout">
+			<param type="string" value="" />
+			<param type="string" value="[pref!]" />
+			<param type="string" value="[pref!]" />
+		</layout>
+		<tabpanel>
+			<tabs>
+				<tab title="${demo.gridfields_tab.tab_field}" accessible="${form.itemsAccess}">
+					<panel include="ru/smartflex/djf/demo/xml/AccountFields.pnl.xml" >
+						<layout clazz="net.miginfocom.swing.MigLayout">
+							<param type="string" value="insets 5" />
+							<param type="string" value="[grow, fill]" />
+							<param type="string" value="[grow, fill]" />
+						</layout>
+					</panel>
+				</tab>
+				<tab title="Empty tab">
+					<panel>
+						<layout clazz="net.miginfocom.swing.MigLayout">
+							<param type="string" value="insets 5" />
+							<param type="string" value="[grow, fill]" />
+							<param type="string" value="[grow, fill, center]" />
+						</layout>
+						<items>
+							<label text="Just test label" constraint="gap para"/>
+						</items>
+					</panel>
+				</tab>
+			</tabs>
+		</tabpanel>
+	</panel>
+
+
+	<panel include="${form.equipWorkHist}" default="ru/smartflex/djf/demo/xml/AccEquipmentGrid.pnl.xml" constraint="span 2, cell 0 1" />
+
+	<!--tabpanel>
 		<tabs>
 			<tab title="${demo.gridfields_tab.tab_field}" accessible="${form.itemsAccess}">
 				<panel include="ru/smartflex/djf/demo/xml/AccountFields.pnl.xml" />
 			</tab>
 			<tab title="${demo.gridfields_tab.tab_equip}">
 				<panel include="${form.equipWorkHist}"
-					default="ru/smartflex/djf/demo/xml/AccEquipmentGrid.pnl.xml" />
+					   default="ru/smartflex/djf/demo/xml/AccEquipmentGrid.pnl.xml" />
 			</tab>
 		</tabs>
-	</tabpanel>
+	</tabpanel-->
 
 </panel>

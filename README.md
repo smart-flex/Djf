@@ -1,10 +1,20 @@
 # DJF - Desktop Java Forms
 
+Djf - легковесная master-detail библиотека на базе Java Swing, с заимствованными GUI идеями из FoxBase и Oracle Forms,
+опирающаяся на концепции ORM Hibernate и использующая Miglayout (и не только) для компоновки, а также RSyntaxTextArea для подсветки текстовых панелей. 
+В библиотеке сделана реализация на перемещение курсором между UI элементами без использования мыши (как это было в 90-х на FoxBase :)
+Формы, панели, виджеты и бины описываются через XML, количество аттрибутов описания минимизировано.  
+Форма - это расширение JInternalFrame, и из нее можно вызвать другую форму и т.д., 
+причем текущая форма сохраняет свое состояние, а следующая форма визуально полностью перекрывает текущую. 
+Форма может быть модальной и в этом случае она не сможет вызвать следующую форму. 
+Форма(ы) масштабируется в соответствие с размером родительского контейнера JFrame. 
+Кроме того в Djf можно увеличивать размер текста через stepPercent виджет, что позволяет более комфортно работать с формами на малоразмерном дисплее.   
+
 Djf is Desktop Java Forms, a compact master-detail UI library like FoxBase, but based on Swing.
 Djf uses Hibernate mapping concepts for data, for component layout - Miglayout and RSyntaxTextArea for text panels.
 
-You can see almost all examples of forms definition, data bindings and assistances in [demo application](https://github.com/smart-flex/Djf/releases/download/1.4/djf-demo-1.4-standalone.jar).
-After downloading you can run this demo: java -jar djf-demo-1.3-standalone.jar
+You can see almost all examples of forms definition, data bindings and assistances in [demo application](https://github.com/smart-flex/Djf/releases/download/1.6/djf-demo-1.6-standalone.jar).
+After downloading you can run this demo: java -jar djf-demo-1.6-standalone.jar
 
 ![One of the Djf demo form](djf-demo.png)
 

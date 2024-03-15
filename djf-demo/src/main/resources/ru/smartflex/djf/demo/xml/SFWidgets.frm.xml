@@ -6,19 +6,28 @@
     <panel>
         <layout clazz="net.miginfocom.swing.MigLayout">
             <param type="string" value="align 0% 50%"/>
-            <param type="string" value="[pref!][pref]" />
+            <param type="string" value="[pref!][pref][pref]" />
         </layout>
         <items>
             <label text="Увеличение размера шрифта" tips="Изменения вступят в силу после перезапуска программы" constraint="gap para" />
-            <stepPercent bind="sp.percent" tips="Font percent value" persist="true" id="idFontPercent" low="0" high="50" delta="10" constraint="gap para, wrap"/>
+            <stepPercent bind="sp.percent" tips="Font percent value" persist="true" id="idFontPercent" low="0" high="50" delta="10" constraint="gap para"/>
+            <label text="Stepper for font increasing" constraint="gap para, wrap" />
+
             <label text="Пустой список улиц" tips="Комбобокс без заполненного списка выглядит коряво" constraint="gap para" />
-            <combobox bind="sp.emptyStreet" fill="ste.streetName" constraint="gap para, wrap"/>
+            <combobox bind="sp.emptyStreet" fill="ste.streetName" constraint="gap para"/>
+            <label text="Empty street list" constraint="gap para, wrap"/>
+
             <label text="Поле шириной в 15 символов" constraint="gap para" />
-            <text bind="sp.text15" cols="15" constraint="gap para, wrap"/>
+            <text bind="sp.text15" cols="15" constraint="gap para"/>
+            <label text="Field with 15 symbols" constraint="gap para, wrap"/>
+
             <label text="Пустой список улиц в 15 символов" tips="Пустой список улиц шириной в 15 символов" constraint="gap para" />
-            <combobox bind="sp.emptyStreet15" fill="ste.streetName" cols="15" constraint="gap para, wrap"/>
+            <combobox bind="sp.emptyStreet15" fill="ste.streetName" cols="15" constraint="gap para"/>
+            <label text="Empty street list with  15 symbols" constraint="gap para, wrap"/>
+
             <label text="Cписок улиц" tips="Заполненный список улиц шириной в 15 символов" constraint="gap para" />
-            <combobox bind="sp.street" fill="st.streetName" cols="15" constraint="gap para, wrap"/>
+            <combobox bind="sp.street" fill="st.streetName" cols="15" constraint="gap para"/>
+            <label text="Filled street list with  15 symbols" constraint="gap para, wrap"/>
         </items>
     </panel>
     <models>
