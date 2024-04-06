@@ -3,6 +3,8 @@
 <form>
     <description>Simple form with some widgets</description>
     <layout clazz="java.awt.BorderLayout"/>
+    <assist clazz="ru.smartflex.djf.demo.java.SFWidgetsAssistant" />
+
     <panel>
         <layout clazz="net.miginfocom.swing.MigLayout">
             <param type="string" value="align 0% 50%"/>
@@ -28,6 +30,10 @@
             <label text="Cписок улиц" tips="Заполненный список улиц шириной в 15 символов" constraint="gap para" />
             <combobox bind="sp.street" fill="st.streetName" cols="15" constraint="gap para"/>
             <label text="Filled street list with  15 symbols" constraint="gap para, wrap"/>
+
+            <checkbox id="itemCheckForSumPayment" text="Включаем поле ввода суммы" action="enableSumPayment" belong="sp" constraint="gap para" />
+            <num id="itemSumPayment" bind="sp.sumPayment" enabled="no" cols="15" constraint="gap para, wrap" />
+
         </items>
     </panel>
     <models>

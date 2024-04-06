@@ -1,7 +1,6 @@
 package ru.smartflex.djf.demo.java;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
 public class StepperPercentInfo {
 
@@ -10,6 +9,7 @@ public class StepperPercentInfo {
     private PojoStreet emptyStreet;
     private PojoStreet emptyStreet15;
     private PojoStreet street;
+    private BigDecimal sumPayment;
 
     public int getPercent() {
         return percent;
@@ -49,5 +49,13 @@ public class StepperPercentInfo {
 
     public void setStreet(PojoStreet street) {
         this.street = street;
+    }
+
+    public BigDecimal getSumPayment() {
+        return sumPayment;
+    }
+
+    public void setSumPayment(BigDecimal sumPayment) {
+        this.sumPayment = sumPayment;
     }
 }

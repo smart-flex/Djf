@@ -122,14 +122,16 @@ public class DesktopJavaForms {
 
     @SuppressWarnings("unused")
     public static void enableWidget(String idWidget) {
-        JComponent comp = findComponent(idWidget);
-        comp.setEnabled(true);
+        WidgetManager wm = FormStack.getCurrentFormBag().getWidgetManager();
+        UIWrapper wrp = wm.getUIWrapper(idWidget);
+        wrp.setItemEnabled();
     }
 
     @SuppressWarnings("unused")
     public static void disableWidget(String idWidget) {
-        JComponent comp = findComponent(idWidget);
-        comp.setEnabled(false);
+        WidgetManager wm = FormStack.getCurrentFormBag().getWidgetManager();
+        UIWrapper wrp = wm.getUIWrapper(idWidget);
+        wrp.setItemDisabled();
     }
 
     @SuppressWarnings("unused")

@@ -57,7 +57,8 @@ public class TaskDemo {
     }
 
     private void init(String[] panels, String[] beans, String[] javaHelper, String[] javaBean) {
-        formBody = OtherUtil.getBodyAsText(formXML);
+        String[] form = {formXML};
+        formBody = concatenateSource(form, "form", true);
 
         String formHTML = formXML.replace("xml", "html").replace(".frm.", ".");
         //noinspection CatchMayIgnoreException

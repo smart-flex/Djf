@@ -11,7 +11,7 @@ import java.awt.*;
 public class Djf extends DesktopJavaForms {
 
     @SuppressWarnings("unused")
-    public static final String DJF_VERSION = "1.6";
+    public static final String DJF_VERSION = "1.7";
 
     private static DjfSession session = new DjfSession();
 

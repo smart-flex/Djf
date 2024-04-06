@@ -227,14 +227,14 @@ public class UIWrapper implements Comparable<UIWrapper> {
         enabledState = UIWrapperEnabledState.defineInitialStatus(info, enabledByMouseClick);
         boolean currentState = enabledState.getCurrentState(this);
 
-        setItemEnabledInt(currentState, false, true);
+        setItemEnabledInt(currentState, false, true, false);
     }
 
     public void setEditableStaticOffBehavior() {
         enabledState = UIWrapperEnabledState.getEditableStaticOffBehavior();
         boolean currentState = enabledState.getCurrentState(this);
 
-        setItemEnabledInt(currentState, false, true);
+        setItemEnabledInt(currentState, false, true, false);
     }
 
     public static Boolean translateStringToBoolean(String info, boolean enabledByMouseClick) {
@@ -265,11 +265,19 @@ public class UIWrapper implements Comparable<UIWrapper> {
     }
 
     public void setItemEnabled(boolean flag) {
-        setItemEnabledInt(flag, false, false);
+        setItemEnabledInt(flag, false, false, false);
+    }
+
+    public void setItemEnabled() {
+        setItemEnabledInt(true, false, false, true);
+    }
+
+    public void setItemDisabled() {
+        setItemEnabledInt(false, false, false, true);
     }
 
     public void setItemDisabledDueToAbend() {
-        setItemEnabledInt(false /* этот параметр при force==true не имеет значения*/, true, false);
+        setItemEnabledInt(false /* этот параметр при force==true не имеет значения*/, true, false, false);
     }
 
     /**
@@ -277,14 +285,18 @@ public class UIWrapper implements Comparable<UIWrapper> {
      * @param flag - true - возвращаем изначальный статус, false - отключаем
      * @param force если true - принудительно переводим виджет в disable в виду аварии
      * @param onInit - true означает начальную инициализацию
+     * @param ignoreCurrentState - параметр для принудительного управления enable статуса
      */
-    private void setItemEnabledInt(boolean flag, boolean force, boolean onInit) {
+    private void setItemEnabledInt(boolean flag, boolean force, boolean onInit, boolean ignoreCurrentState) {
         if (widgetType == WidgetTypeEnum.LABEL || widgetType == WidgetTypeEnum.GROUP || widgetType == WidgetTypeEnum.RADIO) {
             // иначе NPE, т.к. state не определен
             return;
         }
 
         boolean currentState = enabledState.getCurrentState(this);
+        if (ignoreCurrentState) {
+            currentState = flag;
+        }
 
         JComponent comp;
         switch (widgetType) {
