@@ -344,6 +344,12 @@ public class UIWrapper implements Comparable<UIWrapper> {
                     } else {
                         if (flag) {
                             compText.setEditable(currentState);
+                            // включаем появление курсора в поле
+                            compText.getCaret().setVisible(currentState);
+                            if (currentState) {
+                                // убираем курсор с другого поля
+                                compText.requestFocus();
+                            }
                         } else {
                             compText.setEditable(false);
                         }

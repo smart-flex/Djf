@@ -293,7 +293,7 @@ public class ItemBuilder {
             if (item.getEnabled() != null
                     && item.getEnabled().toLowerCase()
                     .equals(SFConstants.BY_CLICK)) {
-                new MouseListenerText((JTextField) wrapper.getObjectUI());
+                new MouseListenerText(wrapper);
             }
 
             wm.registerItemUIWrapper(wrapper);

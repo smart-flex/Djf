@@ -10,6 +10,7 @@ public class StepperPercentInfo {
     private PojoStreet emptyStreet15;
     private PojoStreet street;
     private BigDecimal sumPayment;
+    private String textOrder;
 
     public int getPercent() {
         return percent;
@@ -57,5 +58,13 @@ public class StepperPercentInfo {
 
     public void setSumPayment(BigDecimal sumPayment) {
         this.sumPayment = sumPayment;
+    }
+
+    public String getTextOrder() {
+        return textOrder;
+    }
+
+    public void setTextOrder(String textOrder) {
+        this.textOrder = textOrder;
     }
 }

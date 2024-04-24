@@ -34,6 +34,9 @@
             <checkbox id="itemCheckForSumPayment" text="Включаем поле ввода суммы" action="enableSumPayment" belong="sp" constraint="gap para" />
             <num id="itemSumPayment" bind="sp.sumPayment" enabled="no" cols="15" constraint="gap para, wrap" />
 
+            <label text="Текст заказа" tips="Открывается на редактирование по двойному клику" constraint="gap para" />
+            <text bind="sp.textOrder" enabled="byClick" cols="15" constraint="gap para, wrap" />
+
         </items>
     </panel>
     <models>
