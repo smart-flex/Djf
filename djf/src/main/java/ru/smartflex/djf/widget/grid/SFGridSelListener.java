@@ -42,6 +42,10 @@ public class SFGridSelListener implements ListSelectionListener, ISFHandler {
             return;
         }
 
+        if (!wm.isAllowFocusMovement()) {
+            return;
+        }
+
         ListSelectionModel lsm = (ListSelectionModel) e.getSource();
         if (!lsm.isSelectionEmpty()) {
             if (!listenForColumn) {
@@ -61,8 +65,7 @@ public class SFGridSelListener implements ListSelectionListener, ISFHandler {
 
     private void hadleRowSelection(ListSelectionModel lsm) {
         selectedIndex = lsm.getMinSelectionIndex();
-
-        wm.moveToRow(uiw, selectedIndex);
+        wm.moveToRow(uiw, selectedIndex); // точка поломки - соскос фокуса с грида
         wm.registerSelectedWrapper(uiw);
 
         SFGrid grid = (SFGrid) uiw.getObjectUI();
@@ -90,6 +93,8 @@ public class SFGridSelListener implements ListSelectionListener, ISFHandler {
             }
             treeGrid.repaint();
         }
+        GridRequestFocusThread thread = new GridRequestFocusThread(grid);
+        thread.execute();
     }
 
     @Override

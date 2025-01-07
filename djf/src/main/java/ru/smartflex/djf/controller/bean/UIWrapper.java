@@ -347,7 +347,8 @@ public class UIWrapper implements Comparable<UIWrapper> {
                             // включаем появление курсора в поле
                             compText.getCaret().setVisible(currentState);
                             if (currentState) {
-                                // убираем курсор с другого поля
+                                // убираем курсор с другого поля - необходим, иначе во всех текстовых полях появляется мигающий курсор
+                                // но именно он вызывает срыв фокуса с таблицы - нужен workarround
                                 compText.requestFocus();
                             }
                         } else {

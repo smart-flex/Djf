@@ -638,10 +638,7 @@ public class WidgetManager {
             lockTree.lock();
             try {
                 treeList.goIndex(index, uiw.getModelBase().getTreeNode());
-                moveToRowRepaint(uiw.getModelBase().getTreeNode(), treeList/*
-                 * ,
-                 * true
-                 */);
+                moveToRowRepaint(uiw.getModelBase().getTreeNode(), treeList);
             } finally {
                 lockTree.unlock();
             }
@@ -1078,6 +1075,10 @@ public class WidgetManager {
 
     void setAllowFocusMovement(boolean flag) {
         allowFocusMovement.set(flag);
+    }
+
+    public boolean isAllowFocusMovement() {
+        return allowFocusMovement.get();
     }
 
 }
