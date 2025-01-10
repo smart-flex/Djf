@@ -732,7 +732,7 @@ public class FormBag {
         }
     }
 
-    private FormManager getFormManager() {
+    public FormManager getFormManager() {
         return formManager;
     }
 

@@ -2,11 +2,10 @@ package ru.smartflex.djf.widget.grid;
 
 import java.util.List;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 
 import ru.smartflex.djf.controller.WidgetManager;
+import ru.smartflex.djf.controller.WidgetManagerHelper;
 import ru.smartflex.djf.controller.bean.GridColumnInfo;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.tool.FontUtil;
@@ -108,6 +107,16 @@ public class SFGrid extends JScrollPane implements IRequestFocus {
                 selectFirstRow();
             }
         }
+    }
+
+    public void markGridAsActive() {
+        WidgetManagerHelper.setGridsInActive();
+        table.getTableHeader().setBorder(BorderFactory.createEtchedBorder());
+        table.requestFocus();
+    }
+
+    public void markGridAsInActive() {
+        table.getTableHeader().setBorder(BorderFactory.createEmptyBorder());
     }
 
     public List<GridColumnInfo> getListColumnInfo() {
@@ -241,6 +250,7 @@ public class SFGrid extends JScrollPane implements IRequestFocus {
     @Override
     public void requestFocusOnNestedWidget() {
         requestGridFocus();
+        markGridAsActive();
     }
 
 }

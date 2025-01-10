@@ -64,6 +64,8 @@ public class SFGridSelListener implements ListSelectionListener, ISFHandler {
     }
 
     private void hadleRowSelection(ListSelectionModel lsm) {
+        wm.setAllowFocusMovement(false); // режим будет включен в потоке (ниже)
+
         selectedIndex = lsm.getMinSelectionIndex();
         wm.moveToRow(uiw, selectedIndex); // точка поломки - соскос фокуса с грида
         wm.registerSelectedWrapper(uiw);
@@ -93,8 +95,10 @@ public class SFGridSelListener implements ListSelectionListener, ISFHandler {
             }
             treeGrid.repaint();
         }
-        GridRequestFocusThread thread = new GridRequestFocusThread(grid);
-        thread.execute();
+        // включение режима будет выполнено в потоке, иначе движение по гридам и перезаливка данных вызывает серию
+        // focus lost/gain что в свою очередь вызывает рябь на экране
+        // wm.setAllowFocusMovement(true);
+        GridRequestFocusThread.requestFocusInThread(wm, grid);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class GridFocusListener implements FocusListener, ISFHandler {
 
     @Override
     public void focusGained(FocusEvent e) {
-        if (!SFGridMouseMotionFlag.isMotion()) {
+        if (!SFGridMouseMotionFlag.isMotion() && wm.isAllowFocusMovement()) {
             SFLogger.debug(GridFocusListener.class, "Grid focus gained: ", uiw.getUiName());
             wm.registerSelectedWrapper(uiw);
         }
@@ -28,6 +28,9 @@ public class GridFocusListener implements FocusListener, ISFHandler {
 
     @Override
     public void focusLost(FocusEvent e) {
+        if (!SFGridMouseMotionFlag.isMotion() && wm.isAllowFocusMovement()) {
+            ((SFGrid)uiw.getObjectUI()).markGridAsInActive();
+        }
     }
 
     @Override

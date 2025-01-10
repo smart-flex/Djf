@@ -1,29 +1,46 @@
 package ru.smartflex.djf.widget.grid;
 
+import ru.smartflex.djf.controller.WidgetManager;
 
-import javax.swing.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * В потоке выставляем фокус на гриде трижды, иначе выставление фокусов на input перевешивает и перволначальный фокус с грида соскакивает
  * (свинговый костыль)
  */
-public class GridRequestFocusThread extends SwingWorker<Void, Void> {
+public class GridRequestFocusThread {
 
-    private SFGrid grid;
+    private static ExecutorService service = Executors.newSingleThreadExecutor();
 
-    public GridRequestFocusThread(SFGrid grid) {
-        this.grid = grid;
+    public static void requestFocusInThread(WidgetManager wm, SFGrid grid) {
+        // executor нужен чтоюы упорядочить swing events, в противном случае они идут вперемешку а то и задом наперед
+        service.submit(new GridFocuRequest(wm, grid));
     }
 
-    @Override
-    protected Void doInBackground() throws Exception {
-        // иногда два вызова не помогают
-        Thread.sleep(10);
-        grid.requestGridFocus();
-        Thread.sleep(10);
-        grid.requestGridFocus();
-        Thread.sleep(10);
-        grid.requestGridFocus();
-        return null;
+    static class GridFocuRequest implements Runnable {
+        private WidgetManager wm;
+        private SFGrid grid;
+
+        public GridFocuRequest(WidgetManager wm, SFGrid grid) {
+            this.wm = wm;
+            this.grid = grid;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(10);
+                grid.requestGridFocus();
+                Thread.sleep(10);
+                grid.requestGridFocus();
+                Thread.sleep(10);
+                grid.requestGridFocus();
+                grid.markGridAsActive();
+
+                wm.setAllowFocusMovement(true);
+            } catch (Exception e) {
+            }
+        }
     }
 }

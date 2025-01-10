@@ -9,10 +9,7 @@ import javax.swing.JTextField;
 
 import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.WidgetTypeEnum;
-import ru.smartflex.djf.controller.bean.GridColumnInfo;
-import ru.smartflex.djf.controller.bean.ModelLoadResult;
-import ru.smartflex.djf.controller.bean.UIWrapper;
-import ru.smartflex.djf.controller.bean.UIWrapperModel;
+import ru.smartflex.djf.controller.bean.*;
 import ru.smartflex.djf.controller.bean.tree.BeanStatusEnum;
 import ru.smartflex.djf.controller.bean.tree.IBeanWrapper;
 import ru.smartflex.djf.controller.bean.tree.TreeList;
@@ -148,6 +145,26 @@ public class WidgetManagerHelper {
 
     }
 
+    public static void setGridsInActive() {
+        FormManager fm = FormStack.getCurrentFormBag().getFormManager();
+        List<ModelType> modelList = fm.getForm().getModels().getModel();
+        for (ModelType mt : modelList) {
+            String idModel = mt.getId();
+
+            WidgetManager wm = fm.getWidgetManager();
+            WidgetTreeNode<UIWrapper> wtn = wm.getWidgetTreeNode(idModel);
+            List<WidgetTreeNode<UIWrapper>> orderedList = wtn.getOrderedTreeNode();
+            for (WidgetTreeNode<UIWrapper> wtno : orderedList) {
+                if (wtno.isScrollWidget()) {
+                    Object uiObject = wtno.getWidget().getObjectUI();
+                    if (wtno.getWidget().getWidgetType() == WidgetTypeEnum.GRID || wtno.getWidget().getWidgetType() == WidgetTypeEnum.TGRID) {
+                        ((SFGrid) uiObject).markGridAsInActive();
+                    }
+                }
+            }
+        }
+    }
+
     static void requestFocustOnFirstComponent(FormManager fm) {
         FocusPolicy focus = (FocusPolicy) fm.getWidgetManager()
                 .getFocusPolicy();
@@ -155,6 +172,7 @@ public class WidgetManagerHelper {
         if (comp != null) {
             if (comp instanceof SFGrid) {
                 ((SFGrid) comp).requestGridFocus();
+                ((SFGrid) comp).markGridAsActive();
             } else {
                 comp.requestFocus();
             }
