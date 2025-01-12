@@ -776,7 +776,6 @@ public class WidgetManager {
     }
 
     public void moveDown(String currentUIName) {
-System.out.println("*** WidgetManager.moveDown "+allowFocusMovement.get());
         if (allowFocusMovement.get()) {
             focus.moveDown(currentUIName);
         }

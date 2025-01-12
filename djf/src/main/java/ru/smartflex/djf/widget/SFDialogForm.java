@@ -1,10 +1,12 @@
 package ru.smartflex.djf.widget;
 
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JDialog;
+import javax.swing.*;
 
 import ru.smartflex.djf.Djf;
 import ru.smartflex.djf.FormStepEnum;
@@ -38,6 +40,26 @@ public class SFDialogForm extends JDialog implements ISFDialog, IForm {
             public void windowClosed(WindowEvent e) {
             }
         });
+
+        if (getContentPane() instanceof JComponent) {
+            JComponent panel = (JComponent) getContentPane();
+            panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "dispose");
+            panel.getActionMap().put("dispose", new AbstractAction() {
+                public void actionPerformed(ActionEvent event) {
+                    if (Djf.isCurrentFormWasChanged()) {
+                        Djf.showStatusWarnMessage("${label.djf.message.warn.but_no_actn_allow_formwaschanged}");
+                    } else {
+                        closeDialog();
+                    }
+                }
+            });
+            panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('S', KeyEvent.CTRL_MASK, false), "save");
+            panel.getActionMap().put("save", new AbstractAction() {
+                public void actionPerformed(ActionEvent event) {
+                    Djf.saveForm();
+                }
+            });
+        }
     }
 
     public void closeDialog() {
@@ -65,7 +87,12 @@ public class SFDialogForm extends JDialog implements ISFDialog, IForm {
         }
 
         if (msgMain != null) {
-            this.setTitle(msgMain);
+            if (msgMain.charAt(msgMain.length() - 1) != '.') {
+                msgMain = msgMain + ". ";
+            } else if (msgMain.charAt(msgMain.length() - 1) != ' ') {
+                msgMain = msgMain + " ";
+            }
+            this.setTitle(msgMain +  "<ESC> - выход");
         }
 
         // this is final point of execution. All threads are stopped

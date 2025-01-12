@@ -31,6 +31,7 @@ import ru.smartflex.djf.widget.ActionListenerWidget;
 import ru.smartflex.djf.widget.IForm;
 import ru.smartflex.djf.widget.SFDialogForm;
 import ru.smartflex.djf.widget.TaskStatusLevelEnum;
+import ru.smartflex.djf.widget.template.FormUI;
 
 public class FormStack {
 
@@ -268,6 +269,7 @@ public class FormStack {
                             previousForm.refeshForm(welcomeForParent);
                         }
                     }
+                    ((FormUI)previousForm.getFormWrapper().getObjectUI()).requestFocusInWindowFormUI();
                 }
 
             } else {
