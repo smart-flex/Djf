@@ -37,6 +37,8 @@
             <label text="Текст заказа" tips="Открывается на редактирование по двойному клику" constraint="gap para" />
             <text bind="sp.textOrder" enabled="byClick" cols="15" constraint="gap para, wrap" />
 
+            <button text="Заполнение даты" tips="Заполнение даты в окне" action="fillDate" constraint="gap para, wrap" />
+
         </items>
     </panel>
     <models>

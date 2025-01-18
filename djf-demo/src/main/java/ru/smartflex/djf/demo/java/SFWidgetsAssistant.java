@@ -14,4 +14,8 @@ public class SFWidgetsAssistant extends GridFieldsAssistant {
         }
     }
 
+    public void fillDate() {
+        Djf.runForm("ru/smartflex/djf/demo/xml/SFWidgetsDate.frm.xml");
+    }
+
 }

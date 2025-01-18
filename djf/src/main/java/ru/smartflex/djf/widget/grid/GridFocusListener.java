@@ -28,6 +28,11 @@ public class GridFocusListener implements FocusListener, ISFHandler {
 
     @Override
     public void focusLost(FocusEvent e) {
+        if (wm == null || wm.getFormBag() == null) {
+            // workarround for SFDialogForm.closeDialog() ->dispose();
+            return;
+        }
+
         if (!SFGridMouseMotionFlag.isMotion() && wm.isAllowFocusMovement()) {
             ((SFGrid)uiw.getObjectUI()).markGridAsInActive();
         }

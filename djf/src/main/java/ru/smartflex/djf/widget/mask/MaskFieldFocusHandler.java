@@ -47,6 +47,10 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
 
     @Override
     public void focusLost(FocusEvent e) {
+        if (wm == null || wm.getFormBag() == null) {
+            // workarround for SFDialogForm.closeDialog() ->dispose();
+            return;
+        }
 
         if (!wm.getFormBag().isFormReady()) {
             return;
