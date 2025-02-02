@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<form modal="true" size="250, 170">
+<form modal="true" size="250, 230">
     <description>Date modal form</description>
     <layout clazz="java.awt.BorderLayout" />
 
@@ -15,8 +15,14 @@
             <text id="apt_smp_1" bind="dt.text" cols="10" constraint="gaptop 15, wrap" />
             <label text="Дата" constraint="gap para"/>
             <date bind="dt.dateFilled" constraint="wrap" />
-            <!--label text="Дата" constraint="gap para"/>
-            <date bind="dt.dateEmpty" constraint="gapbottom 15, wrap" /-->
+            <label text="Дата" tips="Пустая дата" constraint="gap para"/>
+            <date bind="dt.dateEmpty" constraint="wrap" />
+            <label text="Период" tips="Корректный период" constraint="gap para"/>
+            <period bind="dt.calcPeriodCorrect" constraint="wrap" />
+            <label text="Период" tips="Неверный период" constraint="gap para"/>
+            <period bind="dt.calcPeriodError" constraint="wrap" />
+            <label text="Период" tips="Незаполненный период" constraint="gap para"/>
+            <period bind="dt.calcPeriodEmpty" constraint="gapbottom 15, wrap" />
         </items>
 
     </panel>

@@ -11,6 +11,8 @@ import ru.smartflex.djf.widget.ISFHandler;
 import ru.smartflex.djf.widget.ItemHandler;
 import ru.smartflex.djf.widget.grid.TFCellEditor;
 
+import java.awt.event.KeyEvent;
+
 public class MaskFieldMaskDateFilter extends DocumentFilter implements
         ISFHandler {
     private JTextField field;
@@ -19,14 +21,15 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
     private WidgetManager wm;
     private TFCellEditor cellEditor = null;
     private boolean onlyDigit;
+    private MaskFieldKeyRegister keyRegister = null;
 
-    public MaskFieldMaskDateFilter(WidgetManager wm, MaskInfo maskInfo,
-                                   JTextField field, boolean onlyDigit) {
+    public MaskFieldMaskDateFilter(WidgetManager wm, MaskInfo maskInfo, JTextField field, boolean onlyDigit, MaskFieldKeyRegister keyRegister) {
         this.wm = wm;
         this.field = field;
         this.maskDelimiter = maskInfo.getMaskDelimiter();
         this.maskInfo = maskInfo;
         this.onlyDigit = onlyDigit;
+        this.keyRegister = keyRegister;
 
         OtherUtil.setFilter(field, this);
     }
@@ -115,28 +118,55 @@ System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+le
     }
 
     @Override
-    public void remove(FilterBypass fb, int offset, int length)
-            throws BadLocationException {
-System.out.println("*** remove  offset "+offset+" length "+length);
+    public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+        int keyPressed = keyRegister.getKeyCode();
+        if (keyPressed == 0) {
+            // мало ли
+            return;
+        }
+
+        System.out.println("*** remove  offset "+offset+" length "+length+" field "+field.getText()+" keyPressed "+keyPressed);
 //todo автоматическое смещение курсора по del и backspace
 
         if (length <= 0) {
             return;
         }
-        if (ItemHandler.checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
-            super.remove(fb, offset, length); // Only one symbol can be deleted
-            if (length == 1) {
-                super.insertString(fb, offset, ISFMaskConstants.STRING_SPACE, null);
-            } else {
-                // if there is more than one symbol was selected in field to delete
-                StringBuilder sb = new StringBuilder(2);
-                for (int i = 0; i < length; i++) {
-                    sb.append(ISFMaskConstants.STRING_SPACE);
-                    // todo вставлять делимитер
-                }
-                super.insertString(fb, offset, sb.toString(), null);
+        if (length == 1) {
+            switch (keyPressed) {
+                case KeyEvent.VK_BACK_SPACE:
+                    boolean canBeErased = ItemHandler.checkIsPossibleToInsertSymbol(maskDelimiter, offset);
+                    if (!canBeErased) {
+                        offset = ItemHandler.calcCurrentCaretToLeft(field, maskDelimiter);
+                    }
+                    super.remove(fb, offset, length); // Only one symbol can be deleted
+                    super.insertString(fb, offset, ISFMaskConstants.STRING_SPACE, null);
+                    field.setCaretPosition(offset);
+                    break;
+                case KeyEvent.VK_DELETE:
+                    int newOffset = ItemHandler.calcCurrentCaretToRight(field, maskDelimiter);
+System.out.println("**** newOffset "+newOffset+" mask length "+maskDelimiter.length());
+                    super.remove(fb, offset, length); // Only one symbol can be deleted
+                    super.insertString(fb, offset, ISFMaskConstants.STRING_SPACE, null);
+                    field.setCaretPosition(newOffset);
+                    break;
             }
-            field.setCaretPosition(offset);
+        } else {
+            if (ItemHandler.checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
+                super.remove(fb, offset, length); // Only one symbol can be deleted
+                if (length == 1) {
+                    super.insertString(fb, offset, ISFMaskConstants.STRING_SPACE, null);
+                } else {
+                    // if there is more than one symbol was selected in field to delete
+                    StringBuilder sb = new StringBuilder(2);
+                    for (int i = 0; i < length; i++) {
+                        sb.append(ISFMaskConstants.STRING_SPACE);
+                        // todo вставлять делимитер
+                    }
+                    super.insertString(fb, offset, sb.toString(), null);
+                }
+                field.setCaretPosition(offset);
+            }
+
         }
 
     }

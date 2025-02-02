@@ -17,13 +17,14 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
     private WidgetManager wm;
     private UIWrapper uiw;
     private TFCellEditor cellEditor = null;
+    private MaskFieldKeyRegister keyRegister = null;
 
-    public MaskFieldKeyHandler(JTextField field, String mask, WidgetManager wm,
-                               UIWrapper uiw) {
+    public MaskFieldKeyHandler(JTextField field, String mask, WidgetManager wm, UIWrapper uiw, MaskFieldKeyRegister keyRegister) {
         this.field = field;
         this.mask = mask;
         this.wm = wm;
         this.uiw = uiw;
+        this.keyRegister = keyRegister;
 
         field.addKeyListener(this);
     }
@@ -71,6 +72,12 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
                     e.consume();
                     wm.moveDown(field.getName());
                 }
+                break;
+            case KeyEvent.VK_DELETE:
+                keyRegister.setKeyCode(KeyEvent.VK_DELETE);
+                break;
+            case KeyEvent.VK_BACK_SPACE:
+                keyRegister.setKeyCode(KeyEvent.VK_BACK_SPACE);
                 break;
         }
     }

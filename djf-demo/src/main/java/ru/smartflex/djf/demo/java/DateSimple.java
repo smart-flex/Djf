@@ -9,6 +9,9 @@ public class DateSimple {
     private String text;
     private Date dateFilled = new Date();
     private Date dateEmpty = null;
+    private Integer calcPeriodCorrect = 202501;
+    private Integer calcPeriodError = 202333;
+    private Integer calcPeriodEmpty = null;
 
     public DateSimple() {
         SimpleDateFormat sdf = new SimpleDateFormat(MainDjfDemo.getDateMask());
@@ -37,5 +40,29 @@ public class DateSimple {
 
     public void setDateEmpty(Date dateEmpty) {
         this.dateEmpty = dateEmpty;
+    }
+
+    public Integer getCalcPeriodCorrect() {
+        return calcPeriodCorrect;
+    }
+
+    public void setCalcPeriodCorrect(Integer calcPeriodCorrect) {
+        this.calcPeriodCorrect = calcPeriodCorrect;
+    }
+
+    public Integer getCalcPeriodError() {
+        return calcPeriodError;
+    }
+
+    public void setCalcPeriodError(Integer calcPeriodError) {
+        this.calcPeriodError = calcPeriodError;
+    }
+
+    public Integer getCalcPeriodEmpty() {
+        return calcPeriodEmpty;
+    }
+
+    public void setCalcPeriodEmpty(Integer calcPeriodEmpty) {
+        this.calcPeriodEmpty = calcPeriodEmpty;
     }
 }

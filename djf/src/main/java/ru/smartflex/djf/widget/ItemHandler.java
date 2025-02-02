@@ -30,8 +30,9 @@ public class ItemHandler {
 
                 uiw.setEmptyDelimiterMask();
 
-                new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw);
-                new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, false);
+                MaskFieldKeyRegister keyRegisterDate = new MaskFieldKeyRegister();
+                new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw, keyRegisterDate);
+                new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, false, keyRegisterDate);
                 new MaskFieldFocusHandler(wm, uiw, field, new DateValidator(uiw.getMaskInfo()));
                 new MaskFieldMouseHandler(field, uiw.getMaskInfo().getMaskDelimiter());
 
@@ -41,8 +42,9 @@ public class ItemHandler {
 
                 uiw.setEmptyDelimiterMask();
 
-                new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw);
-                new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, true);
+                MaskFieldKeyRegister keyRegisterPeriod = new MaskFieldKeyRegister();
+                new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw, keyRegisterPeriod);
+                new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, true, keyRegisterPeriod);
                 new MaskFieldFocusHandler(wm, uiw, field, new PeriodValidator(uiw.getMaskInfo()));
                 new MaskFieldMouseHandler(field, uiw.getMaskInfo().getMaskDelimiter());
 
@@ -363,6 +365,44 @@ public class ItemHandler {
         startCaret++;
         field.setCaretPosition(startCaret);
 
+    }
+
+    public static int calcCurrentCaretToLeft(JTextField field, String maskDelimiter) {
+        int startCaret = field.getCaretPosition();
+
+        if (startCaret > 0) {
+            int ind = startCaret - 1;
+            do {
+                char symbol = maskDelimiter.charAt(ind);
+                if (symbol == ISFMaskConstants.CHAR_SPACE) {
+                    startCaret = ind;
+                    break;
+                }
+                ind--;
+            } while (ind >= 0);
+        }
+
+        return startCaret;
+    }
+
+    public static int calcCurrentCaretToRight(JTextField field, String maskDelimiter) {
+        int startCaret = field.getCaretPosition();
+
+        if (startCaret < maskDelimiter.length()) {
+            int ind = startCaret + 1;
+            do {
+                if (ind < maskDelimiter.length()) {
+                    char symbol = maskDelimiter.charAt(ind);
+                    if (symbol == ISFMaskConstants.CHAR_SPACE) {
+                        startCaret = ind;
+                        break;
+                    }
+                }
+                ind++;
+            } while (ind < maskDelimiter.length());
+        }
+
+        return startCaret;
     }
 
     public static void moveCaretToStart(JTextField field, String mask) {
