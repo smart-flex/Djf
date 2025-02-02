@@ -5,16 +5,16 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
 import ru.smartflex.djf.AlignTypeEnum;
 import ru.smartflex.djf.Djf;
-import ru.smartflex.djf.FormAssistant;
 import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.WidgetTypeEnum;
-import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.bean.tree.ITreeConstants;
 import ru.smartflex.djf.controller.bean.tree.TreeListUtils;
 import ru.smartflex.djf.controller.bean.tree.WidgetTreeNode;
@@ -39,6 +39,7 @@ public class UIWrapper implements Comparable<UIWrapper> {
 
     private WidgetTypeEnum widgetType = null;
 
+    private Lock dataFormatLock = new ReentrantLock(false);
     private DateFormat dateFormat = null;
 
     private String uiName = null;
@@ -129,35 +130,31 @@ public class UIWrapper implements Comparable<UIWrapper> {
     }
 
     public String getFormattedData(Object obj) {
-        String ret = null;
-
-        if (widgetType == WidgetTypeEnum.DATE) {
-            ret = (String) ConverterUtil.getFormattedData(widgetType,
-                    dateFormat, maskInfo.getMaskDelimiter(), obj);
-        } else if (widgetType == WidgetTypeEnum.PERIOD) {
-            ret = (String) ConverterUtil.getFormattedData(maskInfo, obj);
-        } else {
-            if (obj != null) {
-                ret = obj.toString();
-            }
+        Object retObj = getFormattedDataForGrid(obj);
+        if (retObj != null) {
+            return retObj.toString();
         }
-
-        return ret;
+        return null;
     }
 
     public Object getFormattedDataForGrid(Object obj) {
         Object ret = null;
 
-        if (widgetType == WidgetTypeEnum.DATE) {
-            ret = ConverterUtil.getFormattedData(widgetType,
-                    dateFormat, maskInfo.getMaskDelimiter(), obj);
-        } else if (widgetType == WidgetTypeEnum.PERIOD) {
-            ret = ConverterUtil.getFormattedData(maskInfo, obj);
-        } else {
-            if (obj != null) {
-                ret = obj;
+        dataFormatLock.lock();
+        try {
+            if (widgetType == WidgetTypeEnum.DATE) {
+                ret = ConverterUtil.getFormattedData(widgetType, dateFormat, maskInfo.getMaskDelimiter(), obj);
+            } else if (widgetType == WidgetTypeEnum.PERIOD) {
+                ret = ConverterUtil.getFormattedData(maskInfo, obj);
+            } else {
+                if (obj != null) {
+                    ret = obj;
+                }
             }
+        } finally {
+            dataFormatLock.unlock();
         }
+
         return ret;
     }
 
@@ -168,21 +165,34 @@ public class UIWrapper implements Comparable<UIWrapper> {
 
     public Object getCurrentValue() {
         // after validation
+        return getCurrentValue((JComponent)objectUI);
+    }
+
+    public Object getCurrentValue(JComponent swingComponent) {
+        // after validation
         Object obj;
 
-        if (widgetType == WidgetTypeEnum.DATE) {
-            obj = ConverterUtil.getValue(widgetType, dateFormat,
-                    (JTextComponent) objectUI, this);
-        } else {
-            obj = ConverterUtil.getValue(widgetType, null,
-                    (JComponent) objectUI, this);
+        dataFormatLock.lock();
+        try {
+            obj = ConverterUtil.getValue(widgetType, dateFormat, swingComponent, this);
+        } finally {
+            dataFormatLock.unlock();
         }
 
         return obj;
     }
 
     public Object getValueFromText(String val) {
-        return ConverterUtil.getValue(widgetType, dateFormat, val, this);
+        Object obj;
+
+        dataFormatLock.lock();
+        try {
+            obj = ConverterUtil.getValue(widgetType, dateFormat, val, this);
+        } finally {
+            dataFormatLock.unlock();
+        }
+
+        return obj;
     }
 
     public void setBind(String bind) {
@@ -622,10 +632,6 @@ public class UIWrapper implements Comparable<UIWrapper> {
         }
     }
 
-    public java.text.Format getDateFormat() {
-        return dateFormat;
-    }
-
     public MaskInfo getMaskInfo() {
         return maskInfo;
     }
@@ -869,4 +875,9 @@ public class UIWrapper implements Comparable<UIWrapper> {
     public boolean isIdWasAssigned() {
         return idWasAssigned;
     }
+
+    public void setEmptyDelimiterMask() {
+        ((JTextField)objectUI).setText(maskInfo.getMaskDelimiter());
+    }
+
 }

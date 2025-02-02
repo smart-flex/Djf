@@ -106,8 +106,7 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
     }
 
     private void setUpNewValue(boolean invokeStop) {
-        Object val = ConverterUtil.getValue(colInfo.getWidgetType(),
-                colInfo.getDateFormat(), field, colInfo);
+        Object val = colInfo.getCurrentValue(field);
 
         if (colInfo.getWidgetType() == WidgetTypeEnum.PHONE) {
             PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone((String) val);

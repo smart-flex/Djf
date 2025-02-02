@@ -28,43 +28,34 @@ public class ItemHandler {
             case DATE:
                 validateMask(uiw.getMaskInfo());
 
-                field.setText(uiw.getMaskInfo().getMaskDelimiter());
+                uiw.setEmptyDelimiterMask();
 
-                new MaskFieldKeyHandler(field,
-                        uiw.getMaskInfo().getMaskDelimiter(), wm, uiw);
+                new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw);
                 new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, false);
-                new MaskFieldFocusHandler(wm, uiw, field, new DateValidator(
-                        uiw.getMaskInfo()));
-                new MaskFieldMouseHandler(field, uiw.getMaskInfo()
-                        .getMaskDelimiter());
+                new MaskFieldFocusHandler(wm, uiw, field, new DateValidator(uiw.getMaskInfo()));
+                new MaskFieldMouseHandler(field, uiw.getMaskInfo().getMaskDelimiter());
 
                 break;
             case PERIOD:
                 validateMask(uiw.getMaskInfo());
 
-                field.setText(uiw.getMaskInfo().getMaskDelimiter());
+                uiw.setEmptyDelimiterMask();
 
-                new MaskFieldKeyHandler(field,
-                        uiw.getMaskInfo().getMaskDelimiter(), wm, uiw);
+                new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw);
                 new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, true);
-                new MaskFieldFocusHandler(wm, uiw, field, new PeriodValidator(
-                        uiw.getMaskInfo()));
-                new MaskFieldMouseHandler(field, uiw.getMaskInfo()
-                        .getMaskDelimiter());
+                new MaskFieldFocusHandler(wm, uiw, field, new PeriodValidator(uiw.getMaskInfo()));
+                new MaskFieldMouseHandler(field, uiw.getMaskInfo().getMaskDelimiter());
 
                 break;
             default:
-                throw new SmartFlexMaskException("No handlers for this type: "
-                        + uiw.getWidgetType());
+                throw new SmartFlexMaskException("No handlers for this type: " + uiw.getWidgetType());
         }
         BeanFormDefProperty prop = uiw.getBeanFormDefPropertyFromBind();
-        if (prop != null && prop.getNotNull() != null
-                && prop.getNotNull()) {
+        if (prop != null && prop.getNotNull() != null && prop.getNotNull()) {
             field.setBackground(SFConstants.FIELD_REQUIRED_BACKGROUND_COLOR);
         }
         if (uiw.getWidgetType() == WidgetTypeEnum.DATE || uiw.getWidgetType() == WidgetTypeEnum.PERIOD) {
-            ItemHandler.moveCaretToStart(field, uiw.getMaskInfo()
-                    .getMaskDelimiter());
+            ItemHandler.moveCaretToStart(field, uiw.getMaskInfo().getMaskDelimiter());
         }
     }
 

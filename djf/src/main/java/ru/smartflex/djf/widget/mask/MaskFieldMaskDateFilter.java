@@ -43,14 +43,19 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
         OtherUtil.setFilter(field, this);
     }
 
+    // BTW: insertString is never called
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void replace(FilterBypass fb, int offset, int length, String text,
                         AttributeSet attrs) throws BadLocationException {
+System.out.println("*** replace 1 string: "+text+" offset "+offset+" length "+length+" attr "+attrs+" field.getText() "+field.getText());
 
         // this method invoking when user press F2 (user is starting to edit)
         if (text != null && field.getText() != null) {
+System.out.println("*** replace 2 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
             if (text.equals(field.getText())) {
+System.out.println("*** replace 3 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                 // 03-09-2017 stop replacing instead of swing wishing
                 // some additional optimization
                 return;
@@ -60,6 +65,8 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
         // 03-09-2017 Document doc = fb.getDocument();
 
         if (offset == 0 && length == maskDelimiter.length()) {
+System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+
             // JTextField.setText invokes this case
             super.remove(fb, offset, length);
             super.insertString(fb, offset, text, attrs);
@@ -67,9 +74,13 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
             // left. Correct?
             ItemHandler.moveCaretToStart(field, maskDelimiter);
         } else {
+System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
             if (text != null && field.getText() != null) {
+System.out.println("*** replace 6 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+
                 if ((text.length() + field.getText().length() - 1) <= maskDelimiter.length()) {
+System.out.println("*** replace 7 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                     // 03-09-2017 prevent bug with symbol increasing in masked field
                     if (ItemHandler
                             .checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
@@ -80,6 +91,7 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
                                 return;
                             }
                         }
+System.out.println("*** replace 8 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                         super.remove(fb, offset, 1);
                         super.insertString(fb, offset, text, attrs);
                     }
@@ -93,6 +105,8 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
                     cellEditor.stopAndValidate(true);
                 }
             } else {
+System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+
                 ItemHandler.slideCaretFromStartToRight(field, maskDelimiter);
             }
 
@@ -103,6 +117,9 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
     @Override
     public void remove(FilterBypass fb, int offset, int length)
             throws BadLocationException {
+System.out.println("*** remove  offset "+offset+" length "+length);
+//todo автоматическое смещение курсора по del и backspace
+
         if (length <= 0) {
             return;
         }
@@ -115,11 +132,13 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
                 StringBuilder sb = new StringBuilder(2);
                 for (int i = 0; i < length; i++) {
                     sb.append(ISFMaskConstants.STRING_SPACE);
+                    // todo вставлять делимитер
                 }
                 super.insertString(fb, offset, sb.toString(), null);
             }
             field.setCaretPosition(offset);
         }
+
     }
 
     @SuppressWarnings("ConstantConditions")

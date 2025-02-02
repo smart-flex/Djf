@@ -334,12 +334,10 @@ public class WidgetManagerHelper {
                         ((JTextField) uiw.getObjectUI()).setText((String) obj);
                         break;
                     case DATE:
-                        ((JTextField) uiw.getObjectUI()).setText(uiw
-                                .getFormattedData(obj));
+                        ((JTextField) uiw.getObjectUI()).setText(uiw.getFormattedData(obj));
                         break;
                     case PERIOD:
-                        ((JTextField) uiw.getObjectUI()).setText(uiw
-                                .getFormattedData(obj));
+                        ((JTextField) uiw.getObjectUI()).setText(uiw.getFormattedData(obj));
                         break;
                     case BYTE:
                     case SHORT:

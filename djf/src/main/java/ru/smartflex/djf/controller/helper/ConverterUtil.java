@@ -21,14 +21,12 @@ import ru.smartflex.djf.widget.mask.MaskInfo;
 
 public class ConverterUtil {
 
-    private static Lock lockFormatSet = new ReentrantLock(false);
     private static Lock lockFormatGet = new ReentrantLock(false);
 
     private ConverterUtil() {
     }
 
-    public static Object getFormattedData(WidgetTypeEnum widgetType,
-                                          java.text.Format format, String maskDelimiter, Object obj) {
+    public static Object getFormattedData(WidgetTypeEnum widgetType, java.text.Format format, String maskDelimiter, Object obj) {
         Object human;
 
         if (widgetType == WidgetTypeEnum.DATE) {
@@ -36,11 +34,7 @@ public class ConverterUtil {
             if (obj != null) {
                 Date date = (Date) obj;
                 lockFormatGet.lock();
-                try {
-                    human = ((DateFormat) format).format(date);
-                } finally {
-                    lockFormatGet.unlock();
-                }
+                human = ((DateFormat) format).format(date);
             }
 
         } else {
@@ -55,23 +49,17 @@ public class ConverterUtil {
         Object human = maskInfo.getMaskDelimiter();
         if (obj != null) {
             Integer period = (Integer) obj;
-            lockFormatGet.lock();
-            try {
-                int year = period / 100;
-                int mm = period % 100;
+            int year = period / 100;
+            int mm = period % 100;
 
-                human = maskInfo.getPeriodAsString(year, mm);
-            } finally {
-                lockFormatGet.unlock();
-            }
+            human = maskInfo.getPeriodAsString(year, mm);
         }
 
         return human;
     }
 
     @SuppressWarnings("DuplicateBranchesInSwitch")
-    public static Object getValue(WidgetTypeEnum widgetType,
-                                  java.text.Format format, JComponent comp, UIWrapper uiw) {
+    public static Object getValue(WidgetTypeEnum widgetType, java.text.Format format, JComponent comp, UIWrapper uiw) {
         Object obj = null;
 
         switch (widgetType) {
@@ -141,22 +129,17 @@ public class ConverterUtil {
         return obj;
     }
 
-    public static Object getValue(WidgetTypeEnum widgetType,
-                                  java.text.Format format, String val, UIWrapper uiw) {
+    public static Object getValue(WidgetTypeEnum widgetType, java.text.Format format, String val, UIWrapper uiw) {
         Object obj = null;
 
         switch (widgetType) {
             case DATE:
                 if (val != null && val.trim().length() > 6) {
-                    lockFormatSet.lock();
                     try {
                         obj = ((DateFormat) format).parse(val);
                     } catch (Exception e) {
                         SFLogger.error("Date parsing error: " + val, e);
-                        throw new SmartFlexException("Date parsing error: " + val,
-                                e);
-                    } finally {
-                        lockFormatSet.unlock();
+                        throw new SmartFlexException("Date parsing error: " + val, e);
                     }
                 }
                 break;

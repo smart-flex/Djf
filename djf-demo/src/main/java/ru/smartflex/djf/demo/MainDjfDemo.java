@@ -14,8 +14,13 @@ import ru.smartflex.djf.tool.LocalStorage;
 
 public class MainDjfDemo {
 
+    static Properties props = new Properties();
+
+    public static String getDateMask() {
+        return props.getProperty(SFConstants.PROPERTY_MASK_DATE);
+    }
+
     public static void run(String frm) {
-        Properties props = new Properties();
         props.put(SFConstants.PROPERTY_FORM_CLASS, "ru.smartflex.djf.widget.template.FormUI");
         props.put(SFConstants.PROPERTY_FRAME_CLASS, "ru.smartflex.djf.widget.template.FrameUI");
         props.put(SFConstants.PROPERTY_LABEL_RB_PATH, "ru/smartflex/djf/demo");

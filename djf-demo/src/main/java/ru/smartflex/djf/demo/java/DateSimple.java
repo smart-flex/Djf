@@ -1,10 +1,19 @@
 package ru.smartflex.djf.demo.java;
 
+import ru.smartflex.djf.demo.MainDjfDemo;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateSimple {
     private String text;
     private Date dateFilled = new Date();
+    private Date dateEmpty = null;
+
+    public DateSimple() {
+        SimpleDateFormat sdf = new SimpleDateFormat(MainDjfDemo.getDateMask());
+        text = sdf.format(dateFilled);
+    }
 
     public String getText() {
         return text;
@@ -20,5 +29,13 @@ public class DateSimple {
 
     public void setDateFilled(Date dateFilled) {
         this.dateFilled = dateFilled;
+    }
+
+    public Date getDateEmpty() {
+        return dateEmpty;
+    }
+
+    public void setDateEmpty(Date dateEmpty) {
+        this.dateEmpty = dateEmpty;
     }
 }
