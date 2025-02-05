@@ -52,13 +52,19 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
                 goNextSectionOrItem(e);
                 break;
             case KeyEvent.VK_HOME:
-                e.consume();
-                field.setCaretPosition(0);
-                ItemHandler.slideCaretFromStartToRight(field, mask);
+                if (e.getModifiers() == 0) {
+                    // shift не нажат, можно выделить все включая разделители и удалить
+                    e.consume();
+                    field.setCaretPosition(0);
+                    ItemHandler.slideCaretFromStartToRight(field, mask);
+                }
                 break;
             case KeyEvent.VK_END:
-                e.consume();
-                ItemHandler.slideCaretFromEndToLeft(field, mask);
+                if (e.getModifiers() == 0) {
+                    // shift не нажат, можно выделить все включая разделители и удалить
+                    e.consume();
+                    ItemHandler.slideCaretFromEndToLeft(field, mask);
+                }
                 break;
             case KeyEvent.VK_UP:
                 if (cellEditor == null) {
@@ -137,6 +143,8 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
         return startCaret;
     }
 
+    // если нажат шифт, то выделение идет между разделителями, полностью все поле выделить сдлеать затруднительно
+    // и наверное пользователю все равно; а так надо использовать setSelectionStart и setSelectionEnd
     private void shiftLeft(KeyEvent e) {
         int startCaret = field.getCaretPosition();
         int nextCaret = startCaret - 1;
@@ -154,18 +162,9 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
                     }
                 }
                 if (wasShift) {
-                    if (symbol != ISFMaskConstants.CHAR_SPACE) {
-                        // reach end mask and last symbol - delimiter
-                        e.consume();
-                        // return to start caret
-                        field.setCaretPosition(startCaret);
-                    } else {
-                        e.consume();
-                        nextCaret++;
-                        field.setCaretPosition(nextCaret);
-                    }
+                    e.consume();
+                    field.setCaretPosition(nextCaret);
                 }
-
             }
         }
     }
@@ -174,13 +173,10 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
         int startCaret = field.getCaretPosition();
         int returnCaret = startCaret;
         if (startCaret < mask.length()) {
-            char startSymbol = mask.charAt(startCaret);
-
             int nextCaret = startCaret + 1;
             if (nextCaret < mask.length()) {
                 char nextSymbol = mask.charAt(nextCaret);
-                if (startSymbol != ISFMaskConstants.CHAR_SPACE
-                        && nextSymbol != ISFMaskConstants.CHAR_SPACE) {
+                if (nextSymbol != ISFMaskConstants.CHAR_SPACE) {
                     boolean wasShift = false;
                     char symbol = 0;
                     for (; nextCaret < mask.length(); nextCaret++) {
@@ -192,16 +188,9 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
                         }
                     }
                     if (wasShift) {
-                        if (symbol != ISFMaskConstants.CHAR_SPACE) {
-                            // reach end mask and last symbol - delimiter
-                            e.consume();
-                            // return to start caret
-                            field.setCaretPosition(startCaret);
-                        } else {
-                            e.consume();
-                            field.setCaretPosition(nextCaret);
-                            returnCaret = nextCaret;
-                        }
+                        e.consume();
+                        field.setCaretPosition(nextCaret);
+                        returnCaret = nextCaret;
                     }
 
                 } else {

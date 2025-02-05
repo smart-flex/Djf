@@ -52,13 +52,13 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
     @Override
     public void replace(FilterBypass fb, int offset, int length, String text,
                         AttributeSet attrs) throws BadLocationException {
-System.out.println("*** replace 1 string: "+text+" offset "+offset+" length "+length+" attr "+attrs+" field.getText() "+field.getText());
+//System.out.println("*** replace 1 string: "+text+" offset "+offset+" length "+length+" attr "+attrs+" field.getText() "+field.getText());
 
         // this method invoking when user press F2 (user is starting to edit)
         if (text != null && field.getText() != null) {
-System.out.println("*** replace 2 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 2 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
             if (text.equals(field.getText())) {
-System.out.println("*** replace 3 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 3 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                 // 03-09-2017 stop replacing instead of swing wishing
                 // some additional optimization
                 return;
@@ -68,7 +68,7 @@ System.out.println("*** replace 3 string: "+text+" offset "+offset+" length "+le
         // 03-09-2017 Document doc = fb.getDocument();
 
         if (offset == 0 && length == maskDelimiter.length()) {
-System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
             // JTextField.setText invokes this case
             super.remove(fb, offset, length);
@@ -77,13 +77,13 @@ System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+le
             // left. Correct?
             ItemHandler.moveCaretToStart(field, maskDelimiter);
         } else {
-System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
             if (text != null && field.getText() != null) {
-System.out.println("*** replace 6 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 6 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
                 if ((text.length() + field.getText().length() - 1) <= maskDelimiter.length()) {
-System.out.println("*** replace 7 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 7 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                     // 03-09-2017 prevent bug with symbol increasing in masked field
                     if (ItemHandler
                             .checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
@@ -94,7 +94,7 @@ System.out.println("*** replace 7 string: "+text+" offset "+offset+" length "+le
                                 return;
                             }
                         }
-System.out.println("*** replace 8 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 8 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                         super.remove(fb, offset, 1);
                         super.insertString(fb, offset, text, attrs);
                     }
@@ -108,7 +108,7 @@ System.out.println("*** replace 8 string: "+text+" offset "+offset+" length "+le
                     cellEditor.stopAndValidate(true);
                 }
             } else {
-System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+//System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
                 ItemHandler.slideCaretFromStartToRight(field, maskDelimiter);
             }
@@ -124,9 +124,6 @@ System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+le
             // мало ли
             return;
         }
-
-        System.out.println("*** remove  offset "+offset+" length "+length+" field "+field.getText()+" keyPressed "+keyPressed);
-//todo автоматическое смещение курсора по del и backspace
 
         if (length <= 0) {
             return;
@@ -144,29 +141,18 @@ System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+le
                     break;
                 case KeyEvent.VK_DELETE:
                     int newOffset = ItemHandler.calcCurrentCaretToRight(field, maskDelimiter);
-System.out.println("**** newOffset "+newOffset+" mask length "+maskDelimiter.length());
                     super.remove(fb, offset, length); // Only one symbol can be deleted
                     super.insertString(fb, offset, ISFMaskConstants.STRING_SPACE, null);
                     field.setCaretPosition(newOffset);
                     break;
             }
         } else {
-            if (ItemHandler.checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
-                super.remove(fb, offset, length); // Only one symbol can be deleted
-                if (length == 1) {
-                    super.insertString(fb, offset, ISFMaskConstants.STRING_SPACE, null);
-                } else {
-                    // if there is more than one symbol was selected in field to delete
-                    StringBuilder sb = new StringBuilder(2);
-                    for (int i = 0; i < length; i++) {
-                        sb.append(ISFMaskConstants.STRING_SPACE);
-                        // todo вставлять делимитер
-                    }
-                    super.insertString(fb, offset, sb.toString(), null);
-                }
-                field.setCaretPosition(offset);
-            }
-
+            // удаление группы символов, заменяем удаление на maskDelimiter
+            int currentCaret = field.getCaretPosition();
+            String part = maskDelimiter.substring(offset, offset + length);
+            super.remove(fb, offset, length);
+            super.insertString(fb, offset, part, null);
+            field.setCaretPosition(currentCaret);
         }
 
     }

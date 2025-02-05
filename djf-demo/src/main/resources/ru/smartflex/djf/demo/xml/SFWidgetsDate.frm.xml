@@ -30,7 +30,7 @@
 
     <models>
         <model id="dt" noSave="true">
-            <bean clazz="ru.smartflex.djf.demo.java.DateSimple" selfCreated="true"/>
+            <bean clazz="ru.smartflex.djf.demo.java.MaskSimple" selfCreated="true"/>
         </model>
     </models>
 </form>

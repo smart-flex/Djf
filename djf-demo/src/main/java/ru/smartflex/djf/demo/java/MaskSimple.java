@@ -5,7 +5,7 @@ import ru.smartflex.djf.demo.MainDjfDemo;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateSimple {
+public class MaskSimple {
     private String text;
     private Date dateFilled = new Date();
     private Date dateEmpty = null;
@@ -13,9 +13,10 @@ public class DateSimple {
     private Integer calcPeriodError = 202333;
     private Integer calcPeriodEmpty = null;
 
-    public DateSimple() {
-        SimpleDateFormat sdf = new SimpleDateFormat(MainDjfDemo.getDateMask());
-        text = sdf.format(dateFilled);
+    public MaskSimple() {
+//        SimpleDateFormat sdf = new SimpleDateFormat(MainDjfDemo.getDateMask());
+//        text = sdf.format(dateFilled);
+        text = "04--02-2025";
     }
 
     public String getText() {
