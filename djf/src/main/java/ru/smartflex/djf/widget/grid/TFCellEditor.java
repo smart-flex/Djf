@@ -8,17 +8,20 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 
+import ru.smartflex.djf.DesktopJavaForms;
 import ru.smartflex.djf.FrameHelper;
 import ru.smartflex.djf.WidgetTypeEnum;
+import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.GridColumnInfo;
 import ru.smartflex.djf.controller.bean.PhoneBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
-import ru.smartflex.djf.controller.helper.ConverterUtil;
 import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
 import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 import ru.smartflex.djf.widget.mask.IFieldValidator;
+
+import java.awt.*;
 
 public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
 
@@ -76,7 +79,24 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    // старт редактирования, некий аналог Focus Gain
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        switch (colInfo.getWidgetType()) {
+            case PERIOD:
+                ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(false);
+                if (validator.isValid(value.toString()) == false) {
+                    String msg = PrefixUtil.getMsg("${djf.message.warn.value_dont_match_mask}", null);
+                    DesktopJavaForms.showStatusWarnMessage(msg + value.toString());
+                    value = colInfo.getMaskInfo().getMaskDelimiter();
+                    ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(true);
+                }
+                break;
+        }
+        Component comp = super.getTableCellEditorComponent(table, value, isSelected, row, column);
+        return comp;
+    }
+
+        @SuppressWarnings("StatementWithEmptyBody")
     public void stopAndValidate(boolean invokeStop) {
 
         if (!wm.getFormBag().isFormReady()) {
@@ -88,6 +108,9 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
         } else if (field instanceof JComboBox) {
             // nothing to do because works will be done at table.setValueAt
         } else {
+            if (((SFGrid)uiw.getObjectUI()).getTable().getValueIsNotMatchMask()) {
+                FrameHelper.showStatusMessage(TaskStatusLevelEnum.OK, FormStack.getCurrentFormBag().getWelcomeMessage());
+            }
             boolean valid = true;
             if (validator != null) {
                 valid = validator.isValid(((JTextField) field).getText());

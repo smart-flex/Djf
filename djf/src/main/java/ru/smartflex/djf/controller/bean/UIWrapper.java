@@ -145,7 +145,7 @@ public class UIWrapper implements Comparable<UIWrapper> {
             if (widgetType == WidgetTypeEnum.DATE) {
                 ret = ConverterUtil.getFormattedData(widgetType, dateFormat, maskInfo.getMaskDelimiter(), obj);
             } else if (widgetType == WidgetTypeEnum.PERIOD) {
-                ret = ConverterUtil.getFormattedData(maskInfo, obj);
+                ret = ConverterUtil.getFormattedDataPeriod(maskInfo, obj);
             } else {
                 if (obj != null) {
                     ret = obj;

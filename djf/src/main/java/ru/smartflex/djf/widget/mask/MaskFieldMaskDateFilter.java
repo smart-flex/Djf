@@ -67,8 +67,41 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
 
         // 03-09-2017 Document doc = fb.getDocument();
 
+        int lenText = 0;
+        if (text != null) {
+            lenText = text.length();
+        }
+        if (lenText > 1) {
+            // setText, т.к. ввести сразу два символа или возможно Ctrl-V
+            super.remove(fb, offset, length);
+            super.insertString(fb, offset, text, attrs);
+            ItemHandler.moveCaretToStart(field, maskDelimiter);
+        } else if (lenText == 1){
+            // ручной ввод
+            if (ItemHandler.checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
+                // check text for digit only
+                if (onlyDigit && text != null) {
+                    if (!Character.isDigit(text.charAt(0))) {
+                        return;
+                    }
+                }
+                super.remove(fb, offset, 1);
+                super.insertString(fb, offset, text, attrs);
+            }
+
+            if (offset == maskInfo.getLastCaretPosition()) {
+                if (cellEditor == null) {
+                    wm.moveDown(field.getName());
+                } else {
+                    cellEditor.stopAndValidate(true);
+                }
+            } else {
+                ItemHandler.slideCaretFromStartToRight(field, maskDelimiter);
+            }
+        }
+/*
         if (offset == 0 && length == maskDelimiter.length()) {
-//System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
             // JTextField.setText invokes this case
             super.remove(fb, offset, length);
@@ -77,7 +110,7 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
             // left. Correct?
             ItemHandler.moveCaretToStart(field, maskDelimiter);
         } else {
-//System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
+System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
 
             if (text != null && field.getText() != null) {
 //System.out.println("*** replace 6 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
@@ -114,7 +147,7 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
             }
 
         }
-
+*/
     }
 
     @Override

@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import ru.smartflex.djf.FrameHelper;
 import ru.smartflex.djf.WidgetTypeEnum;
+import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.BeanFormDef;
 import ru.smartflex.djf.controller.bean.BeanFormDefProperty;
@@ -26,6 +29,7 @@ import ru.smartflex.djf.model.gen.*;
 import ru.smartflex.djf.tool.FontUtil;
 import ru.smartflex.djf.widget.ItemHandler;
 import ru.smartflex.djf.widget.SFComboBox;
+import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 import ru.smartflex.djf.widget.tgrid.SFTGrid;
 import ru.smartflex.djf.widget.tgrid.SFTGridCellWidget;
 
@@ -42,6 +46,7 @@ public class SFTableWrapper extends JTable {
 
     private Map<Integer, ColumnSettings> mapColSetting = new HashMap<Integer, ColumnSettings>();
     private GridResizeListener gridResizeListener;
+    private AtomicBoolean valueIsNotMatchMask = new AtomicBoolean(false);
 
     SFTableWrapper(SFGrid grid) {
         this.grid = grid;
@@ -431,6 +436,23 @@ public class SFTableWrapper extends JTable {
 
     public int getCurrentPointMouseRow() {
         return currentPointMouseRow;
+    }
+
+    public boolean getValueIsNotMatchMask() {
+        return valueIsNotMatchMask.get();
+    }
+
+    public void setValueIsNotMatchMask(boolean valueIsNotMatchMask) {
+        this.valueIsNotMatchMask.set(valueIsNotMatchMask);
+    }
+
+    // это единственный путь поймать завершение редактирования ячейки
+    public void removeEditor() {
+        super.removeEditor();
+        if (valueIsNotMatchMask.get()) {
+            FrameHelper.showStatusMessage(TaskStatusLevelEnum.OK, FormStack.getCurrentFormBag().getWelcomeMessage());
+            valueIsNotMatchMask.set(false);
+        }
     }
 
     class ColumnSettings {

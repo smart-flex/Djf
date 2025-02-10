@@ -44,7 +44,7 @@ public class ConverterUtil {
         return human;
     }
 
-    public static Object getFormattedData(MaskInfo maskInfo, Object obj) {
+    public static Object getFormattedDataPeriod(MaskInfo maskInfo, Object obj) {
 
         Object human = maskInfo.getMaskDelimiter();
         if (obj != null) {
@@ -52,7 +52,7 @@ public class ConverterUtil {
             int year = period / 100;
             int mm = period % 100;
 
-            human = maskInfo.getPeriodAsString(year, mm);
+            human = maskInfo.getPeriodAsString(year, mm, obj);
         }
 
         return human;

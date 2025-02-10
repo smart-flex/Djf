@@ -7,7 +7,7 @@ import ru.smartflex.djf.WidgetTypeEnum;
 
 public class MaskInfo {
 
-    private static final String ERROR_PERIOD = "####-##";
+//    private static final String ERROR_PERIOD = "####-##";
 
     private int lastCaretPosition = -1;
     private String mask;
@@ -53,8 +53,8 @@ public class MaskInfo {
         }
     }
 
-    public String getPeriodAsString(int year, int month) {
-        String per = ERROR_PERIOD;
+    public String getPeriodAsString(int year, int month, Object notNullValueAsIs) {
+        String per =  notNullValueAsIs.toString(); //ERROR_PERIOD;//
 
         if (type == WidgetTypeEnum.PERIOD) {
             if (isYearAndMonthIsValid(year, month)) {
@@ -88,23 +88,24 @@ public class MaskInfo {
         Integer period = null;
 
         if (type == WidgetTypeEnum.PERIOD) {
-
-            try {
-                String part1 = text.substring(0, indexPeriodDelimiter);
-                String part2 = text.substring(indexPeriodDelimiter + 1);
-                int year;
-                int mm;
-                if (part1.length() > part2.length()) {
-                    year = Integer.parseInt(part1);
-                    mm = Integer.parseInt(part2);
-                } else {
-                    year = Integer.parseInt(part2);
-                    mm = Integer.parseInt(part1);
+            if (text != null && text.length() == 7) {
+                try {
+                    String part1 = text.substring(0, indexPeriodDelimiter);
+                    String part2 = text.substring(indexPeriodDelimiter + 1);
+                    int year;
+                    int mm;
+                    if (part1.length() > part2.length()) {
+                        year = Integer.parseInt(part1);
+                        mm = Integer.parseInt(part2);
+                    } else {
+                        year = Integer.parseInt(part2);
+                        mm = Integer.parseInt(part1);
+                    }
+                    if (isYearAndMonthIsValid(year, mm)) {
+                        period = year * 100 + mm;
+                    }
+                } catch (Exception e) {
                 }
-                if (isYearAndMonthIsValid(year, mm)) {
-                    period = year * 100 + mm;
-                }
-            } catch (Exception e) {
             }
         }
 

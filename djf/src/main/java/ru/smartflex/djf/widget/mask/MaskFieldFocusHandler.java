@@ -5,11 +5,17 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JTextField;
 
+import ru.smartflex.djf.DesktopJavaForms;
+import ru.smartflex.djf.FrameHelper;
 import ru.smartflex.djf.WidgetTypeEnum;
+import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.UIWrapper;
+import ru.smartflex.djf.controller.helper.PrefixUtil;
+import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.ISFHandler;
 import ru.smartflex.djf.widget.ItemHandler;
+import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 
 public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
 
@@ -17,6 +23,7 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
     private IFieldValidator validator;
     private UIWrapper uiw;
     private WidgetManager wm;
+    private String valueAsIs = null;
 
     public MaskFieldFocusHandler(WidgetManager wm, UIWrapper uiw,
                                  JTextField field, IFieldValidator validator) {
@@ -43,6 +50,20 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
                     .getMaskDelimiter());
         }
 
+        switch (uiw.getWidgetType()) {
+            case PERIOD:
+                String value = field.getText();
+                if (!OtherUtil.isStringEmpty(value)) {
+                    if (validator.isValid(value) == false) {
+                        String msg = PrefixUtil.getMsg("${djf.message.warn.value_dont_match_mask}", null);
+                        DesktopJavaForms.showStatusWarnMessage(msg + value.toString());
+                        valueAsIs = value;
+                        field.setText(uiw.getMaskInfo().getMaskDelimiter());
+                    }
+                }
+                break;
+        }
+
     }
 
     @Override
@@ -57,23 +78,33 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
         }
 
         if (validator != null) {
-            if (!validator.isValid(field.getText())) {
-                // field.requestFocus(); because focus lost event was invoked
-                // really after lost focusing
-                // wm.drawTree(uiw);
 
-                Object prev = wm.getCurrentValueUsualWdiget(uiw);
-                String prevAsString = uiw.getFormattedData(prev);
-                field.setText(prevAsString);
-
-            } else {
-                if (uiw.getWidgetType() == WidgetTypeEnum.DATE) {
-                    // for type Date, because incorrect date can be translated into another date
-                    Object data = uiw.getCurrentValue();
-                    String dataAsText = uiw.getFormattedData(data);
-                    field.setText(dataAsText);
+            // возврат некорректного значения
+            if (valueAsIs != null) {
+                if (!uiw.getMaskInfo().isFilled(field.getText())) {
+                    field.setText(valueAsIs);
+                    valueAsIs = null;
                 }
-                wm.setValueUsualWidget(uiw);
+                FrameHelper.showStatusMessage(TaskStatusLevelEnum.OK, FormStack.getCurrentFormBag().getWelcomeMessage());
+            } else {
+                if (!validator.isValid(field.getText())) {
+                    // field.requestFocus(); because focus lost event was invoked
+                    // really after lost focusing
+                    // wm.drawTree(uiw);
+
+                    Object prev = wm.getCurrentValueUsualWdiget(uiw);
+                    String prevAsString = uiw.getFormattedData(prev);
+                    field.setText(prevAsString);
+
+                } else {
+                    if (uiw.getWidgetType() == WidgetTypeEnum.DATE) {
+                        // for type Date, because incorrect date can be translated into another date
+                        Object data = uiw.getCurrentValue();
+                        String dataAsText = uiw.getFormattedData(data);
+                        field.setText(dataAsText);
+                    }
+                    wm.setValueUsualWidget(uiw);
+                }
             }
         }
 
