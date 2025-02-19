@@ -32,7 +32,7 @@ public class ItemHandler {
 
                 MaskFieldKeyRegister keyRegisterDate = new MaskFieldKeyRegister();
                 new MaskFieldKeyHandler(field, uiw.getMaskInfo().getMaskDelimiter(), wm, uiw, keyRegisterDate);
-                new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, false, keyRegisterDate);
+                new MaskFieldMaskDateFilter(wm, uiw.getMaskInfo(), field, true, keyRegisterDate);
                 new MaskFieldFocusHandler(wm, uiw, field, new DateValidator(uiw.getMaskInfo()));
                 new MaskFieldMouseHandler(field, uiw.getMaskInfo().getMaskDelimiter());
 
@@ -99,21 +99,13 @@ public class ItemHandler {
             field.setText(colInfo.getMaskInfo().getMaskDelimiter());
         }
 
-        field.setHorizontalAlignment(ItemBuilder
-                .getSwingAligmentConstant(colInfo.getAlign()));
+        field.setHorizontalAlignment(ItemBuilder.getSwingAligmentConstant(colInfo.getAlign()));
 
-        boolean onlyDigit = false;
-        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD) {
-            onlyDigit = true;
-        }
+        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
 
-        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD
-                || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
-
-            new MaskFieldKeyHandler(field, colInfo.getMaskInfo()
-                    .getMaskDelimiter(), wm, uiw, cellEditor);
-            new MaskFieldMaskDateFilter(wm, colInfo.getMaskInfo(), field,
-                    cellEditor, onlyDigit);
+            MaskFieldKeyRegister keyRegisterDate = new MaskFieldKeyRegister();
+            new MaskFieldKeyHandler(field, colInfo.getMaskInfo().getMaskDelimiter(), wm, uiw, cellEditor, keyRegisterDate);
+            new MaskFieldMaskDateFilter(wm, colInfo.getMaskInfo(), field, cellEditor, true, keyRegisterDate);
         } else if (colInfo.getWidgetType() == WidgetTypeEnum.PHONE) {
             new PhoneFieldFilter(cellEditor, wm);
         }

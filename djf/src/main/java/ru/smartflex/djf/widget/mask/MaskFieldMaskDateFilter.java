@@ -13,8 +13,7 @@ import ru.smartflex.djf.widget.grid.TFCellEditor;
 
 import java.awt.event.KeyEvent;
 
-public class MaskFieldMaskDateFilter extends DocumentFilter implements
-        ISFHandler {
+public class MaskFieldMaskDateFilter extends DocumentFilter implements ISFHandler {
     private JTextField field;
     private String maskDelimiter;
     private MaskInfo maskInfo;
@@ -34,14 +33,14 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
         OtherUtil.setFilter(field, this);
     }
 
-    public MaskFieldMaskDateFilter(WidgetManager wm, MaskInfo maskInfo,
-                                   JTextField field, TFCellEditor cellEditor, boolean onlyDigit) {
+    public MaskFieldMaskDateFilter(WidgetManager wm, MaskInfo maskInfo, JTextField field, TFCellEditor cellEditor, boolean onlyDigit, MaskFieldKeyRegister keyRegister) {
         this.wm = wm;
         this.field = field;
         this.maskDelimiter = maskInfo.getMaskDelimiter();
         this.maskInfo = maskInfo;
         this.cellEditor = cellEditor;
         this.onlyDigit = onlyDigit;
+        this.keyRegister = keyRegister;
 
         OtherUtil.setFilter(field, this);
     }
@@ -50,15 +49,11 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void replace(FilterBypass fb, int offset, int length, String text,
-                        AttributeSet attrs) throws BadLocationException {
-//System.out.println("*** replace 1 string: "+text+" offset "+offset+" length "+length+" attr "+attrs+" field.getText() "+field.getText());
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
 
         // this method invoking when user press F2 (user is starting to edit)
         if (text != null && field.getText() != null) {
-//System.out.println("*** replace 2 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
             if (text.equals(field.getText())) {
-//System.out.println("*** replace 3 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
                 // 03-09-2017 stop replacing instead of swing wishing
                 // some additional optimization
                 return;
@@ -72,10 +67,32 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
             lenText = text.length();
         }
         if (lenText > 1) {
-            // setText, т.к. ввести сразу два символа или возможно Ctrl-V
-            super.remove(fb, offset, length);
-            super.insertString(fb, offset, text, attrs);
-            ItemHandler.moveCaretToStart(field, maskDelimiter);
+
+            if (keyRegister.isCtrlVWasPressed()) {
+                // Ctrl-V
+                text = maskInfo.alignTextToMask(text, offset);
+                lenText = text.length();
+                if (offset + lenText > maskInfo.getAmountMask()) {
+                    return;
+                }
+                if (onlyDigit && text != null) {
+                    for (int ind=0; ind<text.length(); ind++) {
+                        if (!Character.isDigit(text.charAt(ind))) {
+                            return;
+                        }
+                    }
+                }
+
+                super.replace(fb, offset, lenText, text, attrs);
+                field.setCaretPosition(offset + lenText);
+                ItemHandler.slideCaretFromStartToRight(field, maskDelimiter);
+            } else {
+                // setText
+                super.remove(fb, offset, length);
+                super.insertString(fb, offset, text, attrs);
+                ItemHandler.moveCaretToStart(field, maskDelimiter);
+            }
+
         } else if (lenText == 1){
             // ручной ввод
             if (ItemHandler.checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
@@ -99,60 +116,11 @@ public class MaskFieldMaskDateFilter extends DocumentFilter implements
                 ItemHandler.slideCaretFromStartToRight(field, maskDelimiter);
             }
         }
-/*
-        if (offset == 0 && length == maskDelimiter.length()) {
-System.out.println("*** replace 4 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
-
-            // JTextField.setText invokes this case
-            super.remove(fb, offset, length);
-            super.insertString(fb, offset, text, attrs);
-            // After setText caret position is in the right. Moves it to the
-            // left. Correct?
-            ItemHandler.moveCaretToStart(field, maskDelimiter);
-        } else {
-System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
-
-            if (text != null && field.getText() != null) {
-//System.out.println("*** replace 6 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
-
-                if ((text.length() + field.getText().length() - 1) <= maskDelimiter.length()) {
-//System.out.println("*** replace 7 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
-                    // 03-09-2017 prevent bug with symbol increasing in masked field
-                    if (ItemHandler
-                            .checkIsPossibleToInsertSymbol(maskDelimiter, offset)) {
-
-                        // check text for digit only
-                        if (onlyDigit && text != null) {
-                            if (!Character.isDigit(text.charAt(0))) {
-                                return;
-                            }
-                        }
-//System.out.println("*** replace 8 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
-                        super.remove(fb, offset, 1);
-                        super.insertString(fb, offset, text, attrs);
-                    }
-                }
-            }
-
-            if (offset == maskInfo.getLastCaretPosition()) {
-                if (cellEditor == null) {
-                    wm.moveDown(field.getName());
-                } else {
-                    cellEditor.stopAndValidate(true);
-                }
-            } else {
-//System.out.println("*** replace 9 string: "+text+" offset "+offset+" length "+length+" attr "+attrs);
-
-                ItemHandler.slideCaretFromStartToRight(field, maskDelimiter);
-            }
-
-        }
-*/
     }
 
     @Override
     public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-        int keyPressed = keyRegister.getKeyCode();
+        int keyPressed = keyRegister.getDeleteKeyCode();
         if (keyPressed == 0) {
             // мало ли
             return;
@@ -196,5 +164,8 @@ System.out.println("*** replace 5 string: "+text+" offset "+offset+" length "+le
         field = null;
         wm = null;
         maskDelimiter = null;
+        keyRegister = null;
+        cellEditor = null;
+        maskInfo = null;
     }
 }

@@ -53,6 +53,32 @@ public class MaskInfo {
         }
     }
 
+    public String alignTextToMask(String text, int offset) {
+        StringBuilder sb = new StringBuilder(maskDelimiter.length());
+        int indText = 0;
+        for (int i=offset; i<maskDelimiter.length() && indText<text.length() ; i++) {
+            char symbol = text.charAt(indText);
+            char delim = maskDelimiter.charAt(i);
+            if (delim != ISFMaskConstants.CHAR_SPACE) {
+                // значит это разделитель
+                if (symbol == delim) {
+                    sb.append(symbol);
+                } else {
+                    sb.append(delim);
+                    sb.append(symbol);
+                }
+            } else {
+                if (symbol == delim) {
+                    // ошибка, не д.б. разделителя, съедаем символ
+                } else {
+                    sb.append(symbol);
+                }
+            }
+            indText++;
+        }
+        return sb.toString();
+    }
+
     public String getPeriodAsString(int year, int month, Object notNullValueAsIs) {
         String per =  notNullValueAsIs.toString(); //ERROR_PERIOD;//
 
@@ -133,6 +159,13 @@ public class MaskInfo {
 
     int getLastCaretPosition() {
         return lastCaretPosition;
+    }
+
+    public int getAmountMask() {
+        if (maskDelimiter != null) {
+            return maskDelimiter.length();
+        }
+        return 0;
     }
 
     public void setLastCaretPosition(int lastCaretPosition) {

@@ -240,7 +240,7 @@ public class DjfConfigurator {
         return onlyDelim;
     }
 
-    private static String extractDelimitersFromPeriodMask(String mask) {
+    public static String extractDelimitersFromPeriodMask(String mask) {
         return mask.replace('0', ISFMaskConstants.CHAR_SPACE);
     }
 

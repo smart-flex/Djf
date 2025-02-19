@@ -29,13 +29,13 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
         field.addKeyListener(this);
     }
 
-    public MaskFieldKeyHandler(JTextField field, String mask, WidgetManager wm,
-                               UIWrapper uiw, TFCellEditor cellEditor) {
+    public MaskFieldKeyHandler(JTextField field, String mask, WidgetManager wm, UIWrapper uiw, TFCellEditor cellEditor, MaskFieldKeyRegister keyRegister) {
         this.field = field;
         this.mask = mask;
         this.wm = wm;
         this.uiw = uiw;
         this.cellEditor = cellEditor;
+        this.keyRegister = keyRegister;
 
         field.addKeyListener(this);
     }
@@ -80,10 +80,15 @@ public class MaskFieldKeyHandler extends java.awt.event.KeyAdapter implements
                 }
                 break;
             case KeyEvent.VK_DELETE:
-                keyRegister.setKeyCode(KeyEvent.VK_DELETE);
+                keyRegister.setDeleteKeyCode(KeyEvent.VK_DELETE);
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                keyRegister.setKeyCode(KeyEvent.VK_BACK_SPACE);
+                keyRegister.setDeleteKeyCode(KeyEvent.VK_BACK_SPACE);
+                break;
+            case KeyEvent.VK_V:
+                if (e.getModifiers() == 2) {
+                    keyRegister.registerCtrlVPressed();
+                }
                 break;
         }
     }
