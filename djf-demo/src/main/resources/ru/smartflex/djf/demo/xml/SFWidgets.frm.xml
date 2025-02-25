@@ -37,13 +37,26 @@
             <label text="Текст заказа" tips="Открывается на редактирование по двойному клику" constraint="gap para" />
             <text bind="sp.textOrder" enabled="byClick" cols="15" constraint="gap para, wrap" />
 
-            <button text="Заполнение масковых данных" action="fillDate" constraint="gap para, wrap" />
+            <label text="Телефон (неверный формат)" constraint="gap para" />
+            <phone bind="sp.phoneFilledMistake" cols="15" constraint="gap para, wrap" />
+
+            <label text="Телефон (верный формат)" constraint="gap para" />
+            <phone bind="sp.phoneFilledOk" cols="15" constraint="gap para, wrap" />
+
+            <label text="Телефон"  constraint="gap para" />
+            <phone bind="sp.phoneEmpty" cols="15" constraint="gap para, wrap" />
+
+            <label text="Период" tips="Неверный период" constraint="gap para"/>
+            <period bind="sp.calcPeriodError" constraint="gap para, wrap" />
+
+            <button text="Заполнение данных в маск полях" action="fillDate" constraint="gap para, wrap" />
 
         </items>
     </panel>
     <models>
-        <model id="sp" noSave="true">
-            <bean clazz="ru.smartflex.djf.demo.java.StepperPercentInfo" selfCreated="true"/>
+        <model id="sp">
+            <load method="${session.app.getSimpleWidgetBean}" delay="0" />
+            <bean clazz="ru.smartflex.djf.demo.java.StepperPercentInfo"/>
         </model>
         <model id="ste">
             <load method="${session.adr.getEmptyListAddress}" />

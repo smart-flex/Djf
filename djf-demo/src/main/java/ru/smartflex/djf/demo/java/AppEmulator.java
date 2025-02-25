@@ -101,7 +101,7 @@ public class AppEmulator {
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
         PojoAccount pa1 = new PojoAccount("19680201-grid", new Date(),
-                null, "+7 927 220 31 17", "410000", true, null,
+                "89093372772", "+7 927 220 31 17", "410000", true, null,
                 null, new BigDecimal("2000.23"));
         pa1.setStreet(address.getDergachevskayaStreet());
         pa1.setBuilding(address.getBld5());
@@ -570,5 +570,9 @@ public class AppEmulator {
             }
         }
         return false;
+    }
+
+    public StepperPercentInfo getSimpleWidgetBean() {
+        return new StepperPercentInfo();
     }
 }

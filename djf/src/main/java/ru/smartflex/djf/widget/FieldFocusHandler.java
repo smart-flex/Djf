@@ -7,9 +7,7 @@ import javax.swing.JTextField;
 
 import ru.smartflex.djf.WidgetTypeEnum;
 import ru.smartflex.djf.controller.WidgetManager;
-import ru.smartflex.djf.controller.bean.PhoneBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
-import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
 import ru.smartflex.djf.widget.mask.*;
 
 /**
@@ -48,9 +46,6 @@ public class FieldFocusHandler implements FocusListener, ISFHandler {
                 break;
             case NUMERIC:
                 validator = new NumValidator(uiw);
-                break;
-            case PHONE:
-                validator = new PhoneValidator();
                 break;
         }
     }
@@ -96,14 +91,6 @@ public class FieldFocusHandler implements FocusListener, ISFHandler {
                         Object data = uiw.getCurrentValue();
                         String dataAsText = uiw.getFormattedData(data);
                         field.setText(dataAsText);
-                    }
-                    break;
-                    case PHONE: {
-                        Object data = uiw.getCurrentValue();
-                        PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone((String) data);
-                        if (phoneBag != null) {
-                            field.setText(phoneBag.getPhoneFormatted());
-                        }
                     }
                     break;
                 }

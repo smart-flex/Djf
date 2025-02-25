@@ -11,6 +11,10 @@ public class StepperPercentInfo {
     private PojoStreet street;
     private BigDecimal sumPayment;
     private String textOrder;
+    private String phoneFilledMistake = "89093372772";
+    private String phoneFilledOk = "+7 919 825 76 58";
+    private String phoneEmpty;
+    private Integer calcPeriodError = 202333;
 
     public int getPercent() {
         return percent;
@@ -66,5 +70,37 @@ public class StepperPercentInfo {
 
     public void setTextOrder(String textOrder) {
         this.textOrder = textOrder;
+    }
+
+    public String getPhoneFilledMistake() {
+        return phoneFilledMistake;
+    }
+
+    public void setPhoneFilledMistake(String phoneFilledMistake) {
+        this.phoneFilledMistake = phoneFilledMistake;
+    }
+
+    public String getPhoneFilledOk() {
+        return phoneFilledOk;
+    }
+
+    public void setPhoneFilledOk(String phoneFilledOk) {
+        this.phoneFilledOk = phoneFilledOk;
+    }
+
+    public String getPhoneEmpty() {
+        return phoneEmpty;
+    }
+
+    public void setPhoneEmpty(String phoneEmpty) {
+        this.phoneEmpty = phoneEmpty;
+    }
+
+    public Integer getCalcPeriodError() {
+        return calcPeriodError;
+    }
+
+    public void setCalcPeriodError(Integer calcPeriodError) {
+        this.calcPeriodError = calcPeriodError;
     }
 }

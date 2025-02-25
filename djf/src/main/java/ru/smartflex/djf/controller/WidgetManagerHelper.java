@@ -322,16 +322,17 @@ public class WidgetManagerHelper {
             IBeanWrapper bw = wm.getBeanWrapper(uiw.getModelBase(), index);
 
             if (isWidgetInModel(uiw.getModelBase())) {
-                Object obj = wm.getValueFromBeanWrapper(uiw.getModelBase(), bw,
-                        true);
+                Object obj = wm.getValueFromBeanWrapper(uiw.getModelBase(), bw, true);
 
                 switch (uiw.getWidgetType()) {
                     case PASSWORD:
                         ((SFPassword)uiw.getObjectUI()).getPasswordField().setText((String) obj);
+                        ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());
                         break;
                     case PHONE:
                     case TEXT:
                         ((JTextField) uiw.getObjectUI()).setText((String) obj);
+                        ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());
                         break;
                     case DATE:
                         ((JTextField) uiw.getObjectUI()).setText(uiw.getFormattedData(obj));
@@ -343,16 +344,15 @@ public class WidgetManagerHelper {
                     case SHORT:
                     case INT:
                     case LONG:
-                        ((JTextField) uiw.getObjectUI()).setText(uiw
-                                .getFormattedData(obj));
+                        ((JTextField) uiw.getObjectUI()).setText(uiw.getFormattedData(obj));
+                        ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());
                         break;
                     case NUMERIC:
-                        ((JTextField) uiw.getObjectUI()).setText(uiw
-                                .getFormattedData(obj));
+                        ((JTextField) uiw.getObjectUI()).setText(uiw.getFormattedData(obj));
+                        ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());
                         break;
                     case TEXTAREA:
-                        ((ITextArea) uiw.getObjectUI()).setText(uiw
-                                .getFormattedData(obj));
+                        ((ITextArea) uiw.getObjectUI()).setText(uiw.getFormattedData(obj));
                         break;
                     case STEPPER_PERCENT:
                         SFStepperPercent stepper = (SFStepperPercent) uiw.getObjectUI();

@@ -956,7 +956,7 @@ public class ItemBuilder {
 
             wm.registerItemUIWrapper(wrapper);
 
-            ItemHandler.setupHandlerToTextField(wrapper, wm);
+            ItemHandler.setupHandlerToPhoneField(wrapper, wm);
             ((JTextField)wrapper.getObjectUI()).setColumns(16 + 1);
 
             setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());

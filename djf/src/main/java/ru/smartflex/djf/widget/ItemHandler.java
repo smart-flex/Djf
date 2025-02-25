@@ -61,6 +61,22 @@ public class ItemHandler {
         }
     }
 
+    public static void setupHandlerToPhoneField(UIWrapper uiw, WidgetManager wm) {
+
+        JTextField field = (JTextField) uiw.getObjectUI();
+        field.setFocusTraversalKeysEnabled(false);
+
+        new FieldKeyHandler(field, wm);
+        new PhoneFieldFocusHamdler(wm, uiw, field);
+        new PhoneFieldFilter(wm, field);
+
+        BeanFormDefProperty prop = uiw.getBeanFormDefPropertyFromBind();
+
+        if (prop != null && prop.getNotNull() != null && prop.getNotNull()) {
+            field.setBackground(SFConstants.FIELD_REQUIRED_BACKGROUND_COLOR);
+        }
+    }
+
     public static void setupHandlerToColumn(TableColumn tableColumn,
                                             WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
 
@@ -395,6 +411,10 @@ public class ItemHandler {
         }
 
         return startCaret;
+    }
+
+    public static void moveCaretToStart(JTextField field) {
+        moveCaretToStart(field, null);
     }
 
     public static void moveCaretToStart(JTextField field, String mask) {

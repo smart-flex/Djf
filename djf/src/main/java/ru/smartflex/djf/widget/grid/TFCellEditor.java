@@ -18,6 +18,7 @@ import ru.smartflex.djf.controller.bean.PhoneBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
+import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 import ru.smartflex.djf.widget.mask.IFieldValidator;
 
@@ -89,6 +90,29 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
                     DesktopJavaForms.showStatusWarnMessage(msg + value.toString());
                     value = colInfo.getMaskInfo().getMaskDelimiter();
                     ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(true);
+                }
+                break;
+            case PHONE:
+                ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(false);
+                if (!OtherUtil.isStringEmpty((String) value)) {
+                    boolean result = validator.isValid((String) value);
+                    if (result) {
+                        // совпало по правилам номера
+                        PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone((String) value);
+                        if (phoneBag != null) {
+                            String phoneFormatted = phoneBag.getPhoneFormatted();
+                            result = phoneFormatted.equals(value);
+                        } else {
+                            // мало ли
+                            result = false;
+                        }
+                    }
+                    if (!result) {
+                        String msg = PrefixUtil.getMsg("${djf.message.warn.value_dont_match_mask}", null);
+                        DesktopJavaForms.showStatusWarnMessage(msg + value.toString());
+                        value = "";
+                        ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(true);
+                    }
                 }
                 break;
         }

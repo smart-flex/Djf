@@ -78,15 +78,27 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
         }
 
         if (validator != null) {
-
+            boolean doStepNext = true;
             // возврат некорректного значения
             if (valueAsIs != null) {
-                if (!uiw.getMaskInfo().isFilled(field.getText())) {
+                if (field.getText().equals(uiw.getMaskInfo().getMaskDelimiter())) {
+                    // ничего не ввели, влзвращаем некорректное значение
                     field.setText(valueAsIs);
+                } else {
+                    // что-то ввели, проверяем на валидность
+                    if (validator.isValid(field.getText())) {
+                        doWellness();
+                    } else {
+                        // влзвращаем некорректное значение
+                        field.setText(valueAsIs);
+                    }
                     valueAsIs = null;
                 }
                 FrameHelper.showStatusMessage(TaskStatusLevelEnum.OK, FormStack.getCurrentFormBag().getWelcomeMessage());
-            } else {
+                doStepNext = false;
+            }
+
+            if (doStepNext) {
                 if (!validator.isValid(field.getText())) {
                     // field.requestFocus(); because focus lost event was invoked
                     // really after lost focusing
@@ -97,18 +109,22 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
                     field.setText(prevAsString);
 
                 } else {
-                    if (uiw.getWidgetType() == WidgetTypeEnum.DATE) {
-                        // for type Date, because incorrect date can be translated into another date
-                        Object data = uiw.getCurrentValue();
-                        String dataAsText = uiw.getFormattedData(data);
-                        field.setText(dataAsText);
-                    }
-                    wm.setValueUsualWidget(uiw);
+                    doWellness();
                 }
             }
         }
 
         wm.doActionMethod(field.getName());
+    }
+
+    private void doWellness() {
+        if (uiw.getWidgetType() == WidgetTypeEnum.DATE) {
+            // for type Date, because incorrect date can be translated into another date
+            Object data = uiw.getCurrentValue();
+            String dataAsText = uiw.getFormattedData(data);
+            field.setText(dataAsText);
+        }
+        wm.setValueUsualWidget(uiw);
     }
 
     @Override
