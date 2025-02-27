@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComponent;
+import javax.swing.text.JTextComponent;
 
 import ru.smartflex.djf.WidgetTypeEnum;
 import ru.smartflex.djf.controller.bean.UIWrapper;
@@ -207,7 +208,14 @@ public class FocusPolicy extends FocusTraversalPolicy {
                 if (w.isFocusable()) {
                     if (((JComponent) w.getObjectUI()).isRequestFocusEnabled()) {
                         if (((JComponent) w.getObjectUI()).isEnabled()) {
-                            jcomp = (JComponent) w.getObjectUI();
+                            if (w.getObjectUI() instanceof JTextComponent) {
+                                if (((JTextComponent) w.getObjectUI()).isEditable()) {
+                                    jcomp = (JComponent) w.getObjectUI();
+                                }
+                            } else {
+                                // button, combobox, etc
+                                jcomp = (JComponent) w.getObjectUI();
+                            }
                         }
                     }
                 }
@@ -216,11 +224,17 @@ public class FocusPolicy extends FocusTraversalPolicy {
             // for form without model, but widgets have order
             if (w.getOrder() > 0) {
                 if (((JComponent) w.getObjectUI()).isEnabled()) {
-                    jcomp = (JComponent) w.getObjectUI();
+                    if (w.getObjectUI() instanceof JTextComponent) {
+                        if (((JTextComponent) w.getObjectUI()).isEditable()) {
+                            jcomp = (JComponent) w.getObjectUI();
+                        }
+                    } else {
+                        // button, combobox, etc
+                        jcomp = (JComponent) w.getObjectUI();
+                    }
                 }
             }
         }
-
         return jcomp;
     }
 }

@@ -8,7 +8,7 @@ public enum WidgetTypeEnum {
     public static boolean isFocusAble(WidgetTypeEnum type) {
         boolean fok = true;
 
-        if (type == LABEL || type == PANEL || type == TABPANEL || type == GROUP) {
+        if (type == LABEL || type == PANEL || type == TABPANEL || type == GROUP || type == STEPPER_PERCENT) {
             fok = false;
         }
 
@@ -23,7 +23,7 @@ public enum WidgetTypeEnum {
                 || type == TGRID || type == PERIOD || type == INT
                 || type == BYTE || type == SHORT || type == LONG
                 || type == NUMERIC || type == OPERATOR || type == TEXTAREA || type == FILE || type == RADIO
-                || type == PHONE || type == STEPPER_PERCENT) {
+                || type == PHONE) {
             fok = true;
         }
 

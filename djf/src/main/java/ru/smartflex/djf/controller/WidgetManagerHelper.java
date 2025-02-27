@@ -166,8 +166,7 @@ public class WidgetManagerHelper {
     }
 
     static void requestFocustOnFirstComponent(FormManager fm) {
-        FocusPolicy focus = (FocusPolicy) fm.getWidgetManager()
-                .getFocusPolicy();
+        FocusPolicy focus = (FocusPolicy) fm.getWidgetManager().getFocusPolicy();
         Component comp = focus.getFirstFocusableComponent();
         if (comp != null) {
             if (comp instanceof SFGrid) {
