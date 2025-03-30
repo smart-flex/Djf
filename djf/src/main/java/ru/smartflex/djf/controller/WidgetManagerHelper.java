@@ -329,6 +329,7 @@ public class WidgetManagerHelper {
                         ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());
                         break;
                     case PHONE:
+                    case SNILS:
                     case TEXT:
                         ((JTextField) uiw.getObjectUI()).setText((String) obj);
                         ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());

@@ -8,8 +8,7 @@
 	<xs:complexType name="ItemPhoneBaseType">
 
 		<xs:complexContent>
-			<xs:extension base="ItemInputType">
-			</xs:extension>
+			<xs:extension base="ItemInputType" />
 		</xs:complexContent>
 
 	</xs:complexType>

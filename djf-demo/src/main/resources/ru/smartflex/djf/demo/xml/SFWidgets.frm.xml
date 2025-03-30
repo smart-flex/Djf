@@ -49,6 +49,15 @@
             <label text="Период" tips="Неверный период" constraint="gap para"/>
             <period bind="sp.calcPeriodError" constraint="gap para, wrap" />
 
+            <label text="СНИЛС (неверный формат)" constraint="gap para" />
+            <snils bind="sp.snilsFilledMistake" cols="15" constraint="gap para, wrap" />
+
+            <label text="СНИЛС (верный формат)" constraint="gap para" />
+            <snils bind="sp.snilsFilledOk" cols="15" constraint="gap para, wrap" />
+
+            <label text="Телефон"  constraint="gap para" />
+            <snils bind="sp.snilsEmpty" cols="15" constraint="gap para, wrap" />
+
             <button text="Заполнение данных в маск полях" action="fillDate" constraint="gap para, wrap" />
 
         </items>

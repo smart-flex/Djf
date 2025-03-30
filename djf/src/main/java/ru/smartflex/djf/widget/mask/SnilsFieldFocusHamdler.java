@@ -4,10 +4,10 @@ import ru.smartflex.djf.DesktopJavaForms;
 import ru.smartflex.djf.FrameHelper;
 import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.WidgetManager;
-import ru.smartflex.djf.controller.bean.PhoneBag;
+import ru.smartflex.djf.controller.bean.SnilsBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
-import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
+import ru.smartflex.djf.controller.helper.SnilsUtil;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.ISFHandler;
 import ru.smartflex.djf.widget.TaskStatusLevelEnum;
@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
+public class SnilsFieldFocusHamdler implements FocusListener, ISFHandler {
 
     private JTextField field;
     private IFieldValidator validator;
@@ -24,19 +24,18 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
     private WidgetManager wm;
     private String valueAsIs = null;
 
-    public PhoneFieldFocusHamdler(WidgetManager wm, UIWrapper uiw,  JTextField field) {
+    public SnilsFieldFocusHamdler(WidgetManager wm, UIWrapper uiw, JTextField field) {
         this.field = field;
         this.wm = wm;
         this.uiw = uiw;
 
-        this.validator = new PhoneValidator();
+        this.validator = new SnilsValidator();
 
         field.addFocusListener(this);
     }
 
     @Override
-    public void focusGained(FocusEvent e) {
-
+    public void focusGained(FocusEvent focusEvent) {
         if (!wm.getFormBag().isFormReady()) {
             return;
         }
@@ -49,13 +48,12 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
 
             boolean result = validator.isValid(value);
             if (result) {
-                // совпало по правилам номера
-                PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone(value);
-                if (phoneBag != null) {
-                    String phoneFormatted = phoneBag.getPhoneFormatted();
-                    result = phoneFormatted.equals(value);
+                // проверяем на формат
+                SnilsBag snilsBag = SnilsUtil.formatSnils(field.getText());
+                if (snilsBag != null) {
+                    String snilsFormatted = snilsBag.getSnilsFormatted();
+                    result = snilsFormatted.equals(value);
                 } else {
-                    // мало ли
                     result = false;
                 }
             }
@@ -69,7 +67,7 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
     }
 
     @Override
-    public void focusLost(FocusEvent e) {
+    public void focusLost(FocusEvent focusEvent) {
         if (wm == null || wm.getFormBag() == null) {
             // workarround for SFDialogForm.closeDialog() ->dispose();
             return;
@@ -86,20 +84,20 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
                 field.setText(valueAsIs);
             } else {
                 // что то ввели
-                String phoneFormatted = null;
+                String snilsFormatted = null;
                 boolean result = validator.isValid(field.getText());
                 if (result) {
                     // совпало по правилам номера
-                    PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone(field.getText());
-                    if (phoneBag != null) {
-                        phoneFormatted = phoneBag.getPhoneFormatted();
+                    SnilsBag snilsBag = SnilsUtil.formatSnils(field.getText());
+                    if (snilsBag != null) {
+                        snilsFormatted = snilsBag.getSnilsFormatted();
                     } else {
                         // мало ли
                         result = false;
                     }
                 }
                 if (result) {
-                    field.setText(phoneFormatted);
+                    field.setText(snilsFormatted);
                 } else {
                     field.setText(valueAsIs);
                 }
@@ -116,15 +114,16 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
                 String prevAsString = uiw.getFormattedData(prev);
                 field.setText(prevAsString);
             } else {
-                PhoneBag phoneBag = PhoneZoneUtil.formatPhoneWithZone(field.getText());
-                if (phoneBag != null) {
-                    field.setText(phoneBag.getPhoneFormatted());
+                SnilsBag snilsBag = SnilsUtil.formatSnils(field.getText());
+                if (snilsBag != null) {
+                    field.setText(snilsBag.getSnilsFormatted());
                 }
                 wm.setValueUsualWidget(uiw);
             }
         }
 
         wm.doActionMethod(field.getName());
+
     }
 
     @Override
@@ -135,6 +134,4 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
         validator = null;
         valueAsIs = null;
     }
-
 }
-

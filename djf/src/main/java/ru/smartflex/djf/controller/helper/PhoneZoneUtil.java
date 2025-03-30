@@ -95,20 +95,7 @@ public class PhoneZoneUtil {
 
     private static PhoneBag formatPhoneWithZone(String newText, String prevText, int ind, boolean finished) {
         PhoneBag phoneBag = null;
-        String raw = null;
-        if (prevText != null) {
-            if (ind == prevText.length()) {
-                raw =  prevText + newText;
-            } else {
-                if (ind == 0) {
-                    raw = newText + prevText;
-                } else {
-                    raw = prevText.substring(0, ind) + newText + prevText.substring(ind);
-                }
-            }
-        } else {
-            raw = newText;
-        }
+        String raw = DocumentFilterUtil.doGlue(newText, prevText, ind);
         if (!StringUtils.isEmpty(raw)) {
             String rawNoSpaces = raw.replace(" ", "");
             String _toKey = rawNoSpaces;

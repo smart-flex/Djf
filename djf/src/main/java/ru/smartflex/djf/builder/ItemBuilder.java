@@ -445,9 +445,10 @@ public class ItemBuilder {
 
         return id;
     }
-    public static UIWrapper fillTextBase(UIWrapper wrapper,
-                                         WidgetTypeEnum widgetType, ItemInputType item, BeanFormDef beanDef,
-                                         boolean setupLength, String bindPrefix, boolean enabledByMouseClick) {
+
+    public static UIWrapper fillTextBase(UIWrapper wrapper, WidgetTypeEnum widgetType, ItemInputType item,
+                                         BeanFormDef beanDef, boolean setupLength, String bindPrefix, boolean enabledByMouseClick) {
+
         Object ui = ObjectCreator.createSwing(widgetType);
         wrapper.setObjectUI(ui);
         wrapper.setWidgetType(widgetType);
@@ -943,8 +944,7 @@ public class ItemBuilder {
         }
     }
 
-    static void build(ItemPhoneType item, WidgetManager wm,
-                      SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
+    static void build(ItemPhoneType item, WidgetManager wm, SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
 
         if (AccessibleHelper.isAccessible(item, wm)) {
 
@@ -1028,6 +1028,30 @@ public class ItemBuilder {
                 ((SFPassword)ui).getPasswordField().setColumns(cols.intValue() + 1);
             }
         }
+    }
+
+    static void build(ItemSnilsType item, WidgetManager wm, SFPanel sfPanel, BeanFormDef beanDef, String bindPrefix) {
+
+        if (AccessibleHelper.isAccessible(item, wm)) {
+
+            UIWrapper wrapper = fillTextBase(new UIWrapper(), WidgetTypeEnum.SNILS, item, beanDef,false, bindPrefix, true);
+
+            wrapper.setOrder(item.getOrder());
+            wrapper.setAction(item.getAction());
+            wrapper.setBelongToModel(item.getBelong());
+
+            wm.registerItemUIWrapper(wrapper);
+
+            ItemHandler.setupHandlerToSnilsField(wrapper, wm);
+            ((JTextField)wrapper.getObjectUI()).setColumns(14 + 1);
+
+            setToolTipText(wrapper, item.getTips(), sfPanel.getBundle());
+
+            java.awt.Container uiPanel = (Container) sfPanel.getPanel();
+
+            uiPanel.add((Component) wrapper.getObjectUI(), item.getConstraint());
+        }
+
     }
 
 }

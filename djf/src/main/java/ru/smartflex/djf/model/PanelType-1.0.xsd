@@ -28,6 +28,7 @@
 	<xs:include schemaLocation="ItemGroupType-1.0.xsd" />
 	<xs:include schemaLocation="ItemPhoneType-1.1.xsd" />
 	<xs:include schemaLocation="ItemStepperPercentType-1.6.xsd" />
+	<xs:include schemaLocation="ItemSnilsType-1.7.xsd" />
 
 	<xs:include schemaLocation="AttributeTypes-1.3.xsd" />
 
@@ -61,6 +62,7 @@
 						<xs:element name="group" type="ct:ItemGroupType" />
 						<xs:element name="phone" type="ct:ItemPhoneType" />
 						<xs:element name="stepPercent" type="ct:ItemStepperPercentType" />
+						<xs:element name="snils" type="ct:ItemSnilsType" />
 
 					</xs:choice>
 

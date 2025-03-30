@@ -15,6 +15,9 @@ public class StepperPercentInfo {
     private String phoneFilledOk = "+7 919 825 76 58";
     private String phoneEmpty;
     private Integer calcPeriodError = 202333;
+    private String snilsEmpty;
+    private String snilsFilledMistake = "073---427-39734";
+    private String snilsFilledOk = "148-025-789 78";
 
     public int getPercent() {
         return percent;
@@ -102,5 +105,29 @@ public class StepperPercentInfo {
 
     public void setCalcPeriodError(Integer calcPeriodError) {
         this.calcPeriodError = calcPeriodError;
+    }
+
+    public String getSnilsEmpty() {
+        return snilsEmpty;
+    }
+
+    public void setSnilsEmpty(String snilsEmpty) {
+        this.snilsEmpty = snilsEmpty;
+    }
+
+    public String getSnilsFilledMistake() {
+        return snilsFilledMistake;
+    }
+
+    public void setSnilsFilledMistake(String snilsFilledMistake) {
+        this.snilsFilledMistake = snilsFilledMistake;
+    }
+
+    public String getSnilsFilledOk() {
+        return snilsFilledOk;
+    }
+
+    public void setSnilsFilledOk(String snilsFilledOk) {
+        this.snilsFilledOk = snilsFilledOk;
     }
 }

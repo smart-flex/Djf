@@ -89,65 +89,49 @@ class PanelBuilder {
                         if (it instanceof ItemButtonType) {
                             ItemBuilder.build((ItemButtonType) it, wm, sfPanel);
                         } else if (it instanceof ItemComboboxType) {
-                            ItemBuilder.build((ItemComboboxType) it, wm,
-                                    (java.awt.Container) uiPanel, beanDef,
-                                    bindPref);
+                            ItemBuilder.build((ItemComboboxType) it, wm, (java.awt.Container) uiPanel, beanDef, bindPref);
                         } else if (it instanceof ItemLabelType) {
                             ItemBuilder.build((ItemLabelType) it, wm, sfPanel);
-
                         } else if (it instanceof ItemTextType) {
-                            ItemBuilder.build((ItemTextType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemTextType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemCheckboxType) {
-                            ItemBuilder.build((ItemCheckboxType) it, wm,
-                                    sfPanel, beanDef, bindPref);
+                            ItemBuilder.build((ItemCheckboxType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemGridType) {
-                            ItemBuilder.build((ItemGridType) it, wm, sfPanel,
-                                    beanDef);
+                            ItemBuilder.build((ItemGridType) it, wm, sfPanel, beanDef);
                         } else if (it instanceof ItemDateType) {
-                            ItemBuilder.build((ItemDateType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemDateType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemPasswordType) {
-                            ItemBuilder.build((ItemPasswordType) it, wm,
-                                    sfPanel, beanDef, bindPref);
+                            ItemBuilder.build((ItemPasswordType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemButtonRunType) {
-                            ItemBuilder.build((ItemButtonRunType) it, wm,
-                                    sfPanel);
+                            ItemBuilder.build((ItemButtonRunType) it, wm, sfPanel);
                         } else if (it instanceof ItemPeriodType) {
-                            ItemBuilder.build((ItemPeriodType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemPeriodType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemByteType) {
-                            ItemBuilder.build((ItemByteType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemByteType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemShortType) {
-                            ItemBuilder.build((ItemShortType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemShortType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemIntType) {
-                            ItemBuilder.build((ItemIntType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemIntType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemLongType) {
-                            ItemBuilder.build((ItemLongType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemLongType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemNumType) {
-                            ItemBuilder.build((ItemNumType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemNumType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemOperatorType) {
-                            ItemBuilder.build((ItemOperatorType) it, wm,
-                                    sfPanel);
+                            ItemBuilder.build((ItemOperatorType) it, wm, sfPanel);
                         } else if (it instanceof SeparatorType) {
                             WidgetBuilder.build((SeparatorType) it, sfPanel, wm);
                         } else if (it instanceof ItemTextAreaType) {
-                            ItemBuilder.build((ItemTextAreaType) it, wm,
-                                    sfPanel, beanDef, bindPref);
+                            ItemBuilder.build((ItemTextAreaType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemFileType) {
                             ItemBuilder.build((ItemFileType) it, wm, sfPanel);
                         } else if (it instanceof ItemGroupType) {
                             ItemBuilder.build((ItemGroupType) it, wm, sfPanel);
                         } else if (it instanceof ItemPhoneType) {
-                            ItemBuilder.build((ItemPhoneType) it, wm, sfPanel,
-                                    beanDef, bindPref);
+                            ItemBuilder.build((ItemPhoneType) it, wm, sfPanel, beanDef, bindPref);
                         } else if (it instanceof ItemStepperPercentType) {
                             ItemBuilder.build((ItemStepperPercentType) it, wm, sfPanel, beanDef, bindPref);
+                        } else if (it instanceof  ItemSnilsType) {
+                            ItemBuilder.build((ItemSnilsType) it, wm, sfPanel, beanDef, bindPref);
                         }
                     }
                 }

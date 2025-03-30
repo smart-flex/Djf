@@ -124,6 +124,11 @@ public class ConverterUtil {
                 obj = percent.getPercent();
             }
             break;
+            case SNILS: {
+                String val = ((javax.swing.JTextField) comp).getText();
+                obj = getValue(widgetType, format, val, uiw);
+            }
+            break;
         }
 
         return obj;
@@ -145,6 +150,7 @@ public class ConverterUtil {
                 break;
             case TEXT:
             case PHONE:
+            case SNILS:
             case TEXTAREA:
             case TGRID_TREE_FIELD:
                 if (!OtherUtil.isStringEmpty(val)) {

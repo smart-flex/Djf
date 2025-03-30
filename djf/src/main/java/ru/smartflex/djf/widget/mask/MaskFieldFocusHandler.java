@@ -43,6 +43,7 @@ public class MaskFieldFocusHandler implements FocusListener, ISFHandler {
             return;
         }
 
+        valueAsIs = null;
         wm.registerSelectedWrapper(uiw);
 
         if (uiw.getMaskInfo().getMaskDelimiter() != null) {

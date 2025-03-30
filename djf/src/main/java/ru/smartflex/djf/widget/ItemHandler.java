@@ -77,6 +77,22 @@ public class ItemHandler {
         }
     }
 
+    public static void setupHandlerToSnilsField(UIWrapper uiw, WidgetManager wm) {
+
+        JTextField field = (JTextField) uiw.getObjectUI();
+        field.setFocusTraversalKeysEnabled(false);
+
+        new FieldKeyHandler(field, wm);
+        new SnilsFieldFocusHamdler(wm, uiw, field);
+        new SnilsFieldFilter(wm, field);
+//начинаем отсюда
+        BeanFormDefProperty prop = uiw.getBeanFormDefPropertyFromBind();
+
+        if (prop != null && prop.getNotNull() != null && prop.getNotNull()) {
+            field.setBackground(SFConstants.FIELD_REQUIRED_BACKGROUND_COLOR);
+        }
+    }
+
     public static void setupHandlerToColumn(TableColumn tableColumn,
                                             WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
 
