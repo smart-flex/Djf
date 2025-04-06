@@ -379,6 +379,17 @@ public class SFGridModel extends DefaultTableModel {
                         .translateStringToBoolean(((ItemGridPhoneType) columnDefinition)
                                 .getNoResize(), false);
                 break;
+            case SNILS:
+                ItemBuilder.fillTextBase(colInfo,
+                        WidgetTypeEnum.SNILS, (ItemGridSnilsType) columnDefinition,
+                        beanDef, false, bindPrefix, false);
+
+                columnWidth = new ColumnWidth(
+                        ((ItemGridSnilsType) columnDefinition).getWidth());
+                noResize = UIWrapper
+                        .translateStringToBoolean(((ItemGridSnilsType) columnDefinition)
+                                .getNoResize(), false);
+                break;
         }
 
         // only for defines this is info column or not

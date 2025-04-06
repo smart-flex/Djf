@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
+public class PhoneFieldFocusHandler implements FocusListener, ISFHandler {
 
     private JTextField field;
     private IFieldValidator validator;
@@ -24,7 +24,7 @@ public class PhoneFieldFocusHamdler implements FocusListener, ISFHandler {
     private WidgetManager wm;
     private String valueAsIs = null;
 
-    public PhoneFieldFocusHamdler(WidgetManager wm, UIWrapper uiw,  JTextField field) {
+    public PhoneFieldFocusHandler(WidgetManager wm, UIWrapper uiw, JTextField field) {
         this.field = field;
         this.wm = wm;
         this.uiw = uiw;

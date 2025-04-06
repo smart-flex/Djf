@@ -67,7 +67,7 @@ public class ItemHandler {
         field.setFocusTraversalKeysEnabled(false);
 
         new FieldKeyHandler(field, wm);
-        new PhoneFieldFocusHamdler(wm, uiw, field);
+        new PhoneFieldFocusHandler(wm, uiw, field);
         new PhoneFieldFilter(wm, field);
 
         BeanFormDefProperty prop = uiw.getBeanFormDefPropertyFromBind();
@@ -93,8 +93,7 @@ public class ItemHandler {
         }
     }
 
-    public static void setupHandlerToColumn(TableColumn tableColumn,
-                                            WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
+    public static void setupHandlerToColumn(TableColumn tableColumn, WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
 
         switch (colInfo.getWidgetType()) {
             case DATE:
@@ -105,19 +104,17 @@ public class ItemHandler {
             case LONG:
             case NUMERIC:
             case PHONE:
+            case SNILS:
                 setupHandlerToColumnWithValidator(tableColumn, wm, uiw, colInfo);
                 break;
             default:
-                throw new SmartFlexMaskException("No handlers for this type: "
-                        + colInfo.getWidgetType());
+                throw new SmartFlexMaskException("No handlers for this type: " + colInfo.getWidgetType());
         }
     }
 
-    private static void setupHandlerToColumnWithValidator(TableColumn tableColumn,
-                                                          WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
+    private static void setupHandlerToColumnWithValidator(TableColumn tableColumn, WidgetManager wm, UIWrapper uiw, GridColumnInfo colInfo) {
 
-        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD
-                || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
+        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
             validateMask(colInfo.getMaskInfo());
         }
 
@@ -126,8 +123,7 @@ public class ItemHandler {
         TFCellEditor cellEditor = new TFCellEditor(field, uiw, wm, colInfo);
         new GridCellListener(cellEditor);
 
-        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD
-                || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
+        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
             field.setText(colInfo.getMaskInfo().getMaskDelimiter());
         }
 
@@ -140,6 +136,8 @@ public class ItemHandler {
             new MaskFieldMaskDateFilter(wm, colInfo.getMaskInfo(), field, cellEditor, true, keyRegisterDate);
         } else if (colInfo.getWidgetType() == WidgetTypeEnum.PHONE) {
             new PhoneFieldFilter(cellEditor, wm);
+        } else if (colInfo.getWidgetType() == WidgetTypeEnum.SNILS) {
+            new SnilsFieldFilter(cellEditor, wm);
         }
 
         IFieldValidator validator = null;
@@ -169,6 +167,9 @@ public class ItemHandler {
             case PHONE:
                 validator = new PhoneValidator();
                 break;
+            case SNILS:
+                validator = new SnilsValidator();
+                break;
         }
         cellEditor.setValidator(validator);
 
@@ -178,10 +179,8 @@ public class ItemHandler {
 
         // workaround: because when user start editing by press F2, for empty
         // value there field caret position is on right side
-        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD
-                || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
-            ItemHandler.moveCaretToStart(field, colInfo.getMaskInfo()
-                    .getMaskDelimiter());
+        if (colInfo.getWidgetType() == WidgetTypeEnum.PERIOD || colInfo.getWidgetType() == WidgetTypeEnum.DATE) {
+            ItemHandler.moveCaretToStart(field, colInfo.getMaskInfo().getMaskDelimiter());
         }
     }
 

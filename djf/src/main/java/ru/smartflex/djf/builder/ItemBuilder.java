@@ -723,6 +723,8 @@ public class ItemBuilder {
             ret = javax.swing.SwingConstants.RIGHT;
         } else if (type == AlignTypeEnum.CENTER) {
             ret = javax.swing.SwingConstants.CENTER;
+        } else {
+            ret = javax.swing.SwingConstants.LEFT;
         }
 
         return ret;

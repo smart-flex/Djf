@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+    <description>Simple grid widget form</description>
+    <layout clazz="java.awt.BorderLayout" />
+    <panel constraint="Center">
+        <layout clazz="java.awt.BorderLayout" />
+        <items>
+            <grid constraint="Center" bindPref="pa">
+                <cols>
+                    <int bind="idAccount" title="${demo.gridfields.grid.idAcc}"
+                         tips="${demo.gridfields.grid.idAcc.tips}" width="30" enabled="no" noResize="yes" />
+                    <text bind="accountNumber" title="${label.demo.gridfields.grid.an}"
+                          width="110:120" />
+                    <checkbox bind="hasChildren" title="${demo.gridfields.grid.hasChildren}"
+                              tips="${demo.gridfields.grid.hasChildren.tips}" width="40:40" />
+                    <date bind="dateCreate" title="${demo.gridfields.grid.dc}"
+                          width="100:100" />
+                    <period bind="calcPeriod" title="${demo.gridfields.grid.period}"
+                            tips="$demo.gridfields.grid.period.tips}" width="65:65" align="right"/>
+                    <snils bind="snils" title="СНИЛС" width="115:115"/>
+                    <phone bind="ceilPhone" title="Телефон" width="115:115"/>
+                </cols>
+            </grid>
+        </items>
+    </panel>
+
+    <assist clazz="ru.smartflex.djf.demo.java.GridFieldsAssistant" />
+
+    <models>
+        <!--
+        In model definition for session invocation you can use "session", "sess" or simply "s".
+         -->
+        <model id="pa">
+            <load method="${session.app.getAccounts}" delay="${form.loadDelay}">
+                <param type="string" value="${session.sessId}" />
+            </load>
+            <save method="${sess.app.saveAccounts}" >
+                <param type="string" value="${s.sessId}" />
+                <param type="stackDelete" />
+                <param type="stackSave" />
+            </save>
+            <bean include="ru/smartflex/djf/demo/xml/PojoAccount.bean.xml"/>
+        </model>
+
+        <model id="ct" readOnly="true">
+            <load method="${s.car.getCarType}" />
+            <bean clazz="ru.smartflex.djf.demo.java.PojoCarType" />
+        </model>
+    </models>
+</form>

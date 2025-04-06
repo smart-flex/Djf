@@ -15,9 +15,11 @@ import ru.smartflex.djf.controller.FormStack;
 import ru.smartflex.djf.controller.WidgetManager;
 import ru.smartflex.djf.controller.bean.GridColumnInfo;
 import ru.smartflex.djf.controller.bean.PhoneBag;
+import ru.smartflex.djf.controller.bean.SnilsBag;
 import ru.smartflex.djf.controller.bean.UIWrapper;
 import ru.smartflex.djf.controller.helper.PhoneZoneUtil;
 import ru.smartflex.djf.controller.helper.PrefixUtil;
+import ru.smartflex.djf.controller.helper.SnilsUtil;
 import ru.smartflex.djf.tool.OtherUtil;
 import ru.smartflex.djf.widget.TaskStatusLevelEnum;
 import ru.smartflex.djf.widget.mask.IFieldValidator;
@@ -104,6 +106,28 @@ public class TFCellEditor extends DefaultCellEditor implements ICellEditor {
                             result = phoneFormatted.equals(value);
                         } else {
                             // мало ли
+                            result = false;
+                        }
+                    }
+                    if (!result) {
+                        String msg = PrefixUtil.getMsg("${djf.message.warn.value_dont_match_mask}", null);
+                        DesktopJavaForms.showStatusWarnMessage(msg + value.toString());
+                        value = "";
+                        ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(true);
+                    }
+                }
+                break;
+            case SNILS:
+                ((SFGrid)uiw.getObjectUI()).getTable().setValueIsNotMatchMask(false);
+                if (!OtherUtil.isStringEmpty((String) value)) {
+                    boolean result = validator.isValid((String) value);
+                    if (result) {
+                        // проверяем на формат
+                        SnilsBag snilsBag = SnilsUtil.formatSnils((String) value);
+                        if (snilsBag != null) {
+                            String snilsFormatted = snilsBag.getSnilsFormatted();
+                            result = snilsFormatted.equals(value);
+                        } else {
                             result = false;
                         }
                     }

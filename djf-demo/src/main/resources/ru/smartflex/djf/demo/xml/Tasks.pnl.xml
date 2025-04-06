@@ -4,7 +4,7 @@
 	<layout clazz="net.miginfocom.swing.MigLayout">
 		<param type="string" value="wrap 1" />
 		<param type="string" value="[100%, grow, fill]" />
-		<param type="string" value="[37%, grow, fill][20px][60%, grow, fill]" />
+		<param type="string" value="[40%, grow, fill][20px][57%, grow, fill]" />
 	</layout>
 
 	<panel>

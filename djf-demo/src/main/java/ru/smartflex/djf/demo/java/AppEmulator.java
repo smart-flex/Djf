@@ -102,13 +102,13 @@ public class AppEmulator {
 
         PojoAccount pa1 = new PojoAccount("19680201-grid", new Date(),
                 "89093372772", "+7 927 220 31 17", "410000", true, null,
-                null, new BigDecimal("2000.23"));
+                null, new BigDecimal("2000.23"), "073---427-39734");
         pa1.setStreet(address.getDergachevskayaStreet());
         pa1.setBuilding(address.getBld5());
         listAccount.add(pa1);
 
         PojoAccount pa2 = new PojoAccount("19720202", null, "+7 845 228 46 94",
-                "+7 919 825 76 58", "410000", true, null, 199912, null);
+                "+7 919 825 76 58", "410000", true, null, 199912, null, null);
         pa2.setMilitaryRank("Captain");
         pa2.setMilitaryUnit("2014/1968");
         pa2.setHasCredit(Boolean.TRUE);
@@ -122,13 +122,13 @@ public class AppEmulator {
 
         PojoAccount pa3 = new PojoAccount("19991203", new Date(), null,
                 null, "410000", false, ptPrivate, null,
-                new BigDecimal("5050"));
+                new BigDecimal("5050"), null);
         pa3.setMilitaryRank("Major");
         listAccount.add(pa3);
 
         PojoAccount pa4 = new PojoAccount("19291704", new Date(),
                 "+61 416 819 589", null, "410003", true, ptMuni, 196802,
-                new BigDecimal("4040.44"));
+                new BigDecimal("4040.44"), "148-025-789 78");
         pa4.setHasCredit(Boolean.FALSE);
         pa4.setHasChildren(Boolean.TRUE);
         pa4.setStreet(address.getAltataStreet());
@@ -139,7 +139,7 @@ public class AppEmulator {
         try {
             PojoAccount pa5 = new PojoAccount("19293205", df.parse("10.10.50"),
                     "5 30 50", "+7 495 851 30 50", "410003", true, null, 196866,
-                    new BigDecimal("6060.66"));
+                    new BigDecimal("6060.66"), null);
             listAccount.add(pa5);
         } catch (ParseException e) {
         }
@@ -522,6 +522,16 @@ public class AppEmulator {
                 null,
                 null,
                 new String[]{"ru/smartflex/djf/demo/java/StepperPercentInfo.java", "ru/smartflex/djf/demo/java/PojoStreet.java"}));
+
+        list.add(new TaskDemo(
+                13,
+                "Simple grid form v02 /one table/",
+                "ru/smartflex/djf/demo/xml/SimpleGridWidget.frm.xml",
+                new String[]{"ru/smartflex/djf/demo/xml/AccountAllFieldsGrid.pnl.xml"},
+                new String[]{"ru/smartflex/djf/demo/xml/PojoAccount.bean.xml"},
+                new String[]{"ru/smartflex/djf/demo/java/GridFieldsAssistant.java"},
+                new String[]{"ru/smartflex/djf/demo/java/PojoAccount.java",
+                        "ru/smartflex/djf/demo/java/PojoCarType.java"}));
 
         return list;
     }

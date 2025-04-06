@@ -162,6 +162,10 @@ public class SFTableWrapper extends JTable {
                 tr = new TitleRenderer((ItemGridPhoneType) ct, bundle);
                 type = WidgetTypeEnum.PHONE;
 
+            } else if (ct instanceof ItemGridSnilsType) {
+                tr = new TitleRenderer((ItemGridSnilsType) ct, bundle);
+                type = WidgetTypeEnum.SNILS;
+
             }
 
             //noinspection ConstantConditions
@@ -342,6 +346,19 @@ public class SFTableWrapper extends JTable {
                 }
                 break;
                 case PHONE: {
+                    cr = new GridCellRenderer();
+                    tableColumn = getColumnModel().getColumn(indColumn);
+
+                    BeanFormDefProperty prop = gci.getBeanFormDefPropertyFromBind();
+
+                    ItemHandler.setupHandlerToColumn(tableColumn, wm, uiw, gci);
+
+                    ((GridCellRenderer) cr).setHorAligment(gci.getAlign());
+                    ((GridCellRenderer) cr).setUpBackGroundAsNotNull(prop);
+                    titleRenderers.get(indColumn).markTitleAsNotNull(prop);
+                }
+                break;
+                case SNILS: {
                     cr = new GridCellRenderer();
                     tableColumn = getColumnModel().getColumn(indColumn);
 

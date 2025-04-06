@@ -29,6 +29,7 @@ public class PojoAccount implements Serializable {
     private BigDecimal salary = null;
     private Boolean fired = null;
     private String remark = null;
+    private String snils = null;
 
     private PojoAccPropertyType typeAccount = null;
     private PojoAccount mother = null;
@@ -48,7 +49,7 @@ public class PojoAccount implements Serializable {
     public PojoAccount(String accountNumber, Date dateCreate,
                        String homePhone, String ceilPhone, String postalIndex,
                        boolean employed, PojoAccPropertyType typeAccount,
-                       Integer calcPeriod, BigDecimal salary) {
+                       Integer calcPeriod, BigDecimal salary, String snils) {
         super();
         this.idAccount = id.incrementAndGet();
         this.accountNumber = accountNumber;
@@ -60,6 +61,7 @@ public class PojoAccount implements Serializable {
         this.typeAccount = typeAccount;
         this.calcPeriod = calcPeriod;
         this.salary = salary;
+        this.snils = snils;
     }
 
     public PojoAccount(String accountNumber, Date dateCreate,
@@ -343,4 +345,11 @@ public class PojoAccount implements Serializable {
         this.fired = fired;
     }
 
+    public String getSnils() {
+        return snils;
+    }
+
+    public void setSnils(String snils) {
+        this.snils = snils;
+    }
 }

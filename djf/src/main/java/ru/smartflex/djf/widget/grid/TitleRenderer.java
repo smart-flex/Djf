@@ -72,6 +72,10 @@ public class TitleRenderer extends DefaultTableCellRenderer {
         setupHeader(column.getTitle(), column.getTips(), bundle);
     }
 
+    TitleRenderer(ItemGridSnilsType column, LabelBundle bundle) {
+        setupHeader(column.getTitle(), column.getTips(), bundle);
+    }
+
     static ImageIcon getIconStatusInfo() {
         return iconStatusInfo;
     }
