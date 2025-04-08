@@ -3,9 +3,7 @@ package ru.smartflex.djf.controller;
 import java.awt.Component;
 import java.util.List;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import ru.smartflex.djf.SFConstants;
 import ru.smartflex.djf.WidgetTypeEnum;
@@ -325,8 +323,9 @@ public class WidgetManagerHelper {
 
                 switch (uiw.getWidgetType()) {
                     case PASSWORD:
-                        ((SFPassword)uiw.getObjectUI()).getPasswordField().setText((String) obj);
-                        ItemHandler.moveCaretToStart((JTextField) uiw.getObjectUI());
+                        JPasswordField passwordField = ((SFPassword)uiw.getObjectUI()).getPasswordField();
+                        passwordField.setText((String) obj);
+                        ItemHandler.moveCaretToStart(passwordField);
                         break;
                     case PHONE:
                     case SNILS:
