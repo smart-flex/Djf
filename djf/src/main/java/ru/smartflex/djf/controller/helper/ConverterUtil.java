@@ -3,8 +3,6 @@ package ru.smartflex.djf.controller.helper;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -21,8 +19,6 @@ import ru.smartflex.djf.widget.mask.MaskInfo;
 
 public class ConverterUtil {
 
-    private static Lock lockFormatGet = new ReentrantLock(false);
-
     private ConverterUtil() {
     }
 
@@ -33,10 +29,8 @@ public class ConverterUtil {
             human = maskDelimiter;
             if (obj != null) {
                 Date date = (Date) obj;
-                lockFormatGet.lock();
                 human = ((DateFormat) format).format(date);
             }
-
         } else {
             human = obj;
         }
