@@ -388,8 +388,7 @@ public class WidgetManager {
             fillProperties(treeList, bw);
 
             for (UIWrapper uiw : listUI) {
-                if (uiw.getModelBase().getIdModel() != null
-                        && uiw.getModelBase().getIdModel().equals(idModel)) {
+                if (uiw.getModelBase().getIdModel() != null && uiw.getModelBase().getIdModel().equals(idModel)) {
                     if (uiw.isGrid() || uiw.isTGrid()) {
                         Object ui = uiw.getObjectUI();
                         ((SFGrid) ui).getTable().repaint();

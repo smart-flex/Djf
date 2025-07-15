@@ -113,6 +113,8 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
             }
         }
 
+        boolean someBeanWasReread = false;
+
         List<ModelType> modelList = fm.getForm().getModels().getModel();
         for (ModelType mt : modelList) {
             if (data.isWasLoadError()) {
@@ -120,18 +122,17 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
             }
 
             if (reLoading) {
-                if (fm.getFormBag().isModelCanNotBeSaved(mt.getId())
-                        || (!fm.getFormBag().isModelCanBeChanged(mt.getId()))) {
-                    // data was loading through first iteration
-                    // therefore and usually, we can miss this reloading
-                    // but....
-                    if (FormStack.getCurrentFormBag().isForceRefreshForParentForm()) {
-                        // we have to allow refreshing for this form at this time
-                        FormStack.getCurrentFormBag().setForceRefreshForParentForm(false);
-                    } else {
+                if (fm.getFormBag().isModelMayBeRefreshed(mt.getId())) {
+                    // принудительно разрешен рефреш, пропускаем дальше вниз
+                } else {
+                    if (fm.getFormBag().isModelNotBeRefreshedByDefault(mt.getId())) {
+                        // data was loading through first iteration
+                        // therefore and usually, we can miss this reloading
+                        // не перечитываем бин
                         continue;
                     }
                 }
+                someBeanWasReread = true;
             }
 
             Object obj = null;
@@ -203,13 +204,22 @@ public class FormManagerThread extends SwingWorker<ModelLoadResult, Void> {
             }
         } // end cycle of loading
 
+        if (reLoading && someBeanWasReread == false) {
+            if (FormStack.getCurrentFormBag().isForceRefreshForParentForm()) {
+                // we have to disallow refreshing for this form at this time
+                FormStack.getCurrentFormBag().setForceRefreshForParentForm(false);
+            }
+        }
+
         if (!data.isWasLoadError()) {
-            if (!reLoading) {
-                FormAssistant assistant = fm.getFormBag().getAssistant();
-                if (assistant != null) {
-                    assistant.step(FormStepEnum.AFTER_DATA_INIT_LOADING, fm
-                            .getFormBag().getFormSession());
+            FormAssistant assistant = fm.getFormBag().getAssistant();
+            if (assistant != null) {
+                if (!reLoading) {
+                    assistant.step(FormStepEnum.AFTER_DATA_INIT_LOADING, fm.getFormBag().getFormSession());
+                } else {
+                    assistant.step(FormStepEnum.AFTER_DATA_RELOADING, fm.getFormBag().getFormSession());
                 }
+
             }
         }
     }

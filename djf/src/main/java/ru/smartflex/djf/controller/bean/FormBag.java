@@ -101,10 +101,11 @@ public class FormBag {
 
         List<ModelType> modelList = formType.getModels().getModel();
         for (ModelType mt : modelList) {
-            boolean fokCanBeChanged = false;
-            boolean fokCanBeAppend = false;
-            boolean fokNotBeSaved = false;
-            boolean fokCanBeDeleted = false;
+            boolean fokCanBeChanged = true; // default
+            boolean fokCanBeAppend = true; // default
+            boolean fokNotBeSaved = false; // default
+            boolean fokCanBeDeleted = true; // default
+            boolean fokMayBeRefreshed = false;
 
             // Dynamic settings
             Boolean assistNoAppend = formSession.isNoAppend(mt.getId());
@@ -115,10 +116,8 @@ public class FormBag {
                 }
             } else {
                 // from xml
-                if (mt.isNoAppend() == null
-                        || !mt.isNoAppend()) {
-                    // usual behavior
-                    fokCanBeAppend = true;
+                if (mt.isNoAppend() != null && mt.isNoAppend()) {
+                    fokCanBeAppend = false;
                 }
             }
 
@@ -130,10 +129,8 @@ public class FormBag {
                 }
             } else {
                 // from xml
-                if (mt.isReadOnly() == null
-                        || !mt.isReadOnly()) {
-                    // usual behavior
-                    fokCanBeChanged = true;
+                if (mt.isReadOnly() != null && mt.isReadOnly()) {
+                    fokCanBeChanged = false;
                 }
             }
 
@@ -151,14 +148,22 @@ public class FormBag {
 
             Boolean assistNoDelete = formSession.isNoDelete(mt.getId());
             if (assistNoDelete != null) {
-                if (!assistNoDelete) {
-                    fokCanBeDeleted = true;
+                if (assistNoDelete) {
+                    fokCanBeDeleted = false;
                 }
             } else {
-                if (mt.isNoDelete() == null
-                        || !mt.isNoDelete()) {
-                    // usual behavior
-                    fokCanBeDeleted = true;
+                if (mt.isNoDelete() != null && mt.isNoDelete()) {
+                    fokCanBeDeleted = false;
+                }
+            }
+
+            Boolean assistMayBeRefreshed = formSession.isMayBeRefreshed(mt.getId());
+            if (assistMayBeRefreshed != null) {
+                fokMayBeRefreshed = assistMayBeRefreshed;
+            } else {
+                // from XML
+                if (mt.isMayRefreshed() != null) {
+                    fokMayBeRefreshed = mt.isMayRefreshed();
                 }
             }
 
@@ -174,9 +179,9 @@ public class FormBag {
                     fokCanBeDeleted = false;
                 }
             }
-            FormBagModelCRUDStatus status = new FormBagModelCRUDStatus(
+            FormBagModelCRUDStatus status = new FormBagModelCRUDStatus(mt.getId(),
                     fokCanBeChanged, fokCanBeAppend, fokNotBeSaved,
-                    fokCanBeDeleted);
+                    fokCanBeDeleted, fokMayBeRefreshed);
             modelMapFlag.put(mt.getId(), status);
 
             /*
@@ -184,6 +189,10 @@ public class FormBag {
              * + status);
              */
         }
+    }
+
+    public boolean isModelNotBeRefreshedByDefault(String idModel) {
+        return modelMapFlag.get(idModel).isModelNotBeRefreshedByDefault();
     }
 
     public boolean isModelCanBeChanged(String idModel) {
@@ -198,16 +207,30 @@ public class FormBag {
         return modelMapFlag.get(idModel).isModelCanNotBeSaved();
     }
 
+    public boolean isModelMayBeRefreshed(String idModel) {
+        return modelMapFlag.get(idModel).isModelMayBeRefreshed();
+    }
+
     private boolean isModelCanBeDeleted(String idModel) {
         return modelMapFlag.get(idModel).isModelCanBeDeleted();
     }
 
-    private boolean isModelCanBeChanged() {
+    private boolean isModelCanBeModified() {
         boolean flag = false;
 
         Collection<FormBagModelCRUDStatus> coll = modelMapFlag.values();
         for (FormBagModelCRUDStatus status : coll) {
-            flag = flag || status.isModelCanBeChanged();
+            boolean fok = false;
+            if (status.isModelCanBeChanged()) {
+                if (status.isModelCanNotBeSaved() == true) {
+                    fok = false;
+                } else {
+                    fok = true;
+                }
+            } else {
+                fok = false;
+            }
+            flag = flag || fok;
         }
         return flag;
     }
@@ -218,16 +241,6 @@ public class FormBag {
         Collection<FormBagModelCRUDStatus> coll = modelMapFlag.values();
         for (FormBagModelCRUDStatus status : coll) {
             flag = flag || status.isModelCanBeAppend();
-        }
-        return flag;
-    }
-
-    private boolean isModelCanNotBeSaved() {
-        boolean flag = true;
-
-        Collection<FormBagModelCRUDStatus> coll = modelMapFlag.values();
-        for (FormBagModelCRUDStatus status : coll) {
-            flag = flag && status.isModelCanNotBeSaved();
         }
         return flag;
     }
@@ -244,23 +257,14 @@ public class FormBag {
 
     public void initFrameButtons() {
         // read united flags from all models
-        boolean canNotBeSaved = isModelCanNotBeSaved();
-        boolean mayChanged = isModelCanBeChanged();
-        boolean mayAppend = isModelCanBeAppend();
-        boolean mayDelete = isModelCanBeDeleted();
+        boolean mayAppend = isModelCanBeAppend(); // хоть одна д.б. noAppend
+        boolean mayDelete = isModelCanBeDeleted(); // хоть одна д.б. noDelete
+        boolean mayModified = isModelCanBeModified();
 
-        // Rule handling (as copy-past)
-
-        if (!mayChanged) {
-            // read only is true
+        // Rule handling (as copy-past from private init())
+        if (!mayModified) {
             mayAppend = false;
             mayDelete = false;
-            // canNotBeSaved = true;
-        } else {
-            if (canNotBeSaved) {
-                mayAppend = false;
-                mayDelete = false;
-            }
         }
 
         if (mayAppend) {
@@ -268,7 +272,7 @@ public class FormBag {
         } else {
             getButtonOperCache().setButtonHide(SFConstants.BUTTON_NAME_ADD);
         }
-        if (mayChanged && !canNotBeSaved) {
+        if (mayModified) {
             getButtonOperCache().setButtonShow(SFConstants.BUTTON_NAME_DELETE);
             getButtonOperCache().setButtonShow(SFConstants.BUTTON_NAME_REFRESH);
             getButtonOperCache().setButtonShow(SFConstants.BUTTON_NAME_SAVE);
@@ -542,6 +546,11 @@ public class FormBag {
                         Djf.showStatusErrorMessage("${label.djf.message.error.form.save}");
                     }
                 } else {
+                    FormAssistant assistant = getAssistant();
+                    if (assistant != null) {
+                        assistant.step(FormStepEnum.FORM_WAS_SAVED_SUCCESSFULLY, getFormSession());
+                    }
+
                     Djf.showStatusInfoMessage("${label.djf.message.info.form.save}");
                     formWasSaved = true;
                     refeshForm();

@@ -15,6 +15,7 @@ public class SimpleFormSession implements IFormSession {
     private Map<String, Boolean> noAppendMap = new HashMap<String, Boolean>(2);
     private Map<String, Boolean> noSaveMap = new HashMap<String, Boolean>(2);
     private Map<String, Boolean> noDeleteMap = new HashMap<String, Boolean>(2);
+    private Map<String, Boolean> mayBeRefreshedMap = new HashMap<String, Boolean>(2);
     private Map<String, Object> formParameters;
     private Map<String, Object> modelBeans = new HashMap<String, Object>();
 
@@ -53,8 +54,7 @@ public class SimpleFormSession implements IFormSession {
                 }
             }
             if (!fok) {
-                throw new MissingException("Model: " + idModel
-                        + " is not found");
+                throw new MissingException("Model: " + idModel + " is not found");
             }
         }
         return fok;
@@ -92,6 +92,16 @@ public class SimpleFormSession implements IFormSession {
     @Override
     public Boolean isNoDelete(String idModel) {
         return noDeleteMap.get(idModel);
+    }
+
+    @Override
+    public Boolean isMayBeRefreshed(String idModel) {
+        return mayBeRefreshedMap.get(idModel);
+    }
+
+    @Override
+    public void setMayBeRefreshed(String idModel) {
+        mayBeRefreshedMap.put(idModel, Boolean.TRUE);
     }
 
     @Override

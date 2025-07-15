@@ -48,20 +48,18 @@ public class DesktopJavaForms {
         Object obj = null;
         FormBag fb = FormStack.getCurrentFormBag();
         if (fb != null) {
-            if (fb.getWidgetManager().getFormBag().isFormReady()) {
-                IBeanWrapper bw;
-                if (treePath == null) {
-                    bw = fb.getWidgetManager().getSelectedBeanWrapper();
-                } else {
-                    WidgetTreeNode<UIWrapper> wtn = fb.getWidgetManager()
-                            .getBeanWrapper(treePath);
-                    bw = fb.getWidgetManager().getSelectedBeanWrapper(
-                            wtn.getWidget());
-                }
-                BeanStatusEnum status = bw.getCreatedStatus();
-                if (status != BeanStatusEnum.NEW) {
-                    obj = bw.getData();
-                }
+            IBeanWrapper bw;
+            if (treePath == null) {
+                bw = fb.getWidgetManager().getSelectedBeanWrapper();
+            } else {
+                WidgetTreeNode<UIWrapper> wtn = fb.getWidgetManager()
+                        .getBeanWrapper(treePath);
+                bw = fb.getWidgetManager().getSelectedBeanWrapper(
+                        wtn.getWidget());
+            }
+            BeanStatusEnum status = bw.getCreatedStatus();
+            if (status != BeanStatusEnum.NEW) {
+                obj = bw.getData();
             }
         }
         return obj;

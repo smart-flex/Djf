@@ -36,6 +36,9 @@ public interface IFormSession {
 
     Boolean isNoDelete(String idModel);
 
+    Boolean isMayBeRefreshed(String idModel);
+    void setMayBeRefreshed(String idModel);
+
     @SuppressWarnings("unused")
     Map<String, Object> getFormParameters();
 

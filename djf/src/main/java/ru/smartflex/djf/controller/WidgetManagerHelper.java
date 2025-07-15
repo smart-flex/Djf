@@ -370,18 +370,15 @@ public class WidgetManagerHelper {
         }
     }
 
-    public static BeanStatusEnum isBeanWrapperLocked(WidgetManager wm,
-                                                     UIWrapper uiw, IBeanWrapper bw, int index) {
+    public static BeanStatusEnum isBeanWrapperLocked(WidgetManager wm, UIWrapper uiw, IBeanWrapper bw, int index) {
         BeanStatusEnum bs;
 
-        boolean fok = wm.getFormBag().isModelCanBeChanged(
-                uiw.getModelBase().getIdModel());
-        if (!fok) {
+        boolean fokReadOnly = wm.getFormBag().isModelCanBeChanged(uiw.getModelBase().getIdModel());
+        if (!fokReadOnly) {
             bs = BeanStatusEnum.LOCKED;
         } else {
             // next check
-            if (bw.isBeanWrapperLocked() || bw.isBeanWrapperDeleted()
-                    || bw.isBeanWrapperSelected()) {
+            if (bw.isBeanWrapperLocked() || bw.isBeanWrapperDeleted() || bw.isBeanWrapperSelected()) {
                 bs = bw.getObtainedStatus();
             } else {
                 bs = wm.getLockedStatus(uiw, index);

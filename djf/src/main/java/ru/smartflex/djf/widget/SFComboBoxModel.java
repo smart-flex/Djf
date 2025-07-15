@@ -116,15 +116,14 @@ public class SFComboBoxModel extends DefaultComboBoxModel {
 
             addElement(SFConstants.COMBOBO_FIRST_ITEM);
 
-            List<IBeanWrapper> list = wm.getSelectedBeanWrapperList(uiw
-                    .getModelFill());
+            // в список приходят актуальные данные
+            List<IBeanWrapper> list = wm.getSelectedBeanWrapperList(uiw.getModelFill());
             for (IBeanWrapper bw : list) {
                 Object obj = wm.getValueFromBeanWrapper(uiw.getModelFill(), bw,
                         true);
                 addElement(obj);
                 objMirroList.add(bw.getData());
             }
-
         }
 
     }
